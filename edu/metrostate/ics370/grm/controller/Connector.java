@@ -2,9 +2,6 @@ package edu.metrostate.ics370.grm.controller;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 public class Connector {
   	static final String DB_URL = "jdbc:mysql://localhost:3306/grmdata";
@@ -15,11 +12,11 @@ public class Connector {
   	 *  @param user, password
   	 */
   	public static boolean signIn(String user, String password) {
-  		Connection con = null;
+  		Connection connection = null;
 
   		try {
-  			con = DriverManager.getConnection(DB_URL, user, password);
-  			setCon(con);
+  			connection = DriverManager.getConnection(DB_URL, user, password);
+  			Connector.con = connection;
   			System.out.println("Connection Object Created : " + con);
   			return true;
   		} catch (Exception ex) { ex.printStackTrace(); }
