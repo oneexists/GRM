@@ -1,12 +1,11 @@
 package edu.metrostate.ics370.grm.gui;
 
-import com.formdev.flatlaf.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class main extends JFrame{
+public class MainGUI extends JFrame{
     /**
      Declare all components of the GUI or each button.
      */
@@ -20,7 +19,7 @@ public class main extends JFrame{
     /**
      Declare each listener. What each button is doing when clicked.
      */
-    public main() {
+    public MainGUI() {
         exit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -31,10 +30,9 @@ public class main extends JFrame{
 
 
     static void mainWindow() {
-        FlatDarkLaf.setup();
         UIManager.put( "Button.arc", 999 );
-        main frame = new main();
-        frame.setContentPane(new main().mainPanel);
+        MainGUI frame = new MainGUI();
+        frame.setContentPane(new MainGUI().mainPanel);
         frame.setTitle("Game Recommendation Manager");
         frame.setPreferredSize(new Dimension(800, 800));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

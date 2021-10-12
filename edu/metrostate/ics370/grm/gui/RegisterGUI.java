@@ -1,13 +1,11 @@
 package edu.metrostate.ics370.grm.gui;
 
-import com.formdev.flatlaf.FlatDarkLaf;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class register {
+public class RegisterGUI {
     private JTextField username;
     private JPasswordField password;
     private JPasswordField passwordConfirm;
@@ -16,7 +14,7 @@ public class register {
     private JLabel picture;
     private JButton cancel;
 
-    public register() {
+    public RegisterGUI() {
         cancel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -26,10 +24,9 @@ public class register {
     }
 
     static void callWindow() {
-        FlatDarkLaf.setup();
         UIManager.put( "Button.arc", 999 );
         JFrame frame = new JFrame();
-        frame.setContentPane(new register().registerPanel);
+        frame.setContentPane(new RegisterGUI().registerPanel);
         frame.setTitle("Game Recommendation Manager");
         frame.setPreferredSize(new Dimension(800, 1000));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,6 +38,6 @@ public class register {
 
 
     public static void main(String[] args) {
-        register.callWindow();
+        RegisterGUI.callWindow();
     }
 }
