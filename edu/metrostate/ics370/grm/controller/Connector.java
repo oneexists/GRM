@@ -27,7 +27,7 @@ public class Connector {
   		return null;
   	}
   	
-  	public static User getUser(String user) {
+  	public static User getUser(String username) {
   		// TODO get user from DB
   		// TODO create User object
   		return null;
