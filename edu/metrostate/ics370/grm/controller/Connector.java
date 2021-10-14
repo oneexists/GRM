@@ -27,6 +27,12 @@ public class Connector {
   		return null;
   	}
   	
+  	/**
+  	 * Finds user by username
+  	 * 
+  	 * @param username
+  	 * @return the user
+  	 */
   	public static User getUser(String username) {
   		// TODO get user from DB
   		// TODO create User object
