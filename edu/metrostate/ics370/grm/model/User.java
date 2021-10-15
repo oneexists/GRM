@@ -1,4 +1,4 @@
-package game_recommendation_test;
+package edu.metrostate.ics370.grm.model;
 //import java.util.List;
 import java.util.*;
 
