@@ -1,7 +1,9 @@
 package edu.metrostate.ics370.grm.controller;
 
+import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.Properties;
 
 import edu.metrostate.ics370.grm.model.User;
 
@@ -10,9 +12,7 @@ import edu.metrostate.ics370.grm.model.User;
  *
  */
 public class Connector {
-	
-  	static final String DB_URL = "jdbc:mysql://localhost:3306/grmdata";
-  	
+	  	
     /**
   	 * 	Database sign in, sets static connection
   	 *
@@ -22,7 +22,19 @@ public class Connector {
   	 */
   	public static Connection signIn(String user, String password) {
   		try {
-  			return DriverManager.getConnection(DB_URL, user, password);
+  			// Properties object
+  			Properties dbProps = new Properties();
+  			// Path object
+  			String propPath = "../../../../../Settings.properties";
+  			// File reader
+  			FileReader fReader = new FileReader(propPath);
+  			// Load properties from file
+  			dbProps.load(fReader);
+  			// Property values
+  			String dbConnUrl = dbProps.getProperty("db.conn.url");
+  			String dbUserName = dbProps.getProperty("db.username");
+  			String dbPassword = dbProps.getProperty("db.password");
+  			return DriverManager.getConnection(dbConnUrl, dbUserName, dbPassword);
   		} catch (Exception ex) { ex.printStackTrace(); }
   		return null;
   	}
