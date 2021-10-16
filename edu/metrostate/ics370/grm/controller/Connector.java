@@ -20,7 +20,7 @@ public class Connector {
   	 * @param password
   	 * @return {@code true} if connection successfully set
   	 */
-  	public static Connection signIn(String user, String password) {
+  	public static Connection signIn() {
   		try {
   			// Properties object
   			Properties dbProps = new Properties();
@@ -45,7 +45,7 @@ public class Connector {
   	 * @param username
   	 * @return the user
   	 */
-  	public static User getUser(String username) {
+  	public static User getUser(String username, String password) {
   		// TODO get user from DB
   		// TODO create User object
   		return null;

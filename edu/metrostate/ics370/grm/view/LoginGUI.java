@@ -78,7 +78,7 @@ public class LoginGUI implements ActionListener {
 		String password = passwordText.getText();
 		boolean login = Login.signIn(user, password);
 		if (login == true) {
-			// TODO open menu
+			// MenuGUI menu = new MenuGUI();
 		} else {
 			// TODO display error
 		}

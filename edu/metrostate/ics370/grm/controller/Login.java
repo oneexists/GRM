@@ -29,10 +29,10 @@ public abstract class Login {
 	 */
 	public static boolean signIn(String username, String password) {
 		// get datbase connection with credentials
-		con = Connector.signIn(username, password);
-		// if connection is successful, get user and return true
-		if (con != null) {
-			user = Connector.getUser(username);
+		con = Connector.signIn();
+		user = Connector.getUser(username, password);
+		// return false if connection or user is null
+		if (!(con == null || user == null)) {
 			return true;
 		}
 		return false;
