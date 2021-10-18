@@ -29,7 +29,8 @@ public abstract class Login {
 	 * If sign in successful, open menu
 	 * 
 	 * Otherwise display error and allow user to sign in again
-	 * @return 
+	 * 
+	 * @return {@code true} if sign in is successful 
 	 * @throws SQLException 
 	 */
 	public static boolean signIn(String username, String password) throws SQLException {
