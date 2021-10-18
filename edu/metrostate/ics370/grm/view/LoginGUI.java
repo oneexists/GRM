@@ -3,6 +3,7 @@ package edu.metrostate.ics370.grm.view;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -76,11 +77,18 @@ public class LoginGUI implements ActionListener {
 		String user = userText.getText();
 		@SuppressWarnings("deprecation")
 		String password = passwordText.getText();
-		boolean login = Login.signIn(user, password);
-		if (login == true) {
-			// MenuGUI menu = new MenuGUI();
-		} else {
-			// TODO display error
+		boolean login;
+		try {
+			login = Login.signIn(user, password);
+			if (login == true) {
+				MenuGUI menu = new MenuGUI();
+				menu.initialize();
+			} else {
+				// TODO display error
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 	}
 

@@ -55,6 +55,23 @@ public class User implements Serializable, Comparable<User> {
 		this.password = password;
 	}
 	/**
+	 * Convenience constructor, get user from database
+	 * 
+	 * @param username
+	 * @param firstName
+	 * @param lastName
+	 * @param dateOfBirth
+	 * @param gender
+	 */
+	public User(String username, String firstName, String lastName, LocalDate dateOfBirth, Gender gender) {
+		this.username = username;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.dateOfBirth = dateOfBirth;
+		this.gender = gender;
+	}
+
+	/**
 	 * @param game to add to hatelist of the user
 	 */
 	public void addHatelist(Game game) { this.hatelist.add(game); }
