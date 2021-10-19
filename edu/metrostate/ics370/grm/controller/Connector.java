@@ -3,31 +3,33 @@ package edu.metrostate.ics370.grm.controller;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-public class Connector {
-  	static final String DB_URL = "jdbc:mysql://localhost:3306/grmdata";
-    private static Connection con;
-  	/*
-  	 * 	DB sign in
-  	 *
-  	 *  @param user, password
-  	 */
-  	public static boolean signIn(String user, String password) {
-  		Connection connection = null;
+import edu.metrostate.ics370.grm.model.User;
 
+/**
+ * @author skylar
+ *
+ */
+public class Connector {
+	
+  	static final String DB_URL = "jdbc:mysql://localhost:3306/grmdata";
+  	
+    /**
+  	 * 	Database sign in, sets static connection
+  	 *
+  	 * @param user
+  	 * @param password
+  	 * @return {@code true} if connection successfully set
+  	 */
+  	public static Connection signIn(String user, String password) {
   		try {
-  			connection = DriverManager.getConnection(DB_URL, user, password);
-  			Connector.con = connection;
-  			System.out.println("Connection Object Created : " + con);
-  			return true;
+  			return DriverManager.getConnection(DB_URL, user, password);
   		} catch (Exception ex) { ex.printStackTrace(); }
-  		return false;
+  		return null;
   	}
-    /*
-     * 	Returns DB connection
-     *
-     *  @return connection
-     */
-     public static Connection getCon() {
-       return con;
-     }
+  	
+  	public static User getUser(String user) {
+  		// TODO get user from DB
+  		// TODO create User object
+  		return null;
+  	}
 }
