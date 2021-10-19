@@ -43,6 +43,3 @@ CREATE TABLE Select_Options (
 
 /*sample user*/
 /* insert into User values ("user", "Gus", "Fring", "p@ssword", curdate(), "Male"); */
-
-/*find user*/
-/* SELECT username FROM User WHERE username = user AND password = pass; */
