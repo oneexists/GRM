@@ -50,12 +50,18 @@ public class Connector {
   		}
   	}
   	
+  	/**
+  	 * Sets connection if {@code null} and returns the connection
+  	 * 
+  	 * @return connection
+  	 */
   	public static Connection getConnection() {
   		if (con == null) {
   			signIn();
   		}
   		return con;
   	}
+  	
   	/**
   	 * Returns Singleton instance, creates instance if {@code null}
   	 * 

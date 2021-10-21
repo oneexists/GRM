@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import edu.metrostate.ics370.grm.controller.Connector;
 import edu.metrostate.ics370.grm.controller.Login;
 
 /**
@@ -43,6 +44,7 @@ public class LoginGUI implements ActionListener {
 	}
 	
 	private void buildLoginPanel() {
+		// instantiate elements
 		panel = new JPanel();
 		userLabel = new JLabel("User");
 		userText = new JTextField();
@@ -51,6 +53,7 @@ public class LoginGUI implements ActionListener {
 		loginButton = new JButton("Login");
 		success = new JLabel();
 
+		// set bounds
 		userLabel.setBounds(10, 20, 80, 25);
 		userText.setBounds(100, 20, 165, 25);
 		passwordLabel.setBounds(10, 50, 80, 25);
@@ -58,6 +61,7 @@ public class LoginGUI implements ActionListener {
 		loginButton.setBounds(10, 80, 80, 25);
 		success.setBounds(10, 110, 300, 25);
 
+		// add to panel
 		panel.add(userLabel);
 		panel.add(userText);
 		panel.add(passwordLabel);
@@ -66,6 +70,7 @@ public class LoginGUI implements ActionListener {
 		panel.add(loginButton);
 		panel.add(success);
 
+		// set action listeners, layout, visibility
 		loginButton.addActionListener(this);
 		passwordText.addActionListener(this);
 		panel.setLayout(null);
@@ -79,6 +84,7 @@ public class LoginGUI implements ActionListener {
 		String password = passwordText.getText();
 		boolean login;
 		try {
+			// validate login
 			login = Login.signIn(user, password);
 			if (login == true) {
 				MenuGUI menu = new MenuGUI();
@@ -87,9 +93,8 @@ public class LoginGUI implements ActionListener {
 				// display login error
 				success.setText("Invalid login.");
 			}
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		} catch (SQLException err) {
+			Connector.processException(err);
 		}
 	}
 

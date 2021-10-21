@@ -21,6 +21,14 @@ public abstract class Login {
 	public Login() {
 	}	
 	
+	/**
+	 * Validates username and password using database connection
+	 * 
+	 * @param username
+	 * @param password
+	 * @return {@code true}
+	 * @throws SQLException
+	 */
 	public static boolean signIn(String username, String password) throws SQLException {
 		String sql = "SELECT username, user_password, user_first_name, user_last_name, user_date_of_birth, gender FROM User WHERE username =\"" + username + "\" AND user_password = \"" + password + "\"";
 		try (	Connection con = Connector.getConnection();
@@ -39,6 +47,7 @@ public abstract class Login {
 		}
 	}
 	
+	// creates and sets user from result set
 	private static void parseUser(ResultSet userRS) throws SQLException {
 		String username = null;
 		String firstName = null;
