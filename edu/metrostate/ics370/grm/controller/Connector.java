@@ -5,14 +5,19 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
 
-import edu.metrostate.ics370.grm.model.User;
-
 /**
  * @author skylar
  *
  */
 public class Connector {
-	  	
+	
+	private static Connector instance = null;
+	private Connection con = null;
+	/**
+	 * Singleton no-arg constructor
+	 */
+	private Connector() {
+	}
     /**
   	 * 	Database sign in, sets static connection
   	 *
@@ -20,7 +25,7 @@ public class Connector {
   	 * @param password
   	 * @return {@code true} if connection successfully set
   	 */
-  	public static Connection signIn() {
+  	public boolean signIn() {
   		try {
   			// Properties object
   			Properties dbProps = new Properties();
@@ -34,20 +39,35 @@ public class Connector {
   			String dbConnUrl = dbProps.getProperty("db.conn.url");
   			String dbUserName = dbProps.getProperty("db.username");
   			String dbPassword = dbProps.getProperty("db.password");
-  			return DriverManager.getConnection(dbConnUrl, dbUserName, dbPassword);
-  		} catch (Exception ex) { ex.printStackTrace(); }
-  		return null;
+  			con = DriverManager.getConnection(dbConnUrl, dbUserName, dbPassword);
+  			return true;
+  		} catch (Exception ex) { 
+  			System.err.println(ex);
+  			return false;
+  		}
   	}
   	
   	/**
-  	 * Finds user by username
+  	 * Returns Singleton instance, creates instance if {@code null}
   	 * 
-  	 * @param username
-  	 * @return the user
+  	 * @return Connector instance
   	 */
-  	public static User getUser(String username, String password) {
-  		// TODO get user from DB
-  		// TODO create User object
-  		return null;
+  	public static Connector getInstance() {
+  		if (instance == null) {
+  			instance = new Connector();
+  		}
+  		return instance;
+  	}
+  	
+  	/**
+  	 * Close connection
+  	 */
+  	public void close() {
+  		try {
+  			con.close();
+  			con = null;
+  		} catch (Exception e) {
+  			// connection not closed
+  		}
   	}
 }
