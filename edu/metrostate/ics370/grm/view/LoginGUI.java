@@ -84,7 +84,8 @@ public class LoginGUI implements ActionListener {
 				MenuGUI menu = new MenuGUI();
 				menu.initialize();
 			} else {
-				// TODO display error
+				// display login error
+				success.setText("Invalid login.");
 			}
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block

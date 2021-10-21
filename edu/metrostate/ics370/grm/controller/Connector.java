@@ -3,6 +3,7 @@ package edu.metrostate.ics370.grm.controller;
 import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Properties;
 
 /**
@@ -12,20 +13,22 @@ import java.util.Properties;
 public class Connector {
 	
 	private static Connector instance = null;
-	private Connection con = null;
+	private static Connection con = null;
+
 	/**
 	 * Singleton no-arg constructor
 	 */
 	private Connector() {
 	}
-    /**
+
+	/**
   	 * 	Database sign in, sets static connection
   	 *
   	 * @param user
   	 * @param password
   	 * @return {@code true} if connection successfully set
   	 */
-  	public boolean signIn() {
+  	public static boolean signIn() {
   		try {
   			// Properties object
   			Properties dbProps = new Properties();
@@ -47,6 +50,12 @@ public class Connector {
   		}
   	}
   	
+  	public static Connection getConnection() {
+  		if (con == null) {
+  			signIn();
+  		}
+  		return con;
+  	}
   	/**
   	 * Returns Singleton instance, creates instance if {@code null}
   	 * 
@@ -60,9 +69,20 @@ public class Connector {
   	}
   	
   	/**
+  	 * Database exception handling
+  	 * 
+  	 * @param e
+  	 */
+  	public static void processException(SQLException e) {
+  		System.err.println("Error message: " + e.getMessage());
+  		System.err.println("Error code: " + e.getErrorCode());
+  		System.err.println("SQL state: " + e.getSQLState());
+  	}
+  	
+  	/**
   	 * Close connection
   	 */
-  	public void close() {
+  	public static void close() {
   		try {
   			con.close();
   			con = null;

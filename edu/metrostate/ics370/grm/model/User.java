@@ -117,6 +117,13 @@ public class User implements Serializable, Comparable<User> {
 	public String getLastName() { return lastName; }
 
 	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
 	 * @return the personalTags of the user
 	 */
 	public GameTag[] getPersonalTags() { return personalTags.toArray(new GameTag[personalTags.size()]); }
