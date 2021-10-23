@@ -14,42 +14,41 @@ import edu.metrostate.ics370.grm.model.User;
  */
 public abstract class Login {
 
-	private static Connection con;
-	private static User user;
+	public static User user;
 	/**
 	 * No-arg constructor
 	 */
 	public Login() {
-
 	}	
 	
 	/**
-	 * Opens login GUI, gets credentials, signs in
+	 * Validates username and password using database connection
 	 * 
-	 * If sign in successful, open menu
-	 * 
-	 * Otherwise display error and allow user to sign in again
-	 * 
-	 * @return {@code true} if sign in is successful 
-	 * @throws SQLException 
+	 * @param username
+	 * @param password
+	 * @return {@code true}
+	 * @throws SQLException
 	 */
 	public static boolean signIn(String username, String password) throws SQLException {
-		// get datbase connection with credentials
-		con = Connector.signIn();
-		user = Connector.getUser(username, password);
-		// sign into database
-		Statement st = con.createStatement();
-		ResultSet userRS = st.executeQuery("SELECT * FROM User WHERE username = '" + username + "' AND user_password = '" + password + "'");
-		// set user
-		user = parseUser(userRS);
-		// return false if connection or user is null
-		if (!(con == null || user == null)) {
-			return true;
+		String sql = "SELECT username, user_password, user_first_name, user_last_name, user_date_of_birth, gender FROM User WHERE username =\"" + username + "\" AND user_password = \"" + password + "\"";
+		try (	Connection con = Connector.getConnection();
+				Statement stmt = con.createStatement();
+				ResultSet rs = stmt.executeQuery(sql);
+				) {
+			parseUser(rs);
+			if (user.getUsername() != null) {
+				return true; 				
+			} else { return false; }
+		} catch (SQLException e) {
+			Connector.processException(e);
+			return false;
+		} finally {
+			Connector.close();
 		}
-		return false;
 	}
-
-	private static User parseUser(ResultSet userRS) throws SQLException {
+	
+	// creates and sets user from result set
+	private static void parseUser(ResultSet userRS) throws SQLException {
 		String username = null;
 		String firstName = null;
 		String lastName = null;
@@ -63,20 +62,5 @@ public abstract class Login {
 			gender = User.Gender.valueOf(userRS.getString("gender"));
 		}
 		user = new User(username, firstName, lastName, dateOfBirth, gender);
-		return user;
-	}
-
-	/**
-	 * @return database connection
-	 */
-	public static Connection getCon() {
-		return con;
-	}
-
-	/**
-	 * @return the user
-	 */
-	public static User getUser() {
-		return user;
 	}
 }

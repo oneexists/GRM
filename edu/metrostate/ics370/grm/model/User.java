@@ -39,21 +39,7 @@ public class User implements Serializable, Comparable<User> {
 		wishlist = new TreeSet<Game>();
 		hatelist = new TreeSet<Game>();
 	}
-	
-	/**
-	 * Convenience constructor, create new user
-	 * 
-	 * @param firstName
-	 * @param lastName
-	 * @param username
-	 * @param password
-	 */
-	public User(String firstName, String lastName, String username, String password) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.username = username;
-		this.password = password;
-	}
+
 	/**
 	 * Convenience constructor, get user from database
 	 * 
@@ -115,6 +101,13 @@ public class User implements Serializable, Comparable<User> {
 	 * @return the last name of the user
 	 */
 	public String getLastName() { return lastName; }
+
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
 
 	/**
 	 * @return the personalTags of the user
@@ -180,19 +173,5 @@ public class User implements Serializable, Comparable<User> {
 	 * @param username the username to set
 	 */
 	public void setUsername(String username) { this.username = username; }
-
-	/**
-	 * Validates username and password of user
-	 * 
-	 * @param user
-	 * @param pass
-	 * @return {@code true} if username and password are valid
-	 */
-	public boolean validate(String user, String pass) {
-		if (this.username == user && this.password == pass) {
-			return true;
-		}
-		return false;
-	}
 
 }
