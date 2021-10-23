@@ -22,6 +22,7 @@ public class MenuGUI implements ActionListener {
 	private JFrame frame;
 	private JButton editProfile;
 	private JButton takeQuiz;
+	private JButton logout;
 	
 	/**
 	 * 
@@ -51,6 +52,10 @@ public class MenuGUI implements ActionListener {
 		takeQuiz = new JButton("Take Quiz");
 		takeQuiz.addActionListener(this);
 		menuPanel.add(takeQuiz);
+		// logout button
+		logout = new JButton("Logout");
+		logout.addActionListener(this);
+		menuPanel.add(logout);
 		
 		// add to frame
 		frame.add(menuPanel, BorderLayout.CENTER);
@@ -61,8 +66,10 @@ public class MenuGUI implements ActionListener {
 		String cmd = e.getActionCommand();
 		if (cmd == "Edit Profile") {
 			// TODO implement edit profile
-		} else {
+		} else if (cmd == "Take Quiz") {
 			// TODO implment take quiz
+		} else {
+			// TODO implement logout
 		}
 		
 	}
