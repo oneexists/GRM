@@ -89,6 +89,8 @@ public class LoginGUI implements ActionListener {
 			if (login == true) {
 				MenuGUI menu = new MenuGUI();
 				menu.initialize();
+				userText.setText("");
+				passwordText.setText("");
 			} else {
 				// display login error
 				success.setText("Invalid login.");

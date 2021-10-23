@@ -12,11 +12,18 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import edu.metrostate.ics370.grm.controller.Login;
+
 /**
  * @author skylar
  *
  */
-public class MenuGUI implements ActionListener {
+public class MenuGUI extends JPanel {
+
+	/**
+	 * Version of the Menu Panel
+	 */
+	private static final long serialVersionUID = 202110001L;
 
 	private JPanel menuPanel;
 	private JFrame frame;
@@ -25,7 +32,7 @@ public class MenuGUI implements ActionListener {
 	private JButton logout;
 	
 	/**
-	 * 
+	 * No-arg constructor
 	 */
 	public MenuGUI() {
 		frame = new JFrame("Game Recommendation Manager Menu");
@@ -33,6 +40,9 @@ public class MenuGUI implements ActionListener {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
+	/**
+	 * Initialize Menu
+	 */
 	public void initialize() {
 		buildMenuPanel();
 		frame.setVisible(true);
@@ -46,32 +56,35 @@ public class MenuGUI implements ActionListener {
 		
 		// edit profile button
 		editProfile = new JButton("Edit Profile");
-		editProfile.addActionListener(this);
+		editProfile.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO implement edit profile frame
+			}
+		});
 		menuPanel.add(editProfile);
 		// take quiz button
 		takeQuiz = new JButton("Take Quiz");
-		takeQuiz.addActionListener(this);
+		takeQuiz.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO implement take quiz frame
+			}
+		});
 		menuPanel.add(takeQuiz);
 		// logout button
 		logout = new JButton("Logout");
-		logout.addActionListener(this);
+		logout.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO logout user and return to login menu
+				Login.signOut();
+				frame.dispose();
+			}
+		});
 		menuPanel.add(logout);
 		
 		// add to frame
 		frame.add(menuPanel, BorderLayout.CENTER);
 	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		String cmd = e.getActionCommand();
-		if (cmd == "Edit Profile") {
-			// TODO implement edit profile
-		} else if (cmd == "Take Quiz") {
-			// TODO implment take quiz
-		} else {
-			// TODO implement logout
-		}
-		
-	}
-
 }
