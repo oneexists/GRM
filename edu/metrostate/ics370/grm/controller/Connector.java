@@ -24,8 +24,6 @@ public class Connector {
 	/**
   	 * 	Database sign in, sets static connection
   	 *
-  	 * @param user
-  	 * @param password
   	 * @return {@code true} if connection successfully set
   	 */
   	public static boolean signIn() {
