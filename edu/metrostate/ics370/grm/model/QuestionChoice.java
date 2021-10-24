@@ -5,6 +5,7 @@ package edu.metrostate.ics370.grm.model;
 
 /**
  * @author skylar
+ * @author christian
  *
  */
 public class QuestionChoice {

@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 /**
  * @author skylar
+ * @author christian
  *
  */
 public class GameTag implements Serializable {
