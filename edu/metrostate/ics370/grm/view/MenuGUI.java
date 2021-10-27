@@ -26,7 +26,7 @@ public class MenuGUI extends JPanel {
 	private static final long serialVersionUID = 202110001L;
 
 	private JPanel menuPanel;
-	private JFrame frame;
+	private JFrame menuFrame;
 	private JButton editProfile;
 	private JButton takeQuiz;
 	private JButton logout;
@@ -35,9 +35,9 @@ public class MenuGUI extends JPanel {
 	 * No-arg constructor
 	 */
 	public MenuGUI() {
-		frame = new JFrame("Game Recommendation Manager Menu");
-		frame.setSize(350, 200);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		menuFrame = new JFrame("Game Recommendation Manager Menu");
+		menuFrame.setSize(350, 200);
+		menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	/**
@@ -45,7 +45,7 @@ public class MenuGUI extends JPanel {
 	 */
 	public void initialize() {
 		buildMenuPanel();
-		frame.setVisible(true);
+		menuFrame.setVisible(true);
 	}
 	
 	private void buildMenuPanel() {
@@ -79,12 +79,12 @@ public class MenuGUI extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO logout user and return to login menu
 				Login.signOut();
-				frame.dispose();
+				menuFrame.dispose();
 			}
 		});
 		menuPanel.add(logout);
 		
 		// add to frame
-		frame.add(menuPanel, BorderLayout.CENTER);
+		menuFrame.add(menuPanel, BorderLayout.CENTER);
 	}
 }
