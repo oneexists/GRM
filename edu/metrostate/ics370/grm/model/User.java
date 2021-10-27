@@ -39,21 +39,24 @@ public class User implements Serializable, Comparable<User> {
 		wishlist = new TreeSet<Game>();
 		hatelist = new TreeSet<Game>();
 	}
-	
+
 	/**
-	 * Convenience constructor, create new user
+	 * Convenience constructor, get user from database
 	 * 
+	 * @param username
 	 * @param firstName
 	 * @param lastName
-	 * @param username
-	 * @param password
+	 * @param dateOfBirth
+	 * @param gender
 	 */
-	public User(String firstName, String lastName, String username, String password) {
+	public User(String username, String firstName, String lastName, LocalDate dateOfBirth, Gender gender) {
+		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.username = username;
-		this.password = password;
+		this.dateOfBirth = dateOfBirth;
+		this.gender = gender;
 	}
+
 	/**
 	 * @param game to add to hatelist of the user
 	 */
@@ -98,6 +101,13 @@ public class User implements Serializable, Comparable<User> {
 	 * @return the last name of the user
 	 */
 	public String getLastName() { return lastName; }
+
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
 
 	/**
 	 * @return the personalTags of the user
@@ -163,19 +173,5 @@ public class User implements Serializable, Comparable<User> {
 	 * @param username the username to set
 	 */
 	public void setUsername(String username) { this.username = username; }
-
-	/**
-	 * Validates username and password of user
-	 * 
-	 * @param user
-	 * @param pass
-	 * @return {@code true} if username and password are valid
-	 */
-	public boolean validate(String user, String pass) {
-		if (this.username == user && this.password == pass) {
-			return true;
-		}
-		return false;
-	}
 
 }
