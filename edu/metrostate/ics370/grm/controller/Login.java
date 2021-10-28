@@ -47,6 +47,18 @@ public abstract class Login {
 		}
 	}
 	
+	/**
+	 * Signs out user and returns true when done
+	 * 
+	 * @return {@code true} when user is null
+	 */
+	public static boolean signOut() {
+		if (user != null) {
+			user = null;
+		}
+		return true;
+	}
+	
 	// creates and sets user from result set
 	private static void parseUser(ResultSet userRS) throws SQLException {
 		String username = null;
