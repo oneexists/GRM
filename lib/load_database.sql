@@ -41,5 +41,38 @@ CREATE TABLE ChoiceTags (
   FOREIGN KEY(tag_id) REFERENCES GameTag(tag_id)
 );
 
+/* add tags */
+INSERT INTO GameTag(tag_name) VALUES
+("survival"), 
+("massively_multiplayer"), 
+("puzzle"), 
+("co_op"), 
+("moba"), 
+("racing"), 
+("rts"), 
+("exploration"), 
+("base_building"), 
+("turn_based"),
+("competitive"), 
+("rpg"), 
+("realistic"), 
+("card_game"), 
+("strategy"), 
+("fighting"), 
+("cartoon"), 
+("sports"), 
+("singleplayer"), 
+("crafting"), 
+("fantasy"), 
+("fps"), 
+("open_world"), 
+("casual"), 
+("relazing"), 
+("battle_royale"),  
+("tactical"), 
+("simulation"),
+("adventure"), 
+("action");
+
 /* add default user */
 INSERT INTO User VALUES ("user", "Gus", "Fring", "p@ssword", curdate(), "Male");
