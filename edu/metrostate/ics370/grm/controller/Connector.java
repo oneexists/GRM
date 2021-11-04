@@ -84,16 +84,4 @@ public class Connector {
   		System.err.println("Error code: " + e.getErrorCode());
   		System.err.println("SQL state: " + e.getSQLState());
   	}
-  	
-  	/**
-  	 * Close connection
-  	 */
-  	public static void close() {
-  		try {
-  			con.close();
-  			con = null;
-  		} catch (Exception e) {
-  			// connection not closed
-  		}
-  	}
 }

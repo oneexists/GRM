@@ -22,6 +22,12 @@ public abstract class Login {
 	}	
 	
 	/**
+	 * Creates new user
+	 */
+	public static void newUser() {
+		
+	}
+	/**
 	 * Validates username and password using database connection
 	 * 
 	 * @param username
@@ -42,8 +48,6 @@ public abstract class Login {
 		} catch (SQLException e) {
 			Connector.processException(e);
 			return false;
-		} finally {
-			Connector.close();
 		}
 	}
 	
