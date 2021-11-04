@@ -24,7 +24,10 @@ public class LoadData {
 	 * Gets games from JSON file
 	 */
 	public static void loadGames() {
-		
+		// GameTag[] tags = Connector.getTags();
+		// for loop: search games
+		// find relevant games
+		// save game in Game[] games
 	}
 
 	/**
