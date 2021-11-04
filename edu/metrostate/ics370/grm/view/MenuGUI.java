@@ -4,7 +4,7 @@
 package edu.metrostate.ics370.grm.view;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -36,7 +36,7 @@ public class MenuGUI extends JPanel {
 	 */
 	public MenuGUI() {
 		menuFrame = new JFrame("Game Recommendation Manager Menu");
-		menuFrame.setSize(350, 200);
+		menuFrame.setSize(350, 350);
 		menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
@@ -49,9 +49,9 @@ public class MenuGUI extends JPanel {
 	}
 	
 	private void buildMenuPanel() {
-		// panel and layout
-		FlowLayout menuLayout = new FlowLayout();
+		// panel
 		menuPanel = new JPanel();
+		GridLayout menuLayout = new GridLayout(0,1);
 		menuPanel.setLayout(menuLayout);
 		
 		// edit profile button
@@ -86,6 +86,6 @@ public class MenuGUI extends JPanel {
 		menuPanel.add(logout);
 		
 		// add to frame
-		menuFrame.add(menuPanel, BorderLayout.CENTER);
+		menuFrame.add(menuPanel, BorderLayout.WEST);
 	}
 }
