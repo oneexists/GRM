@@ -130,6 +130,8 @@ public class LoginGUI implements ActionListener {
 		confirmPasswordText.setBounds(100, 80, 165, 25);
 		newUserPanel.add(confirmPasswordText);
 		
+		// TODO add date of birth field
+		
 		// buttons
 		createUserButton = new JButton("Create User");
 		createUserButton.setBounds(10, 120, 80, 25);
