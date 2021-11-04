@@ -46,7 +46,7 @@ public abstract class LoadData {
 	 * 
 	 * @return GameTag array
 	 */
-	private static GameTag[] getTags() {
+	public static GameTag[] getTags() {
 		// TODO Auto-generated method stub
 		String sql = "SELECT tag_id, tag_name FROM GameTag";
 		try (	Connection con = Connector.getConnection();
@@ -55,7 +55,8 @@ public abstract class LoadData {
 				) {
 			List<GameTag> tags = new ArrayList<>();
 			while (rs.next()) {
-				
+				GameTag tag = new GameTag(rs.getInt("tag_id"), rs.getString("tag_name"));
+				tags.add(tag);
 			}
 			return tags.toArray(new GameTag[tags.size()]);
 		} catch (SQLException e) {
