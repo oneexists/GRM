@@ -21,14 +21,8 @@ public class Connector {
 	private Connector() {
 	}
 
-	/**
-  	 * 	Database sign in, sets static connection
-  	 *
-  	 * @param user
-  	 * @param password
-  	 * @return {@code true} if connection successfully set
-  	 */
-  	public static boolean signIn() {
+	// database sign in
+  	private static boolean signIn() {
   		try {
   			// Properties object
   			Properties dbProps = new Properties();
