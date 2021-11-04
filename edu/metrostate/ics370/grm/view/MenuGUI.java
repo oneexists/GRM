@@ -23,7 +23,7 @@ public class MenuGUI extends JPanel {
 	/**
 	 * Version of the Menu Panel
 	 */
-	private static final long serialVersionUID = 202110001L;
+	private static final long serialVersionUID = 202111002L;
 
 	private JPanel menuPanel;
 	private JFrame menuFrame;
@@ -49,7 +49,6 @@ public class MenuGUI extends JPanel {
 	}
 	
 	private void buildMenuPanel() {
-		// panel
 		menuPanel = new JPanel();
 		GridLayout menuLayout = new GridLayout(0,1);
 		menuPanel.setLayout(menuLayout);
@@ -77,7 +76,6 @@ public class MenuGUI extends JPanel {
 		logout.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO logout user and return to login menu
 				Login.signOut();
 				LoginGUI.openLogin();
 				menuFrame.dispose();
