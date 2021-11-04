@@ -1,9 +1,9 @@
 package edu.metrostate.ics370.grm.controller;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.LocalDate;
 
 import edu.metrostate.ics370.grm.model.User;
@@ -36,10 +36,10 @@ public abstract class Login {
 	 * @throws SQLException
 	 */
 	public static boolean signIn(String username, String password) throws SQLException {
-		String sql = "SELECT username, user_password, user_first_name, user_last_name, user_date_of_birth, gender FROM User WHERE username =\"" + username + "\" AND user_password = \"" + password + "\"";
+		String pSql = "SELECT username, user_password, user_first_name, user_last_name, user_date_of_birth, gender FROM User WHERE username = ? AND user_password = ?";
 		try (	Connection con = Connector.getConnection();
-				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery(sql);
+				PreparedStatement pStmt = con.prepareStatement(pSql);
+				ResultSet rs = executeStmt(pStmt, username, password);
 				) {
 			parseUser(rs);
 			if (user.getUsername() != null) {
@@ -51,6 +51,12 @@ public abstract class Login {
 		}
 	}
 	
+	private static ResultSet executeStmt(PreparedStatement pStmt, String username, String password) throws SQLException {
+		pStmt.setString(1, username);
+		pStmt.setString(2, password);
+		return pStmt.executeQuery();
+	}
+
 	/**
 	 * Signs out user and returns true when done
 	 * 
