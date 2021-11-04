@@ -6,8 +6,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import edu.metrostate.ics370.grm.model.GameTag;
-
 /**
  * @author skylar
  *
@@ -97,13 +95,4 @@ public class Connector {
   		}
   	}
 
-	/**
-	 * Returns all tags used in questionnaire
-	 * 
-	 * @return GameTag array
-	 */
-	public static GameTag[] getTags() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
