@@ -21,7 +21,7 @@ import edu.metrostate.ics370.grm.controller.Login;
  */
 public class LoginGUI implements ActionListener {
 
-	private JFrame frame;
+	private static JFrame frame;
 	private JPanel panel;
 	private JButton loginButton;
 	private JLabel success;
@@ -40,6 +40,13 @@ public class LoginGUI implements ActionListener {
 		frame = new JFrame("Login");
 		frame.setSize(350, 200);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+	}
+	
+	/**
+	 * Sets login frame as visible
+	 */
+	public static void openLogin() {
 		frame.setVisible(true);
 	}
 	
@@ -91,6 +98,7 @@ public class LoginGUI implements ActionListener {
 				menu.initialize();
 				userText.setText("");
 				passwordText.setText("");
+				frame.setVisible(false);
 			} else {
 				// display login error
 				success.setText("Invalid login.");

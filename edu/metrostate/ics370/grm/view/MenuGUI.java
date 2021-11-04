@@ -79,6 +79,7 @@ public class MenuGUI extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO logout user and return to login menu
 				Login.signOut();
+				LoginGUI.openLogin();
 				menuFrame.dispose();
 			}
 		});
