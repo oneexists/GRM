@@ -139,7 +139,10 @@ public class LoginGUI implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO create user
-				Login.newUser();
+				String user = userText.getText();
+				@SuppressWarnings("deprecation")
+				String password = passwordText.getText();
+				Login.newUser(user, password);
 			}	
 		});
 		newUserPanel.add(createUserButton);
@@ -148,7 +151,7 @@ public class LoginGUI implements ActionListener {
 		cancelButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO return to login menu
+				// return to login menu
 				newUserPanel.setVisible(false);
 				loginPanel.setVisible(true);
 			}	

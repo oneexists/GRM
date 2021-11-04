@@ -23,8 +23,28 @@ public abstract class Login {
 	
 	/**
 	 * Creates new user
+	 * @param password 
+	 * @param username 
 	 */
-	public static void newUser() {
+	public static void newUser(String username, String password) {
+		String pSql = "INSERT INTO User(username, user_password) VALUES (?, ?)";
+		try (	Connection con = Connector.getConnection();
+				PreparedStatement pStmt = con.prepareStatement(pSql);
+				) {
+			pStmt.setString(1, username);
+			pStmt.setString(2, password);
+			int added = pStmt.executeUpdate();
+			// TODO redirect to login menu
+			if (added == 1) {
+				// user added
+				// return to login and set success to indicate user was added
+			} else {
+				// user not added
+				// return to new user and set error message
+			}
+		} catch (SQLException e) {
+			Connector.processException(e);
+		}
 		
 	}
 	/**
