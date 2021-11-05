@@ -34,7 +34,7 @@ public abstract class LoadData {
 	 */
 	public static void loadGames() {
 		// get tags from database 
-		GameTag[] tags = getTags();			// (realized once I started writing this that this class will be the one that uses this method -Sky)
+		GameTag[] tags = getTags();
 		System.out.println(tags);
 		// for each (jsonGame)	{ 
 		// 	if (jsonGame has a tag in tags)		{ games.add(jsonGame) }
@@ -47,7 +47,6 @@ public abstract class LoadData {
 	 * @return GameTag array
 	 */
 	public static GameTag[] getTags() {
-		// TODO Auto-generated method stub
 		String sql = "SELECT tag_id, tag_name FROM GameTag";
 		try (	Connection con = Connector.getConnection();
 				Statement stmt = con.createStatement();
