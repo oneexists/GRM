@@ -7,8 +7,10 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 /**
- * @author skylar
+ *	Connects to database defined in properties file located under .settings/Settings.properties </br>
+ *	Processes SQLException handling for database exceptions
  *
+ * @author skylar
  */
 public class Connector {
 	
@@ -20,9 +22,13 @@ public class Connector {
 	 */
 	private Connector() {
 	}
-
-	// database sign in
-  	private static boolean signIn() {
+  	
+  	/**
+  	 * Sets connection to database
+  	 * 
+  	 * @return database connection
+  	 */
+  	public Connection getConnection() {
   		try {
   			// Properties object
   			Properties dbProps = new Properties();
@@ -37,21 +43,8 @@ public class Connector {
   			String dbUserName = dbProps.getProperty("db.username");
   			String dbPassword = dbProps.getProperty("db.password");
   			con = DriverManager.getConnection(dbConnUrl, dbUserName, dbPassword);
-  			return true;
   		} catch (Exception ex) { 
   			System.err.println(ex);
-  			return false;
-  		}
-  	}
-  	
-  	/**
-  	 * Sets connection if {@code null} and returns the connection
-  	 * 
-  	 * @return connection
-  	 */
-  	public static Connection getConnection() {
-  		if (con == null) {
-  			signIn();
   		}
   		return con;
   	}
@@ -66,6 +59,18 @@ public class Connector {
   			instance = new Connector();
   		}
   		return instance;
+  	}
+  	
+  	/**
+  	 * Closes the database connection
+  	 */
+  	public void close() {
+  		try {
+  			con.close();
+  			con = null;
+  		} catch (SQLException e) {
+  			System.err.println(e);
+  		}
   	}
   	
   	/**

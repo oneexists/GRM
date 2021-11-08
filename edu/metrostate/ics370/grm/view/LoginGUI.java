@@ -20,6 +20,11 @@ import edu.metrostate.ics370.grm.controller.Login;
  *
  */
 public class LoginGUI implements ActionListener {
+	// login messages
+	private final String INVALID_LOGIN = "Username or password is incorrect.";
+	private final String INVALID_NEW_USER = "Could not create new user.";
+	private final String INVALID_NEW_PASSWORD = "Passwords do not match.";
+	private final String VALID_NEW_USER	= "New user created. Please sign in.";
 
 	private static JFrame frame;
 	private JPanel loginPanel;
@@ -138,11 +143,28 @@ public class LoginGUI implements ActionListener {
 		createUserButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO create user
+				// create user
+				boolean newUser;
 				String user = userText.getText();
 				@SuppressWarnings("deprecation")
 				String password = passwordText.getText();
-				Login.newUser(user, password);
+				@SuppressWarnings("deprecation")
+				String confirmPassword = confirmPasswordText.getText();
+				// matching password
+				if (password.equals(confirmPassword)) {
+					newUser = Login.newUser(user, password);	
+					if (newUser != true) {
+						success.setText(INVALID_NEW_USER);
+					} else {
+						success.setText(VALID_NEW_USER);
+					}
+				} else {
+					// passwords do not match
+					success.setText(INVALID_NEW_PASSWORD);
+				}
+				// return to login
+				newUserPanel.setVisible(false);
+				loginPanel.setVisible(true);
 			}	
 		});
 		newUserPanel.add(createUserButton);
@@ -181,7 +203,7 @@ public class LoginGUI implements ActionListener {
 				frame.setVisible(false);
 			} else {
 				// display login error
-				success.setText("Invalid login.");
+				success.setText(INVALID_LOGIN);
 			}
 		} catch (SQLException err) {
 			Connector.processException(err);
