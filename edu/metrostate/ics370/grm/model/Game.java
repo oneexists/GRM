@@ -3,37 +3,26 @@
  */
 package edu.metrostate.ics370.grm.model;
 
-import java.io.Serializable;
-
 /**
  * @author skylar
- *
  */
-public class Game implements Serializable{
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 202110001L;
+public class Game {
 	
-	private int id;
+	private int appId;
 	private String name;
 	private GameTag[] tags;
-
-	/**
-	 * No-arg constructor
-	 */
-	public Game() {
-	}
 	
 	/**
 	 * Initializes the Game
 	 * 
-	 * @param id
-	 * @param name
-	 * @param tags
+	 * @param appId id of the game
+	 * @param name name of the game
+	 * @param tags tags of the game
 	 */
-	public Game(int id, String name, GameTag[] tags) {
+	public Game(int appId, String name, GameTag[] tags) {
+		this.appId = appId;
+		this.name = name;
+		this.tags = tags;
 		
 	}
 
@@ -41,7 +30,7 @@ public class Game implements Serializable{
 	 * @return the id
 	 */
 	public int getId() {
-		return id;
+		return appId;
 	}
 
 	/**

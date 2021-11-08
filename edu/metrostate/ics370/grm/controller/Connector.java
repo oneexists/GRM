@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 /**
- *	Connects to database defined in properties file located under .settings/Settings.properties </br>
+ *	Connects to database defined in properties file located under .settings/Settings.properties 
  *	Processes SQLException handling for database exceptions
  *
  * @author skylar
@@ -16,13 +16,38 @@ public class Connector {
 	
 	private static Connector instance = null;
 	private static Connection con = null;
-
+	
 	/**
 	 * Singleton no-arg constructor
 	 */
 	private Connector() {
 	}
-  	
+
+	/**
+	 * Closes the database connection
+	 */
+	public void close() {
+		try {
+			con.close();
+			con = null;
+		} catch (SQLException e) {
+			System.err.println(e);
+		}
+	}
+	
+	
+	/**
+  	 * Returns Singleton instance, creates instance if {@code null}
+  	 * 
+  	 * @return Connector instance
+  	 */
+  	public static Connector getInstance() {
+  		if (instance == null) {
+  			instance = new Connector();
+  		}
+  		return instance;
+  	}
+
   	/**
   	 * Sets connection to database
   	 * 
@@ -50,33 +75,9 @@ public class Connector {
   	}
   	
   	/**
-  	 * Returns Singleton instance, creates instance if {@code null}
-  	 * 
-  	 * @return Connector instance
-  	 */
-  	public static Connector getInstance() {
-  		if (instance == null) {
-  			instance = new Connector();
-  		}
-  		return instance;
-  	}
-  	
-  	/**
-  	 * Closes the database connection
-  	 */
-  	public void close() {
-  		try {
-  			con.close();
-  			con = null;
-  		} catch (SQLException e) {
-  			System.err.println(e);
-  		}
-  	}
-  	
-  	/**
   	 * Database exception handling
   	 * 
-  	 * @param e
+  	 * @param e exception from database
   	 */
   	public static void processException(SQLException e) {
   		System.err.println("Error message: " + e.getMessage());

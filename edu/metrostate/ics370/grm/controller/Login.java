@@ -8,8 +8,10 @@ import java.time.LocalDate;
 import edu.metrostate.ics370.grm.model.User;
 
 /**
+ * Controller class provides new user functionality, signs into and out of the database.
+ * DAO for User class
+ * 
  * @author skylar
- *
  */
 public abstract class Login {
 
@@ -22,8 +24,10 @@ public abstract class Login {
 	
 	/**
 	 * Creates new user
-	 * @param password 
-	 * @param username 
+	 * 
+	 * @param password password of the new user
+	 * @param username username of the new user
+	 * @return {@code true} if the user was added to the database
 	 */
 	public static boolean newUser(String username, String password) {
 		boolean validCredentials = validateUser(username, password);
@@ -51,6 +55,8 @@ public abstract class Login {
 		}
 		
 	}
+	
+	// validates newUser credentials
 	private static boolean validateUser(String username, String password) {
 		// TODO validate username and password
 		return true;
@@ -59,10 +65,10 @@ public abstract class Login {
 	/**
 	 * Validates username and password using database connection
 	 * 
-	 * @param username
-	 * @param password
+	 * @param username username to search
+	 * @param password password to search
 	 * @return {@code true} iff valid username and password
-	 * @throws SQLException
+	 * @throws SQLException exception from the database
 	 */
 	public static boolean signIn(String username, String password) throws SQLException {
 		String pSql = "SELECT username, user_password, user_first_name, user_last_name, user_date_of_birth, gender FROM User WHERE username = ? AND user_password = ?";
@@ -79,6 +85,7 @@ public abstract class Login {
 		}
 	}
 	
+	// sets parameters in PreparedStatement and executes query
 	private static ResultSet executeStmt(PreparedStatement pStmt, String username, String password) throws SQLException {
 		pStmt.setString(1, username);
 		pStmt.setString(2, password);
