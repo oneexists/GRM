@@ -24,7 +24,6 @@ public class Game implements Serializable{
 	 * No-arg constructor
 	 */
 	public Game() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	/**

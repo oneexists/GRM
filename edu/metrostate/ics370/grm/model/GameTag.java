@@ -23,7 +23,6 @@ public class GameTag implements Serializable {
 	 * No-arg constructor
 	 */
 	public GameTag() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	/**

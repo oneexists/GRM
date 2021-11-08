@@ -40,7 +40,6 @@ public class Question {
 	 * No-arg constructor
 	 */
 	public Question() {
-		// TODO Auto-generated constructor stub
 	}
 
 }
