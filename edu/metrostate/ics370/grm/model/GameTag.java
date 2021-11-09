@@ -8,11 +8,10 @@ import java.io.Serializable;
 /**
  * @author skylar
  * @author christian
- *
  */
 public class GameTag implements Serializable {
 	/**
-	 * 
+	 * Version of the bean
 	 */
 	private static final long serialVersionUID = 202110001L;
 	
@@ -23,14 +22,13 @@ public class GameTag implements Serializable {
 	 * No-arg constructor
 	 */
 	public GameTag() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	/**
 	 * Initializes the GameTag
 	 * 
-	 * @param id
-	 * @param name
+	 * @param id id of the GameTag
+	 * @param name name of the GameTag
 	 */
 	public GameTag(int id, String name) {
 		this.id = id;

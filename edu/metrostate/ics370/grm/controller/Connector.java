@@ -7,14 +7,16 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 /**
- * @author skylar
+ *	Connects to database defined in properties file located under .settings/Settings.properties 
+ *	Processes SQLException handling for database exceptions
  *
+ * @author skylar
  */
 public class Connector {
 	
 	private static Connector instance = null;
 	private static Connection con = null;
-
+	
 	/**
 	 * Singleton no-arg constructor
 	 */
@@ -22,11 +24,36 @@ public class Connector {
 	}
 
 	/**
-  	 * 	Database sign in, sets static connection
-  	 *
-  	 * @return {@code true} if connection successfully set
+	 * Closes the database connection
+	 */
+	public void close() {
+		try {
+			con.close();
+			con = null;
+		} catch (SQLException e) {
+			System.err.println(e);
+		}
+	}
+	
+	
+	/**
+  	 * Returns Singleton instance, creates instance if {@code null}
+  	 * 
+  	 * @return Connector instance
   	 */
-  	public static boolean signIn() {
+  	public static Connector getInstance() {
+  		if (instance == null) {
+  			instance = new Connector();
+  		}
+  		return instance;
+  	}
+
+  	/**
+  	 * Sets connection to database
+  	 * 
+  	 * @return database connection
+  	 */
+  	public Connection getConnection() {
   		try {
   			// Properties object
   			Properties dbProps = new Properties();
@@ -41,58 +68,20 @@ public class Connector {
   			String dbUserName = dbProps.getProperty("db.username");
   			String dbPassword = dbProps.getProperty("db.password");
   			con = DriverManager.getConnection(dbConnUrl, dbUserName, dbPassword);
-  			return true;
   		} catch (Exception ex) { 
   			System.err.println(ex);
-  			return false;
-  		}
-  	}
-  	
-  	/**
-  	 * Sets connection if {@code null} and returns the connection
-  	 * 
-  	 * @return connection
-  	 */
-  	public static Connection getConnection() {
-  		if (con == null) {
-  			signIn();
   		}
   		return con;
   	}
   	
   	/**
-  	 * Returns Singleton instance, creates instance if {@code null}
-  	 * 
-  	 * @return Connector instance
-  	 */
-  	public static Connector getInstance() {
-  		if (instance == null) {
-  			instance = new Connector();
-  		}
-  		return instance;
-  	}
-  	
-  	/**
   	 * Database exception handling
   	 * 
-  	 * @param e
+  	 * @param e exception from database
   	 */
   	public static void processException(SQLException e) {
   		System.err.println("Error message: " + e.getMessage());
   		System.err.println("Error code: " + e.getErrorCode());
   		System.err.println("SQL state: " + e.getSQLState());
   	}
-  	
-  	/**
-  	 * Close connection
-  	 */
-  	public static void close() {
-  		try {
-  			con.close();
-  			con = null;
-  		} catch (Exception e) {
-  			// connection not closed
-  		}
-  	}
-
 }
