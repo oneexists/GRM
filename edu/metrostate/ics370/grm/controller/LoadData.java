@@ -3,7 +3,6 @@
  */
 package edu.metrostate.ics370.grm.controller;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -48,8 +47,7 @@ public abstract class LoadData {
 	 */
 	public static GameTag[] getTags() {
 		String sql = "SELECT tag_id, tag_name FROM GameTag";
-		try (	Connection con = Connector.getConnection();
-				Statement stmt = con.createStatement();
+		try (	Statement stmt = Connector.getInstance().getConnection().createStatement();
 				ResultSet rs = stmt.executeQuery(sql);
 				) {
 			List<GameTag> tags = new ArrayList<>();
