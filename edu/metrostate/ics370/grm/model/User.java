@@ -8,7 +8,6 @@ import java.util.TreeSet;
 
 /**
  * @author skylar
- *
  */
 public class User implements Serializable, Comparable<User> {
 	public enum Gender {
@@ -18,13 +17,12 @@ public class User implements Serializable, Comparable<User> {
 	/**
 	 * Version of the bean
 	 */
-	private static final long serialVersionUID = 202110002L;
+	private static final long serialVersionUID = 202111002L;
 	private static final Comparator<User> USER_COMPARATOR = Comparator.comparing(User::getUsername);
 	
 	private String firstName;
 	private String lastName;
 	private String username;
-	private String password;
 	private LocalDate dateOfBirth;
 	private Gender gender;
 	private Collection<GameTag> personalTags;
@@ -43,11 +41,11 @@ public class User implements Serializable, Comparable<User> {
 	/**
 	 * Convenience constructor, get user from database
 	 * 
-	 * @param username
-	 * @param firstName
-	 * @param lastName
-	 * @param dateOfBirth
-	 * @param gender
+	 * @param username the username of the user
+	 * @param firstName the first name of the user
+	 * @param lastName the last name of the user
+	 * @param dateOfBirth the date of birth of the user
+	 * @param gender the gender of the user
 	 */
 	public User(String username, String firstName, String lastName, LocalDate dateOfBirth, Gender gender) {
 		this.username = username;
@@ -103,16 +101,10 @@ public class User implements Serializable, Comparable<User> {
 	public String getLastName() { return lastName; }
 
 	/**
-	 * @return the password
-	 */
-	public String getPassword() {
-		return password;
-	}
-
-	/**
 	 * @return the personalTags of the user
 	 */
 	public GameTag[] getPersonalTags() { return personalTags.toArray(new GameTag[personalTags.size()]); }
+
 	/**
 	 * @return the username of the user
 	 */
@@ -143,35 +135,5 @@ public class User implements Serializable, Comparable<User> {
 	public void removeWishlist(Game game) {
 		// TODO remove game from wishlist
 	}
-
-	/**
-	 * @param dateOfBirth the dateOfBirth to set
-	 */
-	public void setDateOfBirth(LocalDate dateOfBirth) { this.dateOfBirth = dateOfBirth; }
-
-	/**
-	 * @param firstName the first name to set
-	 */
-	public void setFirstName(String firstName) { this.firstName = firstName; }
-
-	/**
-	 * @param gender the gender to set
-	 */
-	public void setGender(Gender gender) { this.gender = gender; }
-
-	/**
-	 * @param lastName the last name to set
-	 */
-	public void setLastName(String lastName) { this.lastName = lastName; }
-
-	/**
-	 * @param password the password to set
-	 */
-	public void setPassword(String password) { this.password = password; }
-	
-	/**
-	 * @param username the username to set
-	 */
-	public void setUsername(String username) { this.username = username; }
 
 }
