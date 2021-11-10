@@ -16,8 +16,10 @@ import edu.metrostate.ics370.grm.controller.Connector;
 import edu.metrostate.ics370.grm.controller.Login;
 
 /**
+ * Login panel: userLabel, userText, passwordLabel, passwordText, loginButton, newUserButton, cancelButton, success
+ * newUserPanel: userLabel, userText, passwordLabel, passwordText, confirmPasswordLabel, confirmPasswordText
+ * 
  * @author skylar
- *
  */
 public class LoginGUI implements ActionListener {
 	// login messages
@@ -41,6 +43,8 @@ public class LoginGUI implements ActionListener {
 	private JPasswordField passwordText;
 	private JLabel confirmPasswordLabel;
 	private JPasswordField confirmPasswordText;
+	private JLabel dateOfBirthLabel;
+	private JTextField dateOfBirthText;
 	
 	/**
 	 * No-arg constructor
@@ -49,7 +53,7 @@ public class LoginGUI implements ActionListener {
 	 */
 	public LoginGUI() {
 		frame = new JFrame("Login");
-		frame.setSize(350, 200);
+		frame.setSize(500, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
@@ -114,32 +118,37 @@ public class LoginGUI implements ActionListener {
 		newUserPanel = new JPanel();
 		// user labels and text
 		userLabel = new JLabel("User");
-		userLabel.setBounds(10, 20, 140, 25);
+		userLabel.setBounds(10, 20, 220, 25);
 		newUserPanel.add(userLabel);
 		userText = new JTextField();
-		userText.setBounds(160, 20, 165, 25);
+		userText.setBounds(220, 20, 165, 25);
 		newUserPanel.add(userText);
 		// password label and text
 		passwordLabel = new JLabel("Password");
-		passwordLabel.setBounds(10, 50, 140, 25);
+		passwordLabel.setBounds(10, 50, 220, 25);
 		newUserPanel.add(passwordLabel);
 		passwordText = new JPasswordField();
-		passwordText.setBounds(160, 50, 165, 25);
+		passwordText.setBounds(220, 50, 165, 25);
 		passwordText.addActionListener(this);
 		newUserPanel.add(passwordText);
 		// confirm password label and text
 		confirmPasswordLabel = new JLabel("Confirm Password");
-		confirmPasswordLabel.setBounds(10, 80, 140, 25);
+		confirmPasswordLabel.setBounds(10, 80, 220, 25);
 		newUserPanel.add(confirmPasswordLabel);
 		confirmPasswordText = new JPasswordField();
-		confirmPasswordText.setBounds(160, 80, 165, 25);
+		confirmPasswordText.setBounds(220, 80, 165, 25);
 		newUserPanel.add(confirmPasswordText);
-		
-		// TODO add date of birth field
+		// date of birth
+		dateOfBirthLabel = new JLabel("Date of birth (mm/dd/yyyy):");
+		dateOfBirthLabel.setBounds(10, 110, 220, 25);
+		newUserPanel.add(dateOfBirthLabel);
+		dateOfBirthText = new JTextField();
+		dateOfBirthText.setBounds(220, 110, 165, 25);
+		newUserPanel.add(dateOfBirthText);
 		
 		// buttons
 		createUserButton = new JButton("Create User");
-		createUserButton.setBounds(10, 120, 130, 25);
+		createUserButton.setBounds(10, 140, 130, 25);
 		createUserButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -150,9 +159,10 @@ public class LoginGUI implements ActionListener {
 				String password = passwordText.getText();
 				@SuppressWarnings("deprecation")
 				String confirmPassword = confirmPasswordText.getText();
+				String dob = dateOfBirthText.getText();
 				// matching password
 				if (password.equals(confirmPassword)) {
-					newUser = Login.newUser(user, password);	
+					newUser = Login.newUser(user, password, dob);	
 					if (newUser != true) {
 						success.setText(INVALID_NEW_USER);
 					} else {
@@ -169,7 +179,7 @@ public class LoginGUI implements ActionListener {
 		});
 		newUserPanel.add(createUserButton);
 		cancelButton = new JButton("Cancel");
-		cancelButton.setBounds(160, 120, 100, 25);
+		cancelButton.setBounds(160, 140, 100, 25);
 		cancelButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
