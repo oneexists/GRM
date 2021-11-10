@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import edu.metrostate.ics370.grm.controller.Login;
 
@@ -25,11 +26,16 @@ public class MenuGUI extends JPanel {
 	 */
 	private static final long serialVersionUID = 202111002L;
 
-	private JPanel menuPanel;
 	private JFrame menuFrame;
+	private JPanel menuPanel;
+	private JPanel profilePanel;
 	private JButton editProfile;
 	private JButton takeQuiz;
 	private JButton logout;
+	private JTextField username;
+	private JTextField firstName;
+	private JTextField dateOfBirth;
+	private JTextField gender;
 	
 	/**
 	 * No-arg constructor
@@ -45,6 +51,7 @@ public class MenuGUI extends JPanel {
 	 */
 	public void initialize() {
 		buildMenuPanel();
+		buildProfilePanel();
 		menuFrame.setVisible(true);
 	}
 	
@@ -85,5 +92,23 @@ public class MenuGUI extends JPanel {
 		
 		// add to frame
 		menuFrame.add(menuPanel, BorderLayout.WEST);
+	}
+	
+	private void buildProfilePanel() {
+		profilePanel = new JPanel();
+		GridLayout profileLayout = new GridLayout(0,1);
+		profilePanel.setLayout(profileLayout);
+		
+		username = new JTextField(Login.user.getUsername());
+		firstName = new JTextField(Login.user.getFirstName());
+		dateOfBirth = new JTextField(Login.user.getDateOfBirth().toString());
+		gender = new JTextField(Login.user.getGender().toString());
+		
+		profilePanel.add(username);
+		profilePanel.add(firstName);
+		profilePanel.add(dateOfBirth);
+		profilePanel.add(gender);
+		
+		menuFrame.add(profilePanel);
 	}
 }
