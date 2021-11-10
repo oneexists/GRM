@@ -16,10 +16,13 @@ import javax.swing.JTextField;
 import edu.metrostate.ics370.grm.controller.Login;
 
 /**
+ * Menu panel: edit profile, take quiz, logout
+ * Profile panel: username, firstName, dateOfBirth, gender
+ * 
  * @author skylar
  *
  */
-public class MenuGUI extends JPanel {
+public class MenuGUI extends JFrame {
 
 	/**
 	 * Version of the Menu Panel
@@ -98,17 +101,22 @@ public class MenuGUI extends JPanel {
 		profilePanel = new JPanel();
 		GridLayout profileLayout = new GridLayout(0,1);
 		profilePanel.setLayout(profileLayout);
-		
+		// username
 		username = new JTextField(Login.user.getUsername());
-		firstName = new JTextField(Login.user.getFirstName());
-		dateOfBirth = new JTextField(Login.user.getDateOfBirth().toString());
-		gender = new JTextField(Login.user.getGender().toString());
-		
 		profilePanel.add(username);
+		// first name
+		firstName = new JTextField(Login.user.getFirstName());
 		profilePanel.add(firstName);
+		// date of birth
+		dateOfBirth = new JTextField(Login.user.getDateOfBirth().toString());
 		profilePanel.add(dateOfBirth);
-		profilePanel.add(gender);
+		// gender
+		if (Login.user.getGender() != null) {
+			gender = new JTextField(Login.user.getGender().toString());			
+			profilePanel.add(gender);
+		}
 		
+		// add to frame
 		menuFrame.add(profilePanel);
 	}
 }
