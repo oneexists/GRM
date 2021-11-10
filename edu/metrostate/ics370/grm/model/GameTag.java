@@ -9,7 +9,8 @@ import java.io.Serializable;
  * @author skylar
  *
  */
-public class GameTag implements Serializable {
+public class GameTag implements Serializable
+{
 	/**
 	 * 
 	 */
@@ -17,11 +18,14 @@ public class GameTag implements Serializable {
 	
 	private int id;
 	private String name;
+    private int val;
 
-	/**
+    
+    /**
 	 * No-arg constructor
 	 */
-	public GameTag() {
+	public GameTag()
+	{
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -31,7 +35,8 @@ public class GameTag implements Serializable {
 	 * @param id
 	 * @param name
 	 */
-	public GameTag(int id, String name) {
+	public GameTag(int id, String name)
+	{
 		this.id = id;
 		this.name = name;
 	}
@@ -39,14 +44,41 @@ public class GameTag implements Serializable {
 	/**
 	 * @return the id
 	 */
-	public int getId() {
+	public int getId()
+	{
 		return id;
 	}
 	
 	/**
 	 * @return the name
 	 */
-	public String getName() {
+	public String getName()
+	{
 		return name;
+	}
+
+	
+	public void setTag(String string)
+	{
+		// TODO Auto-generated method stub
+		name = string;
+	}
+	
+
+	public String getTag()
+	{
+		return name;
+	}
+
+	
+	public int getVal()
+	{
+		return val;
+	}
+
+	
+	public void setVal(int val)
+	{
+		this.val = val;
 	}
 }

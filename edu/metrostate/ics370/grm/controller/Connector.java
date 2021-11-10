@@ -33,7 +33,7 @@ public class Connector {
   			// Properties object
   			Properties dbProps = new Properties();
   			// Path object
-  			String propPath = ".settings/Settings.properties";
+  			String propPath = "C:\\Users\\chris\\GRM_Clone\\.settings\\Settings.txt";
   			// File reader
   			FileReader fReader = new FileReader(propPath);
   			// Load properties from file

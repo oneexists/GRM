@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import edu.metrostate.ics370.grm.controller.Login;
+import edu.metrostate.ics370.grm.questionaire.RecommendationManager;
 
 /**
  * @author skylar
@@ -67,8 +68,19 @@ public class MenuGUI extends JPanel {
 		takeQuiz = new JButton("Take Quiz");
 		takeQuiz.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e)
+			{
 				// TODO implement take quiz frame
+				RecommendationManager rms;
+				try
+				{
+					rms = new RecommendationManager();
+				}
+				catch (Exception e1)
+				{
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		menuPanel.add(takeQuiz);
