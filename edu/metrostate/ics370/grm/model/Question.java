@@ -1,6 +1,3 @@
-/**
- * 
- */
 package edu.metrostate.ics370.grm.model;
 
 /**

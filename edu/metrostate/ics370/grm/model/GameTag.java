@@ -9,7 +9,8 @@ import java.io.Serializable;
  * @author skylar
  * @author christian
  */
-public class GameTag implements Serializable {
+public class GameTag implements Serializable
+{
 	/**
 	 * Version of the bean
 	 */
@@ -17,8 +18,10 @@ public class GameTag implements Serializable {
 	
 	private int id;
 	private String name;
+    private int val;
 
-	/**
+    
+    /**
 	 * No-arg constructor
 	 */
 	public GameTag() {
@@ -45,7 +48,19 @@ public class GameTag implements Serializable {
 	/**
 	 * @return the name
 	 */
-	public String getName() {
+	public String getName()
+	{
 		return name;
+	}
+	
+	public int getVal()
+	{
+		return val;
+	}
+
+	
+	public void setVal(int val)
+	{
+		this.val = val;
 	}
 }

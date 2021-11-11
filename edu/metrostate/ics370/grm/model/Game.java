@@ -23,7 +23,6 @@ public class Game {
 		this.appId = appId;
 		this.name = name;
 		this.tags = tags;
-		
 	}
 
 	/**
@@ -36,14 +35,16 @@ public class Game {
 	/**
 	 * @return the name
 	 */
-	public String getName() {
+	public String getName()
+	{
 		return name;
 	}
-
+	
 	/**
 	 * @return the tags
 	 */
-	public GameTag[] getTags() {
+	public GameTag[] getTags()
+	{
 		return tags;
 	}
 }
