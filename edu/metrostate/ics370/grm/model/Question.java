@@ -1,4 +1,4 @@
-package edu.metrostate.ics370.grm.questionaire;
+package edu.metrostate.ics370.grm.model;
 
 
 public class Question

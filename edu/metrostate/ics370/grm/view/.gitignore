@@ -1,4 +1,3 @@
-/ApiManager.class
 /GuiChoice.class
 /GuiManager$1.class
 /GuiManager$10.class
@@ -21,13 +20,7 @@
 /GuiManager.class
 /GuiResult.class
 /GuiWishlist.class
-/ProfileManager.class
-/Question.class
-/RecommendationManager.class
-/SubGame.class
-/SubQuestion.class
-/SubTag.class
-/tempLoader.class
-/GameLoader.class
-/InterfaceSqlLoad.class
-/InterfaceSqlSave.class
+/MenuGUI$1.class
+/MenuGUI$2.class
+/MenuGUI$3.class
+/MenuGUI.class

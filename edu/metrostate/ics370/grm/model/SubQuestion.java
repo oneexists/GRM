@@ -1,6 +1,4 @@
-package edu.metrostate.ics370.grm.questionaire;
-import edu.metrostate.ics370.grm.model.GameTag;
-
+package edu.metrostate.ics370.grm.model;
 
 public class SubQuestion
 {

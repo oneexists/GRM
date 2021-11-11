@@ -1,4 +1,4 @@
-package edu.metrostate.ics370.grm.questionaire;
+package edu.metrostate.ics370.grm.controller;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;

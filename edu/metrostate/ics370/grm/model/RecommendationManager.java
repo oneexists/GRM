@@ -1,6 +1,10 @@
-package edu.metrostate.ics370.grm.questionaire;
-import edu.metrostate.ics370.grm.model.Game;
-import edu.metrostate.ics370.grm.model.GameTag;
+package edu.metrostate.ics370.grm.model;
+import edu.metrostate.ics370.grm.controller.GameLoader;
+import edu.metrostate.ics370.grm.controller.InterfaceSqlLoad;
+import edu.metrostate.ics370.grm.controller.InterfaceSqlSave;
+import edu.metrostate.ics370.grm.view.GuiChoice;
+import edu.metrostate.ics370.grm.view.GuiManager;
+import edu.metrostate.ics370.grm.view.GuiResult;
 
 
 public class RecommendationManager

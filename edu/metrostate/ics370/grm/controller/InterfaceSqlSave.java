@@ -1,4 +1,4 @@
-package edu.metrostate.ics370.grm.questionaire;
+package edu.metrostate.ics370.grm.controller;
 import edu.metrostate.ics370.grm.model.Game;
 import edu.metrostate.ics370.grm.model.GameTag;
 
