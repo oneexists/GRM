@@ -443,7 +443,7 @@ public class GuiManager
 	   for (int i = 0; i < getDbBtnGames().length; i++)
 		   getDbBtnGames()[i].setVisible(false);
 	   
-	   btnWishlist.setText("Questions");
+	   //btnWishlist.setText("Questions");
    	
 
 	   //**Disable all buttons first**//
@@ -538,7 +538,7 @@ public class GuiManager
 	   for (int i = 0; i < getDbBtnGames().length; i++)
 		   getDbBtnGames()[i].setVisible(true);
 	   
-	   btnWishlist.setText("Wishlist");
+	   //btnWishlist.setText("Wishlist");
    	
    	
 	   int count = dbBtnGamesWishlist.length;
