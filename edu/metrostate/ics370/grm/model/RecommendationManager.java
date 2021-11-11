@@ -45,7 +45,6 @@ public class RecommendationManager
     	gm = new GuiManager(this);
 
     	//This will be replaced when the Sql loader is setup//
-    	initializeQuestions(); //Makes the database of questions//
 		setQuestion(); //Sets the first question//
     }
     
@@ -72,50 +71,6 @@ public class RecommendationManager
             numTagsUsed++;
             //dbTags.add(ntag);
         }
-    }
-    
-    
-    public void initializeQuestions()
-    {
-    	//**Question 0**//
-    	dbQuestions[0] = new Question("What is most important to you?", "Being part of a team", "Spending time with friends online", "Doing something special");
-    	dbQuestions[0].getDbChoices()[0].getDbTags()[0].setTag("team");
-    	dbQuestions[0].getDbChoices()[1].getDbTags()[0].setTag("online multiplayer");
-    	dbQuestions[0].getDbChoices()[2].getDbTags()[0].setTag("story");
-    	dbQuestions[0].getDbChoices()[2].getDbTags()[1].setTag("engaging");
-
-    	//**Question 1**//
-    	dbQuestions[1] = new Question("Would you rather?", "Save the day", "Relax", "Tactically control things");
-    	dbQuestions[1].getDbChoices()[0].getDbTags()[0].setTag("hero");
-    	dbQuestions[1].getDbChoices()[1].getDbTags()[0].setTag("relax");
-    	dbQuestions[1].getDbChoices()[2].getDbTags()[0].setTag("tactical");
-    	dbQuestions[1].getDbChoices()[2].getDbTags()[1].setTag("rts");
-
-    	//**Question 2**//
-    	dbQuestions[2] = new Question("I like", "Fast frantic fun where my reflexes can shine", "Casual no pressure experiences", "Letting my creativity shine");
-    	dbQuestions[2].getDbChoices()[0].getDbTags()[0].setTag("fast");
-    	dbQuestions[2].getDbChoices()[1].getDbTags()[0].setTag("frantic");
-    	dbQuestions[2].getDbChoices()[2].getDbTags()[0].setTag("reflex");
-    	dbQuestions[2].getDbChoices()[1].getDbTags()[0].setTag("casual");
-    	dbQuestions[2].getDbChoices()[2].getDbTags()[0].setTag("creative");
-
-    	//**Question 3**//
-    	dbQuestions[3] = new Question("I usually prefer", "Bright fun, cartoon lands to explore", "Dark, smelly dungeons", "Realistic cities and locations");
-    	dbQuestions[3].getDbChoices()[0].getDbTags()[0].setTag("cartoon");
-    	dbQuestions[3].getDbChoices()[0].getDbTags()[1].setTag("bright");
-    	dbQuestions[3].getDbChoices()[0].getDbTags()[2].setTag("happy");
-    	dbQuestions[3].getDbChoices()[1].getDbTags()[0].setTag("dark");
-    	dbQuestions[3].getDbChoices()[1].getDbTags()[1].setTag("dungeon");
-    	dbQuestions[3].getDbChoices()[2].getDbTags()[0].setTag("realistic");
-
-    	//**Question 4**//
-    	dbQuestions[4] = new Question("I feel most safe and happy when", "I am playing a game by myself", "I am next to friends on a couch", "I am playing with people online");
-    	dbQuestions[4].getDbChoices()[0].getDbTags()[0].setTag("solo");
-    	dbQuestions[4].getDbChoices()[0].getDbTags()[1].setTag("single player");
-    	dbQuestions[4].getDbChoices()[1].getDbTags()[0].setTag("local multiplayer");
-    	dbQuestions[4].getDbChoices()[2].getDbTags()[0].setTag("online multiplayer");
-    	
-    	this.totalQuestions = 5;
     }
     
 
