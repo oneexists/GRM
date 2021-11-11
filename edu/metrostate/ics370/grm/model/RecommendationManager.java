@@ -243,12 +243,14 @@ public class RecommendationManager
     }
     
     
-    
+
+    /*
     public boolean contains()
     {
     	
     	return false;
     }
+    */
 
 
     public void setQuestion()
