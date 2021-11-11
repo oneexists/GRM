@@ -6,13 +6,9 @@ import edu.metrostate.ics370.grm.model.QuestionChoice;
 import edu.metrostate.ics370.grm.model.RecommendationManager;
 
 
-public class InterfaceSqlLoad
+public abstract class InterfaceSqlLoad
 {
 	
-	public Question getQuestion() {
-		// TODO get question from database
-		return new Question("question", new QuestionChoice[3]);
-	}
 	//Can take all the database of games and put them in the SQL if desired//
 	public void loadFromSql(RecommendationManager rms)
 	{
@@ -26,5 +22,9 @@ public class InterfaceSqlLoad
 		rms.setDbTags(dbTags);
 		rms.setDbGamesWishlist(dbGamesWishlist);
 		rms.setDbGamesHatelist(dbGamesHatelist);
+	}
+	public static Question getQuestions() {
+		// TODO get question from database
+		return new Question("question", new QuestionChoice[3]);
 	}
 }

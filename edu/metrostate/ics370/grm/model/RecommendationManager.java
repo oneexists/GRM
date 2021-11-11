@@ -37,8 +37,9 @@ public class RecommendationManager
     	}
 		
     	iss = new InterfaceSqlSave();
-    	isl = new InterfaceSqlLoad();
-    	//isl.loadFromSql(this);
+    	// get questions from database
+    	Question questions = InterfaceSqlLoad.getQuestions();
+    	
 		gl = new GameLoader();
     	//setUser(new User());
     	gm = new GuiManager(this);
