@@ -8,8 +8,6 @@ import edu.metrostate.ics370.grm.view.GuiManager;
 
 public class RecommendationManager
 {
-	private Game[] dbGamesWishlist;
-	private Game[] dbGamesHatelist;
 	private GameTag[] dbTags;
 
 	private int qnum;
@@ -17,15 +15,7 @@ public class RecommendationManager
     private GuiChoice[] dbGuiChoices = new GuiChoice[3];
     
     
-    public RecommendationManager() {
-    	for (int i = 0; i < dbGamesWishlist.length; i++)
-    	{
-    		dbGamesWishlist[i] = new Game();
-    		dbGamesHatelist[i] = new Game();
-    		if (i < 100)
-    			dbTags[i] = new GameTag();
-    	}
-		    	
+    public RecommendationManager() { 	
     	// get questions from database
     	QuestionnaireInterface.getQuestions();
     	
@@ -63,17 +53,17 @@ public class RecommendationManager
             			break;
             		}
             	}
-            	for (int i = 0; i < Login.user.getWishlist().length; i++)
+            	for (int i = 0; i < getWishlist().length; i++)
             	{
-            		if (dbGamesWishlist[i] == QuestionnaireInterface.games[y])
+            		if (getWishlist()[i] == QuestionnaireInterface.games[y])
             		{
             			contains = true;
             			break;
             		}
             	}
-            	for (int i = 0; i < Login.user.getHatelist().length; i++)
+            	for (int i = 0; i < getHatelist().length; i++)
             	{
-            		if (dbGamesHatelist[i] == QuestionnaireInterface.games[y])
+            		if (getHatelist()[i] == QuestionnaireInterface.games[y])
             		{
             			contains = true;
             			break;
@@ -179,8 +169,6 @@ public class RecommendationManager
     	// add game to wishlist
     	QuestionnaireInterface.addWishlist(tgresult);
     	
-        //user.dbGamesWishlist.Add(tgresult.game_s);
-        dbGamesWishlist[Login.user.getWishlist().length] = tgresult;
         //tgresult.state = "moving"; //Animation game being added to profile/wishlist//
         //StartCoroutine(delayed_show_results(1));
         showResults();
@@ -193,7 +181,7 @@ public class RecommendationManager
     	QuestionnaireInterface.addHatelist(tgresult);
     	
         //user.dbGamesRemoved.Add(tgresult.game_s);
-        dbGamesHatelist[Login.user.getHatelist().length] = tgresult;
+        getHatelist()[getHatelist().length] = tgresult;
         //tgresult.state = "deleting"; //Animation game being deleted//
         //StartCoroutine(delayed_show_results(1));
         showResults();
@@ -205,11 +193,11 @@ public class RecommendationManager
 		return dbGuiChoices;
 	}
 
-	public Game[] getDbGamesWishlist() {
+	public Game[] getWishlist() {
 		return Login.user.getWishlist();
 	}
 
-	public Game[] getDbGamesHatelist() {
+	public Game[] getHatelist() {
 		return Login.user.getHatelist();
 	}
 
