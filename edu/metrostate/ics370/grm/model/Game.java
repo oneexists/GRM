@@ -11,6 +11,7 @@ public class Game {
 	private int appId;
 	private String name;
 	private float rating;
+
 	private GameTag[] tags;
 	
 	/**
@@ -59,5 +60,12 @@ public class Game {
 	public GameTag[] getTags()
 	{
 		return tags;
+	}
+
+	/**
+	 * @param rating the rating to set
+	 */
+	public void setRating(float rating) {
+		this.rating = rating;
 	}
 }

@@ -161,9 +161,9 @@ public class RecommendationManager
 
     public void guiChoiceSelected(GuiChoice tgchoice)
     {
-        for (int x = 0; x < tgchoice.getDbTags().length; x++)
-        	// TODO Login.user.addPersonalTags(tag);
-            // add_choice(tgchoice.getDbTags()[x].getTag(), 1); //tgchoice.dbTags[x].val);
+        for (int x = 0; x < tgchoice.getDbTags().length; x++) {
+        	QuestionnaireInterface.addPersonalTag(tgchoice.getDbTags()[x]);
+        }
         qnum++;
 
         if (qnum >= QuestionnaireInterface.questions.length) //Out of questions//
@@ -171,7 +171,6 @@ public class RecommendationManager
 
         showResults();
         setQuestion();
-        iss.saveToSqlTags(dbTags);
     }
 
 

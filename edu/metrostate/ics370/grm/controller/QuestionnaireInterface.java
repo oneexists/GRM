@@ -194,4 +194,9 @@ public abstract class QuestionnaireInterface {
 		// TODO remove game from hatelist
 		
 	}
+
+	public static void addPersonalTag(GameTag gameTag) {
+		// TODO add personal tag to user
+		
+	}
 }
