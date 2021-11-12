@@ -18,7 +18,6 @@ public class RecommendationManager
 	private int qnum;
     private GuiManager gm;
     private GameLoader gl;
-    private int numHatelist;
     private GuiChoice[] dbGuiChoices = new GuiChoice[3];
     
     
@@ -76,7 +75,7 @@ public class RecommendationManager
             			break;
             		}
             	}
-            	for (int i = 0; i < numHatelist; i++)
+            	for (int i = 0; i < Login.user.getHatelist().length; i++)
             	{
             		if (dbGamesHatelist[i] == gl.dbGames[y])
             		{
@@ -194,8 +193,7 @@ public class RecommendationManager
     public void btnRemoveGame(Game tgresult)
     {
         //user.dbGamesRemoved.Add(tgresult.game_s);
-        dbGamesHatelist[numHatelist] = tgresult;
-        numHatelist++;
+        dbGamesHatelist[Login.user.getHatelist().length] = tgresult;
         //tgresult.state = "deleting"; //Animation game being deleted//
         //StartCoroutine(delayed_show_results(1));
         showResults();
@@ -206,16 +204,6 @@ public class RecommendationManager
 	public GuiChoice[] getDbGuiChoices()
 	{
 		return dbGuiChoices;
-	}
-
-	public int getNumHatelist()
-	{
-		return numHatelist;
-	}
-
-	public void setNumHatelist(int numHatelist)
-	{
-		this.numHatelist = numHatelist;
 	}
 
 	public Game[] getDbGamesWishlist() {
