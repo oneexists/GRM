@@ -3,11 +3,15 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import edu.metrostate.ics370.grm.controller.InterfaceSqlSave;
+import edu.metrostate.ics370.grm.controller.Login;
 import edu.metrostate.ics370.grm.model.Game;
 import edu.metrostate.ics370.grm.model.RecommendationManager;
 
@@ -618,15 +622,24 @@ public class GuiManager
    }
    
    
-   public void btnHatelist(int num)
-   {
+   public void btnHatelist(int num) {
+	   // create list of games from user's hatelist
+	   List<Game> hatelist = Arrays.asList(Login.user.getHatelist());
+	   // if game is not on list...
+	   if (!(hatelist.contains(dbGuiResults[num]))) {
+		   // add to user hatelist
+		   Login.user.addHatelist(dbGuiResults[num]);
+		   // add to hatelist on database
+		   InterfaceSqlSave.addHatelist(dbGuiResults[num]);
+	   }
+	   
 	   if (dbGuiResults[num] != null && dbGuiResults[num].getName() != null)
 	   {
 		   rm.getDbGamesHatelist()[rm.getNumHatelist()] = dbGuiResults[num];
+		   
 		   rm.setNumHatelist(rm.getNumHatelist() + 1);
 		   rm.showResults();
 		   rm.setQuestion();
-		   rm.getIss().saveToSqlHatelist(rm.getDbGamesHatelist());
 	   }
    }
 

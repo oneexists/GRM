@@ -21,4 +21,10 @@ public class InterfaceSqlSave
 	{
 		//Save the array into the sql//
 	}
+
+
+	public static void addHatelist(Game game) {
+		// TODO Auto-generated method stub
+		
+	}
 }
