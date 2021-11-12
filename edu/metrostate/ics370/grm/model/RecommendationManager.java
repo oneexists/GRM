@@ -6,10 +6,7 @@ import edu.metrostate.ics370.grm.view.GuiChoice;
 import edu.metrostate.ics370.grm.view.GuiManager;
 
 
-public class RecommendationManager
-{
-	private GameTag[] dbTags;
-
+public class RecommendationManager {
 	private int qnum;
     private GuiManager gm;
     private GuiChoice[] dbGuiChoices = new GuiChoice[3];
@@ -40,7 +37,7 @@ public class RecommendationManager
 
         int numPotentials = 0;
 
-        for (int x = 0; x < dbTags.length; x++)
+        for (int x = 0; x < getTags().length; x++)
         {
             for (int y = 0; y < QuestionnaireInterface.games.length; y++)
             {
@@ -78,7 +75,7 @@ public class RecommendationManager
                     //If game is not in either wishlist or trash//
                     for (int z = 0; z < QuestionnaireInterface.games[y].getTags().length; z++)
                     {
-                        if (dbTags[x].getName() == QuestionnaireInterface.games[y].getTags()[z].getName())
+                        if (getTags()[x].getName() == QuestionnaireInterface.games[y].getTags()[z].getName())
                         {
                         	//dbPotentialGames.Add(gl.dbGames[y]);
                         	dbPotentialGames[numPotentials] = QuestionnaireInterface.games[y];
@@ -95,12 +92,12 @@ public class RecommendationManager
         {
             for (int y = 0; y < dbPotentialGames[x].getTags().length; y++)
             {
-                for (int z = 0; z < dbTags.length; z++)
+                for (int z = 0; z < getTags().length; z++)
                 {
                     var mod = 1;
-                    if (dbPotentialGames[x].getTags()[y].getName() == dbTags[z].getName())
+                    if (dbPotentialGames[x].getTags()[y].getName() == getTags()[z].getName())
                     {
-                        mod = Math.round(dbTags[z].getVal() * 0.5f);
+                        mod = Math.round(getTags()[z].getVal() * 0.5f);
                         dbPotentialGames[x].setRating(dbPotentialGames[x].getRating() + mod);
                     }
                 }
@@ -204,14 +201,7 @@ public class RecommendationManager
 	/**
 	 * @return the dbTags
 	 */
-	public GameTag[] getDbTags() {
-		return dbTags.clone();
-	}
-
-	/**
-	 * Sets the tags from the database
-	 */
-	public void setDbTags() {
-		this.dbTags = LoadData.getTags();
+	public GameTag[] getTags() {
+		return LoadData.getTags().clone();
 	}
 }
