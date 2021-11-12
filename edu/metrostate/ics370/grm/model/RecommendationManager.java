@@ -9,7 +9,7 @@ import edu.metrostate.ics370.grm.view.GuiManager;
 public class RecommendationManager {
 	private int qnum;
     private GuiManager gm;
-    private GuiChoice[] dbGuiChoices = new GuiChoice[3];
+    private QuestionChoice[] questionChoices;
     
     
     public RecommendationManager() { 	
@@ -146,10 +146,10 @@ public class RecommendationManager {
         }
     }
 
-    public void guiChoiceSelected(GuiChoice tgchoice)
+    public void guiChoiceSelected(QuestionChoice tgchoice)
     {
-        for (int x = 0; x < tgchoice.getDbTags().length; x++) {
-        	QuestionnaireInterface.addPersonalTag(tgchoice.getDbTags()[x]);
+        for (int x = 0; x < tgchoice.getTags().length; x++) {
+        	QuestionnaireInterface.addPersonalTag(tgchoice.getTags()[x]);
         }
         qnum++;
 
@@ -185,9 +185,9 @@ public class RecommendationManager {
     }
 
 
-	public GuiChoice[] getDbGuiChoices()
+	public QuestionChoice[] getQuestionChoices()
 	{
-		return dbGuiChoices;
+		return questionChoices;
 	}
 
 	public Game[] getWishlist() {

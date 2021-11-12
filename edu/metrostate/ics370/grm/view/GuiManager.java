@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import edu.metrostate.ics370.grm.controller.Login;
 import edu.metrostate.ics370.grm.controller.QuestionnaireInterface;
 import edu.metrostate.ics370.grm.model.Game;
+import edu.metrostate.ics370.grm.model.QuestionChoice;
 import edu.metrostate.ics370.grm.model.RecommendationManager;
 
 
@@ -38,8 +39,8 @@ public class GuiManager
    public GuiManager(RecommendationManager trm) 
    {
 	   rm = trm;
-	   for (int i = 0; i < rm.getDbGuiChoices().length; i++)
-		   rm.getDbGuiChoices()[i] = new GuiChoice();
+	   for (int i = 0; i < rm.getQuestionChoices().length; i++)
+		   rm.getQuestionChoices()[i] = new QuestionChoice();
 		
 	   for (int i = 0; i < dbGuiResults.length; i++)
 		   dbGuiResults[i] = new Game();
@@ -467,7 +468,7 @@ public class GuiManager
 	   for (int i = 0; i < count; i++) //rm.user.numWishlist; i++)
 	   {
 		   dbBtnGamesWishlist[i].setVisible(true);
-		   dbBtnGamesWishlist[i].setText(rm.getDbGamesWishlist()[i].getName());
+		   dbBtnGamesWishlist[i].setText(rm.getWishlist()[i].getName());
 		   dbBtnGamesWishlistRemove[i].setVisible(true);
 	   }
 	   
@@ -515,7 +516,7 @@ public class GuiManager
 	   for (int i = 0; i < count; i++) //rm.user.numWishlist; i++)
 	   {
 		   dbBtnGamesWishlist[i].setVisible(true);
-		   dbBtnGamesWishlist[i].setText(rm.getDbGamesHatelist()[i].getName());
+		   dbBtnGamesWishlist[i].setText(rm.getHatelist()[i].getName());
 		   dbBtnGamesWishlistRemove[i].setVisible(true);
 	   }
 	   
@@ -574,8 +575,8 @@ public class GuiManager
 		   // remove from wishlist
 		   QuestionnaireInterface.removeWishlist(dbGuiResults[num]);
 		   
-		   rm.getDbGamesWishlist()[num] = rm.getDbGamesWishlist()[Login.user.getWishlist().length - 1]; //Takes the last on the list and moves it to this spot, then removes that last spot//
-		   rm.getDbGamesWishlist()[Login.user.getWishlist().length - 1] = null;
+		   rm.getWishlist()[num] = rm.getWishlist()[Login.user.getWishlist().length - 1]; //Takes the last on the list and moves it to this spot, then removes that last spot//
+		   rm.getWishlist()[Login.user.getWishlist().length - 1] = null;
 		   btnWishlistScreen();
 	   }
 	   else
@@ -584,8 +585,8 @@ public class GuiManager
 		   // remove game from hatelist
 		   QuestionnaireInterface.removeHatelist(dbGuiResults[num]);
 		   
-		   rm.getDbGamesHatelist()[num] = rm.getDbGamesHatelist()[Login.user.getHatelist().length - 1]; //Takes the last on the list and moves it to this spot, then removes that last spot//
-		   rm.getDbGamesHatelist()[Login.user.getHatelist().length - 1] = null;
+		   rm.getHatelist()[num] = rm.getHatelist()[Login.user.getHatelist().length - 1]; //Takes the last on the list and moves it to this spot, then removes that last spot//
+		   rm.getHatelist()[Login.user.getHatelist().length - 1] = null;
 		   btnHatelistScreen();
 	   }
    }
@@ -605,7 +606,7 @@ public class GuiManager
    
    public void btnAnswer(int num)
    {
-	   rm.guiChoiceSelected(rm.getDbGuiChoices()[num]);
+	   rm.guiChoiceSelected(rm.getQuestionChoices()[num]);
    }
    
    
@@ -615,7 +616,7 @@ public class GuiManager
 	   
 	   if (dbGuiResults[num] != null && dbGuiResults[num].getName() != null)
 	   {
-		   rm.getDbGamesWishlist()[Login.user.getWishlist().length] = dbGuiResults[num];
+		   rm.getWishlist()[Login.user.getWishlist().length] = dbGuiResults[num];
 		   rm.showResults();
 		   rm.setQuestion();
 	   }
@@ -628,7 +629,7 @@ public class GuiManager
 	   
 	   if (dbGuiResults[num] != null && dbGuiResults[num].getName() != null)
 	   {
-		   rm.getDbGamesHatelist()[Login.user.getHatelist().length] = dbGuiResults[num];
+		   rm.getHatelist()[Login.user.getHatelist().length] = dbGuiResults[num];
 		   rm.showResults();
 		   rm.setQuestion();
 	   }
