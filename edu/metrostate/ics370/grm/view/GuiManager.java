@@ -609,8 +609,7 @@ public class GuiManager
    }
    
    
-   public void btnWishlist(int num)
-   {
+   public void btnWishlist(int num) {
 	   // save game to wishlist
 	   InterfaceSqlSave.addWishlist(dbGuiResults[num]);
 	   
@@ -620,7 +619,6 @@ public class GuiManager
 		   rm.setNumWishlist(rm.getNumWishlist() + 1);
 		   rm.showResults();
 		   rm.setQuestion();
-		   rm.getIss().saveToSqlWishlist(rm.getDbGamesWishlist());
 	   }
    }
    
@@ -632,7 +630,6 @@ public class GuiManager
 	   if (dbGuiResults[num] != null && dbGuiResults[num].getName() != null)
 	   {
 		   rm.getDbGamesHatelist()[rm.getNumHatelist()] = dbGuiResults[num];
-		   
 		   rm.setNumHatelist(rm.getNumHatelist() + 1);
 		   rm.showResults();
 		   rm.setQuestion();

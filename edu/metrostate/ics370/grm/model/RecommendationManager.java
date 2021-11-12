@@ -2,29 +2,27 @@ package edu.metrostate.ics370.grm.model;
 import edu.metrostate.ics370.grm.controller.GameLoader;
 import edu.metrostate.ics370.grm.controller.InterfaceSqlLoad;
 import edu.metrostate.ics370.grm.controller.InterfaceSqlSave;
+import edu.metrostate.ics370.grm.controller.LoadData;
+import edu.metrostate.ics370.grm.controller.Login;
 import edu.metrostate.ics370.grm.view.GuiChoice;
 import edu.metrostate.ics370.grm.view.GuiManager;
-import edu.metrostate.ics370.grm.view.GuiResult;
 
 
 public class RecommendationManager
 {
-    private int qnum;
+	private Question[] dbQuestions;
+	private Game[] dbGamesWishlist;
+	private Game[] dbGamesHatelist;
+	private GameTag[] dbTags;
+
+	private int qnum;
     private GuiManager gm;
-    //private User user;
     private GameLoader gl;
-    private int numTagsUsed;
-    private int numWishlist;
     private int numHatelist;
     private GuiChoice[] dbGuiChoices = new GuiChoice[3];
-    private Question[] dbQuestions;
-    private Game[] dbGamesWishlist = new Game[200];
-    private Game[] dbGamesHatelist = new Game[200];
-    private GameTag[] dbTags = new GameTag[100];
     
     
-    public RecommendationManager() throws Exception
-    {
+    public RecommendationManager() {
     	for (int i = 0; i < dbGamesWishlist.length; i++)
     	{
     		dbGamesWishlist[i] = new Game();
@@ -39,7 +37,6 @@ public class RecommendationManager
     	setDbQuestions();
     	
 		gl = new GameLoader();
-    	//setUser(new User());
     	gm = new GuiManager(this);
     }
 
@@ -71,7 +68,7 @@ public class RecommendationManager
             			break;
             		}
             	}
-            	for (int i = 0; i < numWishlist; i++)
+            	for (int i = 0; i < Login.user.getWishlist().length; i++)
             	{
             		if (dbGamesWishlist[i] == gl.dbGames[y])
             		{
@@ -96,7 +93,7 @@ public class RecommendationManager
                     //If game is not in either wishlist or trash//
                     for (int z = 0; z < gl.dbGames[y].getTags().length; z++)
                     {
-                        if (dbTags[x].getTag() == gl.dbGames[y].getTags()[z].getTag())
+                        if (dbTags[x].getName() == gl.dbGames[y].getTags()[z].getName())
                         {
                         	//dbPotentialGames.Add(gl.dbGames[y]);
                         	dbPotentialGames[numPotentials] = gl.dbGames[y];
@@ -116,7 +113,7 @@ public class RecommendationManager
                 for (int z = 0; z < dbTags.length; z++)
                 {
                     var mod = 1;
-                    if (dbPotentialGames[x].getTags()[y].getTag() == dbTags[z].getTag())
+                    if (dbPotentialGames[x].getTags()[y].getName() == dbTags[z].getName())
                     {
                         mod = Math.round(dbTags[z].getVal() * 0.5f);
                         dbPotentialGames[x].setRating(dbPotentialGames[x].getRating() + mod);
@@ -163,14 +160,14 @@ public class RecommendationManager
         	//db_gui_results.Add(gres);
         	//tgo.SetActive(true);
         	gm.getDbBtnGames()[x].setText(dbTopGames[x].getName());
-        	gm.getDbGuiResults()[x].game = dbTopGames[x];
+        	gm.getDbGuiResults()[x] = dbTopGames[x];
         }
     }
 
     public void guiChoiceSelected(GuiChoice tgchoice)
     {
         for (int x = 0; x < tgchoice.getDbTags().length; x++)
-        	// TODO user.addPersonalTags(tag);		-- replaces add_choice method
+        	// TODO Login.user.addPersonalTags(tag);
             // add_choice(tgchoice.getDbTags()[x].getTag(), 1); //tgchoice.dbTags[x].val);
         qnum++;
 
@@ -183,11 +180,10 @@ public class RecommendationManager
     }
 
 
-    public void btnAddGame(GuiResult tgresult)
+    public void btnAddGame(Game tgresult)
     {
         //user.dbGamesWishlist.Add(tgresult.game_s);
-        dbGamesWishlist[numWishlist] = tgresult.game;
-        numWishlist++;
+        dbGamesWishlist[Login.user.getWishlist().length] = tgresult;
         //tgresult.state = "moving"; //Animation game being added to profile/wishlist//
         //StartCoroutine(delayed_show_results(1));
         showResults();
@@ -195,10 +191,10 @@ public class RecommendationManager
     }
 
 
-    public void btnRemoveGame(GuiResult tgresult)
+    public void btnRemoveGame(Game tgresult)
     {
         //user.dbGamesRemoved.Add(tgresult.game_s);
-        dbGamesHatelist[numHatelist] = tgresult.game;
+        dbGamesHatelist[numHatelist] = tgresult;
         numHatelist++;
         //tgresult.state = "deleting"; //Animation game being deleted//
         //StartCoroutine(delayed_show_results(1));
@@ -212,109 +208,36 @@ public class RecommendationManager
 		return dbGuiChoices;
 	}
 
-
-	public void setDbGuiChoices(GuiChoice[] dbGuiChoices)
-	{
-		this.dbGuiChoices = dbGuiChoices;
-	}
-
-
-	public int getNumWishlist()
-	{
-		return numWishlist;
-	}
-
-
-	public void setNumWishlist(int numWishlist)
-	{
-		this.numWishlist = numWishlist;
-	}
-
-
 	public int getNumHatelist()
 	{
 		return numHatelist;
 	}
-
 
 	public void setNumHatelist(int numHatelist)
 	{
 		this.numHatelist = numHatelist;
 	}
 
-
-	public int getNumTagsUsed()
-	{
-		return numTagsUsed;
+	public Game[] getDbGamesWishlist() {
+		return Login.user.getWishlist();
 	}
 
-
-	public void setNumTagsUsed(int numTagsUsed)
-	{
-		this.numTagsUsed = numTagsUsed;
+	public Game[] getDbGamesHatelist() {
+		return Login.user.getHatelist();
 	}
 
-
-	public Game[] getDbGamesWishlist()
-	{
-		return dbGamesWishlist;
+	/**
+	 * @return the dbTags
+	 */
+	public GameTag[] getDbTags() {
+		return dbTags.clone();
 	}
 
-
-	public void setDbGamesWishlist(Game[] dbGamesWishlist)
-	{
-		this.dbGamesWishlist = dbGamesWishlist;
-		
-		for (int i = 0; i < this.dbGamesWishlist.length; i++)
-		{
-			if (this.dbGamesWishlist[i] == null)
-			{
-				this.numWishlist = i - 1;
-				break;
-			}
-		}
-	}
-
-
-	public Game[] getDbGamesHatelist()
-	{
-		return dbGamesHatelist;
-	}
-
-
-	public void setDbGamesHatelist(Game[] dbGamesHatelist)
-	{
-		this.dbGamesHatelist = dbGamesHatelist;
-		
-		for (int i = 0; i < this.dbGamesHatelist.length; i++)
-		{
-			if (this.dbGamesHatelist[i] == null)
-			{
-				this.numHatelist = i - 1;
-				break;
-			}
-		}
-	}
-
-
-	public GameTag[] getDbTags()
-	{
-		return dbTags;
-	}
-
-
-	public void setDbTags(GameTag[] dbTags)
-	{
-		this.dbTags = dbTags;
-		
-		for (int i = 0; i < this.dbTags.length; i++)
-		{
-			if (this.dbTags[i] == null)
-			{
-				this.numTagsUsed = i - 1;
-				break;
-			}
-		}
+	/**
+	 * Sets the tags from the database
+	 */
+	public void setDbTags() {
+		this.dbTags = LoadData.getTags();
 	}
 
 	/**
@@ -324,9 +247,8 @@ public class RecommendationManager
 		return dbQuestions.clone();
 	}
 
-
 	/**
-	 * @param dbQuestions the dbQuestions to set
+	 * Sets the questions from the database
 	 */
 	public void setDbQuestions() {
 		this.dbQuestions = InterfaceSqlLoad.getQuestions();

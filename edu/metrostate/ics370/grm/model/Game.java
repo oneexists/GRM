@@ -13,6 +13,10 @@ public class Game {
 	private GameTag[] tags;
 	
 	/**
+	 * No-arg constructor
+	 */
+	public Game() {}
+	/**
 	 * Initializes the Game
 	 * 
 	 * @param appId id of the game
