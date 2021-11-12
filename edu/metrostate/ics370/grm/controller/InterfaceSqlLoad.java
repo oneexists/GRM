@@ -24,6 +24,11 @@ public abstract class InterfaceSqlLoad
 		rms.setDbGamesHatelist(dbGamesHatelist);
 	}
 	public static Question getQuestions() {
+		String sql = "SELECT question_prompt, choice_text "
+				+ "FROM Question, SelectChoices, Choice "
+				+ "WHERE Question.question_id = SelectChoices.question_id "
+				+ "AND SelectChoices.choice_id = Choice.choice_id"
+				+ "ORDER BY question_prompt";
 		// TODO get question from database
 		return new Question("question", new QuestionChoice[3]);
 	}
