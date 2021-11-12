@@ -41,6 +41,18 @@ CREATE TABLE ChoiceTags (
   FOREIGN KEY(tag_id) REFERENCES GameTag(tag_id)
 );
 
+CREATE TABLE Wishlist (
+  username varchar(25) NOT NULL,
+  appId int,
+  FOREIGN KEY(username) REFERENCES User(username)
+);
+
+CREATE TABLE Hatelist (
+  username varchar(25) NOT NULL,
+  appId int,
+  FOREIGN KEY(username) REFERENCES User(username)
+);
+
 /* add tags */
 INSERT INTO GameTag(tag_name) VALUES
 ("survival"), 
