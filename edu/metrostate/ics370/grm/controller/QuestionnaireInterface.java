@@ -24,6 +24,7 @@ import edu.metrostate.ics370.grm.model.QuestionChoice;
  *
  */
 public abstract class QuestionnaireInterface {
+	public static Question[] questions;
 	public static Game[] games;
 
 	/**
@@ -131,7 +132,7 @@ public abstract class QuestionnaireInterface {
 	 * 
 	 * @return questionArray with all of the questions
 	 */
-	public static Question[] getQuestions() {
+	public static void getQuestions() {
 		Question[] questionArray = null;
 		String sql = "SELECT question_prompt, choice_text, tag_name "
 				+ "FROM Question, SelectChoices, Choice, ChoiceTags, GameTag "
@@ -164,7 +165,7 @@ public abstract class QuestionnaireInterface {
 			
 		}
 		Question[] questionSet =  prepareQuestions(questionArray);
-		return questionSet;
+		questions = questionSet;
 	}
 	
 	/**

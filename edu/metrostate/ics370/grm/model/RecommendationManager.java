@@ -1,7 +1,4 @@
 package edu.metrostate.ics370.grm.model;
-import edu.metrostate.ics370.grm.controller.GameLoader;
-import edu.metrostate.ics370.grm.controller.InterfaceSqlLoad;
-import edu.metrostate.ics370.grm.controller.InterfaceSqlSave;
 import edu.metrostate.ics370.grm.controller.LoadData;
 import edu.metrostate.ics370.grm.controller.Login;
 import edu.metrostate.ics370.grm.controller.QuestionnaireInterface;
@@ -11,7 +8,6 @@ import edu.metrostate.ics370.grm.view.GuiManager;
 
 public class RecommendationManager
 {
-	private Question[] dbQuestions;
 	private Game[] dbGamesWishlist;
 	private Game[] dbGamesHatelist;
 	private GameTag[] dbTags;
@@ -31,7 +27,7 @@ public class RecommendationManager
     	}
 		    	
     	// get questions from database
-    	setDbQuestions();
+    	QuestionnaireInterface.getQuestions();
     	
     	// load games from file
     	QuestionnaireInterface.getGames();
@@ -48,7 +44,7 @@ public class RecommendationManager
     	//List<Game> dbCheckRemoved = new ArrayList<>(Arrays.asList(user.dbGamesRemoved));
 
 
-        Game dbPotentialGames[] = new Game[gl.numGames];
+        Game dbPotentialGames[] = new Game[QuestionnaireInterface.games.length];
         //for (int i = 0; i < dbPotentialGames.length; i++)
         //	dbPotentialGames[i] = new Game();
 
@@ -56,12 +52,12 @@ public class RecommendationManager
 
         for (int x = 0; x < dbTags.length; x++)
         {
-            for (int y = 0; y < gl.numGames; y++)
+            for (int y = 0; y < QuestionnaireInterface.games.length; y++)
             {
             	boolean contains = false;
             	for (int i = 0; i < dbPotentialGames.length; i++)
             	{
-            		if (dbPotentialGames[i] == gl.dbGames[y])
+            		if (dbPotentialGames[i] == QuestionnaireInterface.games[y])
             		{
             			contains = true;
             			break;
@@ -69,7 +65,7 @@ public class RecommendationManager
             	}
             	for (int i = 0; i < Login.user.getWishlist().length; i++)
             	{
-            		if (dbGamesWishlist[i] == gl.dbGames[y])
+            		if (dbGamesWishlist[i] == QuestionnaireInterface.games[y])
             		{
             			contains = true;
             			break;
@@ -77,7 +73,7 @@ public class RecommendationManager
             	}
             	for (int i = 0; i < Login.user.getHatelist().length; i++)
             	{
-            		if (dbGamesHatelist[i] == gl.dbGames[y])
+            		if (dbGamesHatelist[i] == QuestionnaireInterface.games[y])
             		{
             			contains = true;
             			break;
@@ -90,12 +86,12 @@ public class RecommendationManager
             	if (!contains)
                 {
                     //If game is not in either wishlist or trash//
-                    for (int z = 0; z < gl.dbGames[y].getTags().length; z++)
+                    for (int z = 0; z < QuestionnaireInterface.games[y].getTags().length; z++)
                     {
-                        if (dbTags[x].getName() == gl.dbGames[y].getTags()[z].getName())
+                        if (dbTags[x].getName() == QuestionnaireInterface.games[y].getTags()[z].getName())
                         {
                         	//dbPotentialGames.Add(gl.dbGames[y]);
-                        	dbPotentialGames[numPotentials] = gl.dbGames[y];
+                        	dbPotentialGames[numPotentials] = QuestionnaireInterface.games[y];
                         	numPotentials++;
                             break;
                         }
@@ -170,7 +166,7 @@ public class RecommendationManager
             // add_choice(tgchoice.getDbTags()[x].getTag(), 1); //tgchoice.dbTags[x].val);
         qnum++;
 
-        if (qnum >= dbQuestions.length) //Out of questions//
+        if (qnum >= QuestionnaireInterface.questions.length) //Out of questions//
             qnum = 0;
 
         showResults();
@@ -182,7 +178,7 @@ public class RecommendationManager
     public void btnAddGame(Game tgresult)
     {
     	// add game to wishlist
-    	InterfaceSqlSave.addWishlist(tgresult);
+    	QuestionnaireInterface.addWishlist(tgresult);
     	
         //user.dbGamesWishlist.Add(tgresult.game_s);
         dbGamesWishlist[Login.user.getWishlist().length] = tgresult;
@@ -195,7 +191,7 @@ public class RecommendationManager
     public void btnRemoveGame(Game tgresult)
     {
     	// add game to hatelist
-    	InterfaceSqlSave.addHatelist(tgresult);
+    	QuestionnaireInterface.addHatelist(tgresult);
     	
         //user.dbGamesRemoved.Add(tgresult.game_s);
         dbGamesHatelist[Login.user.getHatelist().length] = tgresult;
@@ -230,19 +226,5 @@ public class RecommendationManager
 	 */
 	public void setDbTags() {
 		this.dbTags = LoadData.getTags();
-	}
-
-	/**
-	 * @return the dbQuestions
-	 */
-	public Question[] getDbQuestions() {
-		return dbQuestions.clone();
-	}
-
-	/**
-	 * Sets the questions from the database
-	 */
-	public void setDbQuestions() {
-		this.dbQuestions = InterfaceSqlLoad.getQuestions();
 	}
 }
