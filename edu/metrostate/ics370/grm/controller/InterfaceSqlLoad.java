@@ -4,29 +4,20 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import edu.metrostate.ics370.grm.model.Game;
 import edu.metrostate.ics370.grm.model.GameTag;
 import edu.metrostate.ics370.grm.model.Question;
 import edu.metrostate.ics370.grm.model.QuestionChoice;
-import edu.metrostate.ics370.grm.model.RecommendationManager;
 
 
-public abstract class InterfaceSqlLoad
-{
-	
-	//Can take all the database of games and put them in the SQL if desired//
-	public void loadFromSql(RecommendationManager rms)
-	{
-		//Load all info from sql into these//
-		Game[] dbGamesHatelist = new Game[200];
-		Game[] dbGamesWishlist = new Game[200];
-		GameTag[] dbTags = new GameTag[100];
-		
-		rms.setDbTags(dbTags);
-		rms.setDbGamesWishlist(dbGamesWishlist);
-		rms.setDbGamesHatelist(dbGamesHatelist);
-	}
-	
+/**
+ * @author skylar
+ */
+public abstract class InterfaceSqlLoad {	
+	/**
+	 * Returns an array of the questions 
+	 * 
+	 * @return questionArray with all of the questions
+	 */
 	public static Question[] getQuestions() {
 		Question[] questionArray = null;
 		String sql = "SELECT question_prompt, choice_text, tag_name "
@@ -59,6 +50,24 @@ public abstract class InterfaceSqlLoad
 		} catch (SQLException e) {
 			
 		}
-		return questionArray;
+		Question[] questionSet =  prepareQuestions(questionArray);
+		return questionSet;
+	}
+
+	/**
+	 * @param questionArray array of the questions with all choices
+	 * @return qSet array of questions with three choices each
+	 */
+	private static Question[] prepareQuestions(Question[] questionArray) {
+		ArrayList<Question> qSet = new ArrayList<Question>();
+		for (Question q : questionArray) {
+			for (int i=0; i<q.getChoices().length-2; i=i+3) {
+				QuestionChoice[] choices = { q.getChoices()[i/3], q.getChoices()[(i+1)/3], q.getChoices()[(i+2)/3] };
+				Question newQuestion = new Question(q.getPrompt(), choices);
+				qSet.add(newQuestion);
+				
+			}
+		}
+		return qSet.toArray(new Question[qSet.size()]);
 	}
 }
