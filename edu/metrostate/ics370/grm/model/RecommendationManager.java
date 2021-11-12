@@ -29,9 +29,7 @@ public class RecommendationManager
     		if (i < 100)
     			dbTags[i] = new GameTag();
     	}
-		
-    	iss = new InterfaceSqlSave();
-    	
+		    	
     	// get questions from database
     	setDbQuestions();
     	
@@ -181,23 +179,27 @@ public class RecommendationManager
 
     public void btnAddGame(Game tgresult)
     {
+    	// add game to wishlist
+    	InterfaceSqlSave.addWishlist(tgresult);
+    	
         //user.dbGamesWishlist.Add(tgresult.game_s);
         dbGamesWishlist[Login.user.getWishlist().length] = tgresult;
         //tgresult.state = "moving"; //Animation game being added to profile/wishlist//
         //StartCoroutine(delayed_show_results(1));
         showResults();
-        iss.saveToSqlWishlist(dbGamesWishlist);
     }
 
 
     public void btnRemoveGame(Game tgresult)
     {
+    	// add game to hatelist
+    	InterfaceSqlSave.addHatelist(tgresult);
+    	
         //user.dbGamesRemoved.Add(tgresult.game_s);
         dbGamesHatelist[Login.user.getHatelist().length] = tgresult;
         //tgresult.state = "deleting"; //Animation game being deleted//
         //StartCoroutine(delayed_show_results(1));
         showResults();
-        iss.saveToSqlHatelist(dbGamesHatelist);
     }
 
 
