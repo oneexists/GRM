@@ -10,6 +10,7 @@ public class Game {
 	
 	private int appId;
 	private String name;
+	private float rating;
 	private GameTag[] tags;
 	
 	/**
@@ -23,9 +24,10 @@ public class Game {
 	 * @param name name of the game
 	 * @param tags tags of the game
 	 */
-	public Game(int appId, String name, GameTag[] tags) {
+	public Game(int appId, String name, float rating, GameTag[] tags) {
 		this.appId = appId;
 		this.name = name;
+		this.rating = rating;
 		this.tags = tags;
 	}
 
@@ -42,6 +44,13 @@ public class Game {
 	public String getName()
 	{
 		return name;
+	}
+
+	/**
+	 * @return the rating
+	 */
+	public float getRating() {
+		return rating;
 	}
 	
 	/**

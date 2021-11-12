@@ -4,6 +4,7 @@ import edu.metrostate.ics370.grm.controller.InterfaceSqlLoad;
 import edu.metrostate.ics370.grm.controller.InterfaceSqlSave;
 import edu.metrostate.ics370.grm.controller.LoadData;
 import edu.metrostate.ics370.grm.controller.Login;
+import edu.metrostate.ics370.grm.controller.QuestionnaireInterface;
 import edu.metrostate.ics370.grm.view.GuiChoice;
 import edu.metrostate.ics370.grm.view.GuiManager;
 
@@ -17,7 +18,6 @@ public class RecommendationManager
 
 	private int qnum;
     private GuiManager gm;
-    private GameLoader gl;
     private GuiChoice[] dbGuiChoices = new GuiChoice[3];
     
     
@@ -33,7 +33,9 @@ public class RecommendationManager
     	// get questions from database
     	setDbQuestions();
     	
-		gl = new GameLoader();
+    	// load games from file
+    	QuestionnaireInterface.getGames();
+    	
     	gm = new GuiManager(this);
     }
 

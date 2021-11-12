@@ -3,6 +3,8 @@
  */
 package edu.metrostate.ics370.grm.controller;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,6 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 import edu.metrostate.ics370.grm.model.Game;
 import edu.metrostate.ics370.grm.model.GameTag;
@@ -21,6 +24,7 @@ import edu.metrostate.ics370.grm.model.QuestionChoice;
  *
  */
 public abstract class QuestionnaireInterface {
+	public static Game[] games;
 
 	/**
 	 * Adds game to hatelist of user and saves in database
@@ -70,6 +74,56 @@ public abstract class QuestionnaireInterface {
 		} catch (SQLException e) {
 			Connector.processException(e);
 		}
+	}
+	
+	/**
+	 * Gets games from library and populates them into array
+	 */
+	public static void getGames() {
+		// TODO reads data from file to populate games
+        StringBuffer sb = new StringBuffer();
+        try {
+        	// TODO add library.txt to project folder
+        	FileReader reader = new FileReader("/lib/library.txt");		// path within project for txt file
+        	Scanner sc = new Scanner(reader);
+        	while (sc.hasNext()) {
+        		sb.append(sc.next());
+        	}
+        	reader.close();
+        	sc.close();
+        } catch (IOException e) {
+        	// TODO process file IO exception
+        	e.printStackTrace();
+        }
+        
+        String result = sb.toString();
+        result = result.replace(",", " ");
+        String[] words = result.split(" ");
+        
+        int appId = -1;
+        String name = null;
+        float rating = -1;
+        GameTag[] tags = new GameTag[10];
+        
+        // TODO verify games populate correctly
+        // populate games
+        for (int i=0; i<words.length; i++) {
+        	if (words[i].equals("appid")) {
+        		appId = Integer.parseInt(words[i+1]);
+        	}
+        	if (words[i].equals("name")) {
+        		name = words[i+1];
+        	}
+        	if (words[i].equals("rating")) {
+        		rating = Float.parseFloat(words[i+1]);
+        	}
+        	if (words[i].equals("tags")) {
+        		tags[tags.length] = new GameTag(words[i+1]);
+        	}
+        	if (appId != -1 && name != null) {
+        		games[games.length] = new Game(appId, name, rating, tags);        		
+        	}
+        }
 	}
 	
 	/**
