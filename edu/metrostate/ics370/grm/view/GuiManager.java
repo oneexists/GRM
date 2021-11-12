@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 
 import edu.metrostate.ics370.grm.controller.InterfaceSqlSave;
 import edu.metrostate.ics370.grm.controller.Login;
+import edu.metrostate.ics370.grm.controller.QuestionnaireInterface;
 import edu.metrostate.ics370.grm.model.Game;
 import edu.metrostate.ics370.grm.model.RecommendationManager;
 
@@ -460,8 +461,8 @@ public class GuiManager
 
    	
 	   int count = dbBtnGamesWishlist.length;
-	   if (rm.getNumWishlist() < count) //If number of games in wishlist are less than 25, only make 25 buttons visible//
-		   count = rm.getNumWishlist();
+	   if (Login.user.getWishlist().length < count) //If number of games in wishlist are less than 25, only make 25 buttons visible//
+		   count = Login.user.getWishlist().length;
 
 	   //**Add buttons for wishlist games**//
 	   for (int i = 0; i < count; i++) //rm.user.numWishlist; i++)
@@ -508,8 +509,8 @@ public class GuiManager
 
    	
 	   int count = dbBtnGamesWishlist.length;
-	   if (rm.getNumHatelist() < count) //If number of games in wishlist are less than 25, only make 25 buttons visible//
-		   count = rm.getNumHatelist();
+	   if (Login.user.getHatelist().length < count) //If number of games in wishlist are less than 25, only make 25 buttons visible//
+		   count = Login.user.getHatelist().length;
 
 	   //**Add buttons for hatelist games**//
 	   for (int i = 0; i < count; i++) //rm.user.numWishlist; i++)
@@ -570,23 +571,23 @@ public class GuiManager
    public void btnWishlistGameRemove(int num)
    {
 	   //We clicked to remove a game from the wishlist//
-	   if (menuSelected == "wishlist")
-	   {
-		   rm.getDbGamesWishlist()[num] = rm.getDbGamesWishlist()[rm.getNumWishlist() - 1]; //Takes the last on the list and moves it to this spot, then removes that last spot//
-		   rm.getDbGamesWishlist()[rm.getNumWishlist() - 1] = null;
-		   rm.setNumWishlist(rm.getNumWishlist() - 1);
+	   if (menuSelected == "wishlist") {
+		   // remove from wishlist
+		   QuestionnaireInterface.removeWishlist(dbGuiResults[num]);
+		   
+		   rm.getDbGamesWishlist()[num] = rm.getDbGamesWishlist()[Login.user.getWishlist().length - 1]; //Takes the last on the list and moves it to this spot, then removes that last spot//
+		   rm.getDbGamesWishlist()[Login.user.getWishlist().length - 1] = null;
 		   btnWishlistScreen();
-		   rm.getIss().saveToSqlWishlist(rm.getDbGamesWishlist());
 	   }
 	   else
 	   //We clicked to remove a game from the hatelist//
-	   if (menuSelected == "hatelist")
-	   {
-		   rm.getDbGamesHatelist()[num] = rm.getDbGamesHatelist()[rm.getNumHatelist() - 1]; //Takes the last on the list and moves it to this spot, then removes that last spot//
-		   rm.getDbGamesHatelist()[rm.getNumHatelist() - 1] = null;
-		   rm.setNumHatelist(rm.getNumHatelist() - 1);
+	   if (menuSelected == "hatelist") {
+		   // remove game from hatelist
+		   QuestionnaireInterface.removeHatelist(dbGuiResults[num]);
+		   
+		   rm.getDbGamesHatelist()[num] = rm.getDbGamesHatelist()[Login.user.getHatelist().length - 1]; //Takes the last on the list and moves it to this spot, then removes that last spot//
+		   rm.getDbGamesHatelist()[Login.user.getHatelist().length - 1] = null;
 		   btnHatelistScreen();
-		   rm.getIss().saveToSqlHatelist(rm.getDbGamesHatelist());
 	   }
    }
    
@@ -611,12 +612,11 @@ public class GuiManager
    
    public void btnWishlist(int num) {
 	   // save game to wishlist
-	   InterfaceSqlSave.addWishlist(dbGuiResults[num]);
+	   QuestionnaireInterface.addWishlist(dbGuiResults[num]);
 	   
 	   if (dbGuiResults[num] != null && dbGuiResults[num].getName() != null)
 	   {
-		   rm.getDbGamesWishlist()[rm.getNumWishlist()] = dbGuiResults[num];
-		   rm.setNumWishlist(rm.getNumWishlist() + 1);
+		   rm.getDbGamesWishlist()[Login.user.getWishlist().length] = dbGuiResults[num];
 		   rm.showResults();
 		   rm.setQuestion();
 	   }
@@ -625,12 +625,11 @@ public class GuiManager
    
    public void btnHatelist(int num) {
 	   // save game to hatelist
-	   InterfaceSqlSave.addHatelist(dbGuiResults[num]);
+	   QuestionnaireInterface.addHatelist(dbGuiResults[num]);
 	   
 	   if (dbGuiResults[num] != null && dbGuiResults[num].getName() != null)
 	   {
-		   rm.getDbGamesHatelist()[rm.getNumHatelist()] = dbGuiResults[num];
-		   rm.setNumHatelist(rm.getNumHatelist() + 1);
+		   rm.getDbGamesHatelist()[Login.user.getHatelist().length] = dbGuiResults[num];
 		   rm.showResults();
 		   rm.setQuestion();
 	   }

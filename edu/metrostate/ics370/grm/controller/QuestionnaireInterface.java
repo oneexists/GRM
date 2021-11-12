@@ -184,4 +184,14 @@ public abstract class QuestionnaireInterface {
 		}
 		return qSet.toArray(new Question[qSet.size()]);
 	}
+
+	public static void removeWishlist(Game game) {
+		// TODO remove game from wishlist
+		
+	}
+
+	public static void removeHatelist(Game game) {
+		// TODO remove game from hatelist
+		
+	}
 }
