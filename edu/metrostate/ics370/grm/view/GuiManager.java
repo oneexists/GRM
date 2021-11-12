@@ -10,7 +10,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import edu.metrostate.ics370.grm.controller.InterfaceSqlSave;
 import edu.metrostate.ics370.grm.controller.Login;
 import edu.metrostate.ics370.grm.controller.QuestionnaireInterface;
 import edu.metrostate.ics370.grm.model.Game;
