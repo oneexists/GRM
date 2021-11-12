@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import edu.metrostate.ics370.grm.model.Game;
 import edu.metrostate.ics370.grm.model.RecommendationManager;
 
 
@@ -21,7 +22,7 @@ public class GuiManager
     private JButton btnQuestions;
     private JButton btnWishlist;
     private JButton btnHatelist;
-    private GuiResult[] dbGuiResults = new GuiResult[5];
+    private Game[] dbGuiResults = new Game[5];
     private JButton[] dbBtnAnswers = new JButton[3];
     private JButton[] dbBtnGames = new JButton[5];
     private JButton[] dbBtnWishlist = new JButton[5];
@@ -36,8 +37,8 @@ public class GuiManager
 	   for (int i = 0; i < rm.getDbGuiChoices().length; i++)
 		   rm.getDbGuiChoices()[i] = new GuiChoice();
 		
-	   for (int i = 0; i < getDbGuiResults().length; i++)
-		   getDbGuiResults()[i] = new GuiResult();
+	   for (int i = 0; i < dbGuiResults.length; i++)
+		   dbGuiResults[i] = new Game();
 		
 		
 	   //**Make Frame**//
@@ -105,7 +106,7 @@ public class GuiManager
 
 		
 		//**Question Text**//
-		setTxtQuestion(new JLabel());
+		txtQuestion = new JLabel();
 		getTxtQuestion().setBounds(200, 100, 400, 200);
 		String wrd = "Would you rather:";
 		getTxtQuestion().setText(wrd);
@@ -606,10 +607,9 @@ public class GuiManager
    
    public void btnWishlist(int num)
    {
-	   if (getDbGuiResults()[num].game != null && getDbGuiResults()[num].game.getName() != null)
+	   if (dbGuiResults[num] != null && dbGuiResults[num].getName() != null)
 	   {
-		   //System.out.println(dbGuiResults[num].game.nam);
-		   rm.getDbGamesWishlist()[rm.getNumWishlist()] = getDbGuiResults()[num].game;
+		   rm.getDbGamesWishlist()[rm.getNumWishlist()] = dbGuiResults[num];
 		   rm.setNumWishlist(rm.getNumWishlist() + 1);
 		   rm.showResults();
 		   rm.setQuestion();
@@ -620,9 +620,9 @@ public class GuiManager
    
    public void btnHatelist(int num)
    {
-	   if (getDbGuiResults()[num].game != null && getDbGuiResults()[num].game.getName() != null)
+	   if (dbGuiResults[num] != null && dbGuiResults[num].getName() != null)
 	   {
-		   rm.getDbGamesHatelist()[rm.getNumHatelist()] = getDbGuiResults()[num].game;
+		   rm.getDbGamesHatelist()[rm.getNumHatelist()] = dbGuiResults[num];
 		   rm.setNumHatelist(rm.getNumHatelist() + 1);
 		   rm.showResults();
 		   rm.setQuestion();
@@ -636,45 +636,22 @@ public class GuiManager
 		return dbBtnGames;
 	}
 
-
-	public void setDbBtnGames(JButton[] dbBtnGames)
-	{
-		this.dbBtnGames = dbBtnGames;
-	}
 	
-	
-	public GuiResult[] getDbGuiResults()
+	public Game[] getDbGuiResults()
 	{
 		return dbGuiResults;
 	}
 	
-	
-	public void setDbGuiResults(GuiResult[] dbGuiResults)
-	{
-		this.dbGuiResults = dbGuiResults;
-	}
-
 
 	public JButton[] getDbBtnAnswers()
 	{
 		return dbBtnAnswers;
 	}
-	
-	
-	public void setDbBtnAnswers(JButton[] dbBtnAnswers)
-	{
-		this.dbBtnAnswers = dbBtnAnswers;
-	}
-	
+		
 	
 	public JLabel getTxtQuestion()
 	{
 		return txtQuestion;
 	}
-	
-	
-	public void setTxtQuestion(JLabel txtQuestion)
-	{
-		this.txtQuestion = txtQuestion;
-	}
+
 }
