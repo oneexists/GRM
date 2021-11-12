@@ -10,17 +10,14 @@ import edu.metrostate.ics370.grm.view.GuiResult;
 public class RecommendationManager
 {
     private int qnum;
-    private int totalQuestions;
     private GuiManager gm;
     //private User user;
     private GameLoader gl;
-    private InterfaceSqlSave iss;
-    private InterfaceSqlLoad isl;
     private int numTagsUsed;
     private int numWishlist;
     private int numHatelist;
     private GuiChoice[] dbGuiChoices = new GuiChoice[3];
-    private Question[] dbQuestions = new Question[1000];
+    private Question[] dbQuestions;
     private Game[] dbGamesWishlist = new Game[200];
     private Game[] dbGamesHatelist = new Game[200];
     private GameTag[] dbTags = new GameTag[100];
@@ -37,15 +34,13 @@ public class RecommendationManager
     	}
 		
     	iss = new InterfaceSqlSave();
+    	
     	// get questions from database
-    	Question questions = InterfaceSqlLoad.getQuestions();
+    	setDbQuestions();
     	
 		gl = new GameLoader();
     	//setUser(new User());
     	gm = new GuiManager(this);
-
-    	//This will be replaced when the Sql loader is setup//
-		setQuestion(); //Sets the first question//
     }
     
     
@@ -197,54 +192,6 @@ public class RecommendationManager
         	gm.getDbGuiResults()[x].game = dbTopGames[x];
         }
     }
-    
-    
-
-    /*
-    public boolean contains()
-    {
-    	
-    	return false;
-    }
-    */
-
-
-    public void setQuestion()
-    {
-        //**Clear Old Choices**//
-        for (int x = 0; x < getDbGuiChoices().length; x++)
-            //dbGuiChoices[x].dbTags.Clear();
-        {
-        	for (int y = 0; y < getDbGuiChoices()[x].getDbTags().length; y++)
-        	{
-        		getDbGuiChoices()[x].getDbTags()[y].setTag("");
-        		getDbGuiChoices()[x].getDbTags()[y].setVal(0);
-        	}
-        	getDbGuiChoices()[x].setNum(0);
-        }
-        
-
-        //**Add New Choices**//
-        gm.getTxtQuestion().setText(dbQuestions[qnum].getQuest());
-
-    	for (int x = 0; x < dbQuestions[qnum].getDbChoices().length; x++)
-        {
-			//dbGuiChoices[x].txt_choice.text = dbQuestions[qnum].dbChoices[x].choice;
-    		gm.getDbBtnAnswers()[x].setText(dbQuestions[qnum].getDbChoices()[x].getChoice());
-
-        	for (int y = 0; y < dbQuestions[qnum].getDbChoices()[x].getDbTags().length; y++)
-            {
-                var ntag = new GameTag();
-                ntag.setTag(dbQuestions[qnum].getDbChoices()[x].getDbTags()[y].getTag());
-                ntag.setVal(dbQuestions[qnum].getDbChoices()[x].getDbTags()[y].getVal());
-                
-                //dbGuiChoices[x].dbTags.Add(ntag);
-                getDbGuiChoices()[x].getDbTags()[getDbGuiChoices()[x].getNum()] = ntag;
-                getDbGuiChoices()[x].setNum(getDbGuiChoices()[x].getNum() + 1);
-            }
-        }
-    }
-
 
     public void guiChoiceSelected(GuiChoice tgchoice)
     {
@@ -394,43 +341,19 @@ public class RecommendationManager
 			}
 		}
 	}
-	
-	
-	public void setDbQuestions(Question[] dbQ)
-	{
-		this.dbQuestions = dbQ;
-		
-		for (int i = 0; i < this.dbQuestions.length; i++)
-		{
-			if (this.dbQuestions[i] == null)
-			{
-				this.totalQuestions = i - 1;
-				break;
-			}
-		}
+
+	/**
+	 * @return the dbQuestions
+	 */
+	public Question[] getDbQuestions() {
+		return dbQuestions.clone();
 	}
 
 
-	public InterfaceSqlLoad getIsl()
-	{
-		return isl;
-	}
-
-
-	public void setIsl(InterfaceSqlLoad isl)
-	{
-		this.isl = isl;
-	}
-
-
-	public InterfaceSqlSave getIss()
-	{
-		return iss;
-	}
-
-
-	public void setIss(InterfaceSqlSave iss)
-	{
-		this.iss = iss;
+	/**
+	 * @param dbQuestions the dbQuestions to set
+	 */
+	public void setDbQuestions() {
+		this.dbQuestions = InterfaceSqlLoad.getQuestions();
 	}
 }
