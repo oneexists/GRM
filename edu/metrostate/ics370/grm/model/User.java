@@ -3,9 +3,7 @@ package edu.metrostate.ics370.grm.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
-import java.util.TreeSet;
 
 /**
  * @author skylar
@@ -27,16 +25,16 @@ public class User implements Serializable, Comparable<User> {
 	private LocalDate dateOfBirth;
 	private Gender gender;
 	private ArrayList<GameTag> personalTags;
-	private Collection<Game> wishlist;
-	private Collection<Game> hatelist;
+	private ArrayList<Game> wishlist;
+	private ArrayList<Game> hatelist;
 	
 	/**
 	 * No-arg constructor
 	 */
 	public User() {
 		personalTags = new ArrayList<GameTag>();
-		wishlist = new TreeSet<Game>();
-		hatelist = new TreeSet<Game>();
+		wishlist = new ArrayList<Game>();
+		hatelist = new ArrayList<Game>();
 	}
 
 	/**
@@ -126,21 +124,21 @@ public class User implements Serializable, Comparable<User> {
 	 * @param game to remove from the user's hatelist
 	 */
 	public void removeHatelist(Game game) {
-		// TODO remove game from hatelist
+		hatelist.remove(game); 			
 	}
 
 	/**
 	 * @param tag to remove from the user
 	 */
 	public void removePersonalTags(GameTag tag) {
-		// TODO remove tag from user
+		personalTags.remove(tag);
 	}
 
 	/**
 	 * @param game to remove from the user's wishlist
 	 */
 	public void removeWishlist(Game game) {
-		// TODO remove game from wishlist
+		wishlist.remove(game);
 	}
 
 }
