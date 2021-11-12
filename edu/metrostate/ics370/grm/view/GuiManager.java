@@ -611,6 +611,9 @@ public class GuiManager
    
    public void btnWishlist(int num)
    {
+	   // save game to wishlist
+	   InterfaceSqlSave.addWishlist(dbGuiResults[num]);
+	   
 	   if (dbGuiResults[num] != null && dbGuiResults[num].getName() != null)
 	   {
 		   rm.getDbGamesWishlist()[rm.getNumWishlist()] = dbGuiResults[num];
@@ -623,15 +626,8 @@ public class GuiManager
    
    
    public void btnHatelist(int num) {
-	   // create list of games from user's hatelist
-	   List<Game> hatelist = Arrays.asList(Login.user.getHatelist());
-	   // if game is not on list...
-	   if (!(hatelist.contains(dbGuiResults[num]))) {
-		   // add to user hatelist
-		   Login.user.addHatelist(dbGuiResults[num]);
-		   // add to hatelist on database
-		   InterfaceSqlSave.addHatelist(dbGuiResults[num]);
-	   }
+	   // save game to hatelist
+	   InterfaceSqlSave.addHatelist(dbGuiResults[num]);
 	   
 	   if (dbGuiResults[num] != null && dbGuiResults[num].getName() != null)
 	   {
