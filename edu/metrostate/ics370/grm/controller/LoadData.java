@@ -52,7 +52,7 @@ public abstract class LoadData {
 				) {
 			List<GameTag> tags = new ArrayList<>();
 			while (rs.next()) {
-				GameTag tag = new GameTag(rs.getInt("tag_id"), rs.getString("tag_name"));
+				GameTag tag = new GameTag(rs.getString("tag_name"));
 				tags.add(tag);
 			}
 			return tags.toArray(new GameTag[tags.size()]);

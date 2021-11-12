@@ -42,32 +42,6 @@ public class RecommendationManager
     	//setUser(new User());
     	gm = new GuiManager(this);
     }
-    
-    
-    public void add_choice(String ttag, int val)
-    {
-        boolean included = false;
-        for (int x = 0; x < dbTags.length; x++)
-        {
-            if (dbTags[x].getTag() == ttag)
-            {
-                included = true;
-                dbTags[x].setVal(dbTags[x].getVal() + val);
-                break;
-            }
-        }
-
-        if (!included)
-        {
-            var ntag = new GameTag();
-            ntag.setTag(ttag);
-            ntag.setVal(val);
-            dbTags[numTagsUsed] = ntag;
-            numTagsUsed++;
-            //dbTags.add(ntag);
-        }
-    }
-    
 
     public void showResults()
     {
@@ -196,10 +170,11 @@ public class RecommendationManager
     public void guiChoiceSelected(GuiChoice tgchoice)
     {
         for (int x = 0; x < tgchoice.getDbTags().length; x++)
-            add_choice(tgchoice.getDbTags()[x].getTag(), 1); //tgchoice.dbTags[x].val);
+        	// TODO user.addPersonalTags(tag);		-- replaces add_choice method
+            // add_choice(tgchoice.getDbTags()[x].getTag(), 1); //tgchoice.dbTags[x].val);
         qnum++;
 
-        if (qnum >= totalQuestions) //Out of questions//
+        if (qnum >= dbQuestions.length) //Out of questions//
             qnum = 0;
 
         showResults();

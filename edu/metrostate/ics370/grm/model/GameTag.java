@@ -17,7 +17,7 @@ public class GameTag implements Serializable
 	private static final long serialVersionUID = 202110001L;
 	
 	private String name;
-    private int val;
+    private int val = 1;
 
     
     /**
@@ -39,19 +39,16 @@ public class GameTag implements Serializable
 	/**
 	 * @return the name
 	 */
-	public String getName()
-	{
+	public String getName() {
 		return name;
 	}
 	
-	public int getVal()
-	{
+	public int getVal() {
 		return val;
 	}
 
 	
-	public void setVal(int val)
-	{
-		this.val = val;
+	public void upVal() {
+		this.val++;
 	}
 }

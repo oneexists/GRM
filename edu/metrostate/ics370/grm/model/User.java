@@ -2,6 +2,7 @@ package edu.metrostate.ics370.grm.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.TreeSet;
@@ -25,7 +26,7 @@ public class User implements Serializable, Comparable<User> {
 	private String username;
 	private LocalDate dateOfBirth;
 	private Gender gender;
-	private Collection<GameTag> personalTags;
+	private ArrayList<GameTag> personalTags;
 	private Collection<Game> wishlist;
 	private Collection<Game> hatelist;
 	
@@ -33,7 +34,7 @@ public class User implements Serializable, Comparable<User> {
 	 * No-arg constructor
 	 */
 	public User() {
-		personalTags = new TreeSet<GameTag>();
+		personalTags = new ArrayList<GameTag>();
 		wishlist = new TreeSet<Game>();
 		hatelist = new TreeSet<Game>();
 	}
@@ -63,7 +64,13 @@ public class User implements Serializable, Comparable<User> {
 	/**
 	 * @param tag to add to user
 	 */
-	public void addPersonalTags(GameTag tag) { this.personalTags.add(tag); }
+	public void addPersonalTags(GameTag tag) { 
+		if (personalTags.contains(tag)) {
+			personalTags.get(personalTags.indexOf(tag)).upVal();
+		} else {
+			personalTags.add(tag); 			
+		}
+	}
 
 	/**
 	 * @param game to add to the wishlist of the user
