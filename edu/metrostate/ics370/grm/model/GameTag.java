@@ -16,7 +16,6 @@ public class GameTag implements Serializable
 	 */
 	private static final long serialVersionUID = 202110001L;
 	
-	private int id;
 	private String name;
     private int val;
 
@@ -33,16 +32,8 @@ public class GameTag implements Serializable
 	 * @param id id of the GameTag
 	 * @param name name of the GameTag
 	 */
-	public GameTag(int id, String name) {
-		this.id = id;
+	public GameTag(String name) {
 		this.name = name;
-	}
-
-	/**
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
 	}
 	
 	/**
