@@ -119,21 +119,21 @@ public class User implements Serializable, Comparable<User> {
 	 * @param game to remove from the user's hatelist
 	 */
 	public void removeHatelist(Game game) {
-		// TODO remove game from hatelist
+		hatelist.remove(game);
 	}
 
 	/**
 	 * @param tag to remove from the user
 	 */
 	public void removePersonalTags(GameTag tag) {
-		// TODO remove tag from user
+		personalTags.remove(tag);
 	}
 
 	/**
 	 * @param game to remove from the user's wishlist
 	 */
 	public void removeWishlist(Game game) {
-		// TODO remove game from wishlist
+		wishlist.remove(game);
 	}
 
 }
