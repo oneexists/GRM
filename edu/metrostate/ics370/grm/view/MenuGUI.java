@@ -13,7 +13,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import edu.metrostate.ics370.grm.controller.Login;
-import edu.metrostate.ics370.grm.model.RecommendationManager;
 
 /**
  * @author skylar
