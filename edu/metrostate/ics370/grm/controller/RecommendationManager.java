@@ -17,15 +17,7 @@ public class RecommendationManager {
     	QuestionnaireInterface.getGames();
     }
 
-    public void showResults()
-    {
-        //for (int x = 0; x < dbGuiResults.length; x++)
-    	//    DestroyImmediate(dbGuiResults[x].gameObject);
-    	//dbGuiResults.Clear();
-    	//List<Game> dbCheckWishlist = new ArrayList<>(Arrays.asList(user.dbGamesWishlist));
-    	//List<Game> dbCheckRemoved = new ArrayList<>(Arrays.asList(user.dbGamesRemoved));
-
-
+    public void showResults() {
         Game dbPotentialGames[] = new Game[QuestionnaireInterface.games.length];
         //for (int i = 0; i < dbPotentialGames.length; i++)
         //	dbPotentialGames[i] = new Game();
@@ -141,54 +133,48 @@ public class RecommendationManager {
         }
     }
 
-    public void guiChoiceSelected(QuestionChoice tgchoice)
-    {
-        for (int x = 0; x < tgchoice.getTags().length; x++) {
-        	QuestionnaireInterface.addPersonalTag(tgchoice.getTags()[x]);
-        }
-        qnum++;
-
-        if (qnum >= QuestionnaireInterface.questions.length) //Out of questions//
-            qnum = 0;
-
-        showResults();
-        setQuestion();
+    /**
+     * Saves tags from QuestionChoice to user's personal tags
+     * Updates results
+     * Sets next question
+     * 
+     * @param choice that was selected
+     */
+    public void selectChoice(QuestionChoice choice) {
+    	// save tags
+    	for (GameTag tag : choice.getTags()) {
+    		QuestionnaireInterface.addPersonalTag(tag);
+    	}
+    	// TODO show results
+    	// set next question
+    	nextQuestion();
     }
 
+    // increments question number to next question
+	private void nextQuestion() {
+		// TODO set next question
+		if (qnum < QuestionnaireInterface.games.length) {
+			qnum++;			
+		}
+	}
 
-    public void btnAddGame(Game tgresult)
-    {
-    	// add game to wishlist
-    	QuestionnaireInterface.addWishlist(tgresult);
-    	
-        //tgresult.state = "moving"; //Animation game being added to profile/wishlist//
-        //StartCoroutine(delayed_show_results(1));
-        showResults();
-    }
-
-
-    public void btnRemoveGame(Game tgresult)
-    {
-    	// add game to hatelist
-    	QuestionnaireInterface.addHatelist(tgresult);
-    	
-        //user.dbGamesRemoved.Add(tgresult.game_s);
-        getHatelist()[getHatelist().length] = tgresult;
-        //tgresult.state = "deleting"; //Animation game being deleted//
-        //StartCoroutine(delayed_show_results(1));
-        showResults();
-    }
-
-
-	public QuestionChoice[] getQuestionChoices()
-	{
+	/**
+	 * @return the question choices
+	 */
+	public QuestionChoice[] getQuestionChoices() {
 		return questionChoices;
 	}
 
+	/**
+	 * @return the user's wishlist
+	 */
 	public Game[] getWishlist() {
 		return Login.user.getWishlist();
 	}
 
+	/**
+	 * @return the user's hatelist
+	 */
 	public Game[] getHatelist() {
 		return Login.user.getHatelist();
 	}
