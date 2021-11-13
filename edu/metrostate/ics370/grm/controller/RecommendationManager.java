@@ -1,14 +1,11 @@
-package edu.metrostate.ics370.grm.model;
-import edu.metrostate.ics370.grm.controller.LoadData;
-import edu.metrostate.ics370.grm.controller.Login;
-import edu.metrostate.ics370.grm.controller.QuestionnaireInterface;
-import edu.metrostate.ics370.grm.view.GuiChoice;
-import edu.metrostate.ics370.grm.view.GuiManager;
+package edu.metrostate.ics370.grm.controller;
+import edu.metrostate.ics370.grm.model.Game;
+import edu.metrostate.ics370.grm.model.GameTag;
+import edu.metrostate.ics370.grm.model.QuestionChoice;
 
 
 public class RecommendationManager {
 	private int qnum;
-    private GuiManager gm;
     private QuestionChoice[] questionChoices;
     
     
@@ -18,8 +15,6 @@ public class RecommendationManager {
     	
     	// load games from file
     	QuestionnaireInterface.getGames();
-    	
-    	gm = new GuiManager(this);
     }
 
     public void showResults()
@@ -202,6 +197,6 @@ public class RecommendationManager {
 	 * @return the dbTags
 	 */
 	public GameTag[] getTags() {
-		return LoadData.getTags().clone();
+		return QuestionnaireInterface.getTags().clone();
 	}
 }

@@ -21,7 +21,7 @@ import edu.metrostate.ics370.grm.model.QuestionChoice;
 
 /**
  * @author skylar
- *
+ * @author nick
  */
 public abstract class QuestionnaireInterface {
 	public static Question[] questions;
@@ -125,6 +125,28 @@ public abstract class QuestionnaireInterface {
         		games[games.length] = new Game(appId, name, rating, tags);        		
         	}
         }
+	}
+	
+	/**
+	 * Returns all tags used in questionnaire
+	 * 
+	 * @return GameTag array
+	 */
+	public static GameTag[] getTags() {
+		String sql = "SELECT tag_id, tag_name FROM GameTag";
+		try (	Statement stmt = Connector.getInstance().getConnection().createStatement();
+				ResultSet rs = stmt.executeQuery(sql);
+				) {
+			List<GameTag> tags = new ArrayList<>();
+			while (rs.next()) {
+				GameTag tag = new GameTag(rs.getString("tag_name"));
+				tags.add(tag);
+			}
+			return tags.toArray(new GameTag[tags.size()]);
+		} catch (SQLException e) {
+			Connector.processException(e);
+			return null;
+		}
 	}
 	
 	/**
