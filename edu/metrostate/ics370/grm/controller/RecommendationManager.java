@@ -1,6 +1,7 @@
 package edu.metrostate.ics370.grm.controller;
 import edu.metrostate.ics370.grm.model.Game;
 import edu.metrostate.ics370.grm.model.GameTag;
+import edu.metrostate.ics370.grm.model.Question;
 import edu.metrostate.ics370.grm.model.QuestionChoice;
 
 
@@ -12,26 +13,25 @@ public class RecommendationManager {
     public RecommendationManager() { 	
     	// get questions from database
     	QuestionnaireInterface.getQuestions();
-    	
     	// load games from file
     	QuestionnaireInterface.getGames();
     }
+    
+    private Game[] getGames() {
+    	return QuestionnaireInterface.games.clone();
+    }
 
     public void showResults() {
-        Game dbPotentialGames[] = new Game[QuestionnaireInterface.games.length];
-        //for (int i = 0; i < dbPotentialGames.length; i++)
-        //	dbPotentialGames[i] = new Game();
-
         int numPotentials = 0;
 
         for (int x = 0; x < getTags().length; x++)
         {
-            for (int y = 0; y < QuestionnaireInterface.games.length; y++)
+            for (int y = 0; y < getGames().length; y++)
             {
             	boolean contains = false;
-            	for (int i = 0; i < dbPotentialGames.length; i++)
+            	for (int i = 0; i < getGames().length; i++)
             	{
-            		if (dbPotentialGames[i] == QuestionnaireInterface.games[y])
+            		if (getGames()[i] == getGames()[y])
             		{
             			contains = true;
             			break;
@@ -39,7 +39,7 @@ public class RecommendationManager {
             	}
             	for (int i = 0; i < getWishlist().length; i++)
             	{
-            		if (getWishlist()[i] == QuestionnaireInterface.games[y])
+            		if (getWishlist()[i] == getGames()[y])
             		{
             			contains = true;
             			break;
@@ -47,7 +47,7 @@ public class RecommendationManager {
             	}
             	for (int i = 0; i < getHatelist().length; i++)
             	{
-            		if (getHatelist()[i] == QuestionnaireInterface.games[y])
+            		if (getHatelist()[i] == getGames()[y])
             		{
             			contains = true;
             			break;
@@ -60,12 +60,12 @@ public class RecommendationManager {
             	if (!contains)
                 {
                     //If game is not in either wishlist or trash//
-                    for (int z = 0; z < QuestionnaireInterface.games[y].getTags().length; z++)
+                    for (int z = 0; z < getGames()[y].getTags().length; z++)
                     {
-                        if (getTags()[x].getName() == QuestionnaireInterface.games[y].getTags()[z].getName())
+                        if (getTags()[x].getName() == getGames()[y].getTags()[z].getName())
                         {
                         	//dbPotentialGames.Add(gl.dbGames[y]);
-                        	dbPotentialGames[numPotentials] = QuestionnaireInterface.games[y];
+                        	getGames()[numPotentials] = getGames()[y];
                         	numPotentials++;
                             break;
                         }
@@ -77,15 +77,15 @@ public class RecommendationManager {
         //Modify rating by tags//
         for (int x = 0; x < numPotentials; x++)
         {
-            for (int y = 0; y < dbPotentialGames[x].getTags().length; y++)
+            for (int y = 0; y < getGames()[x].getTags().length; y++)
             {
                 for (int z = 0; z < getTags().length; z++)
                 {
                     var mod = 1;
-                    if (dbPotentialGames[x].getTags()[y].getName() == getTags()[z].getName())
+                    if (getGames()[x].getTags()[y].getName() == getTags()[z].getName())
                     {
                         mod = Math.round(getTags()[z].getVal() * 0.5f);
-                        dbPotentialGames[x].setRating(dbPotentialGames[x].getRating() + mod);
+                        getGames()[x].setRating(getGames()[x].getRating() + mod);
                     }
                 }
             }
@@ -105,15 +105,15 @@ public class RecommendationManager {
         	int besti = 0;
             for (int i = 0; i < numPotentials; i++)
             {
-            	if (dbPotentialGames[i].getRating() > bestRating)
+            	if (getGames()[i].getRating() > bestRating)
             	{
-            		bestRating = dbPotentialGames[i].getRating();
+            		bestRating = getGames()[i].getRating();
             		besti = i;
             	}
             }
             //System.out.println("x: " + x); //+ " dbTop " + dbTopGames[x].getName());
-            dbTopGames[x] = dbPotentialGames[besti];
-            dbPotentialGames[besti].setRating(0); //So we don't use this same one again//
+            dbTopGames[x] = getGames()[besti];
+            getGames()[besti].setRating(0); //So we don't use this same one again//
         }
         
 
