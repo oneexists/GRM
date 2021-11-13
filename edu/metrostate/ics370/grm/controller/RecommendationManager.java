@@ -6,19 +6,13 @@ import edu.metrostate.ics370.grm.model.QuestionChoice;
 
 
 public class RecommendationManager {
-	private int qnum;
-    private QuestionChoice[] questionChoices;
-    
+	private int qnum;    
     
     public RecommendationManager() { 	
     	// get questions from database
     	QuestionnaireInterface.getQuestions();
     	// load games from file
     	QuestionnaireInterface.getGames();
-    }
-    
-    private Game[] getGames() {
-    	return QuestionnaireInterface.games.clone();
     }
 
     public void showResults() {
@@ -139,32 +133,20 @@ public class RecommendationManager {
 			qnum++;			
 		}
 	}
-
-	/**
-	 * @return the question choices
-	 */
-	public QuestionChoice[] getQuestionChoices() {
-		return questionChoices;
+	
+	private Game[] getGames() {
+		return QuestionnaireInterface.games.clone();
 	}
 
-	/**
-	 * @return the user's wishlist
-	 */
-	public Game[] getWishlist() {
+	private Game[] getWishlist() {
 		return Login.user.getWishlist();
 	}
 
-	/**
-	 * @return the user's hatelist
-	 */
-	public Game[] getHatelist() {
+	private Game[] getHatelist() {
 		return Login.user.getHatelist();
 	}
 
-	/**
-	 * @return the dbTags
-	 */
-	public GameTag[] getTags() {
+	private GameTag[] getTags() {
 		return QuestionnaireInterface.getTags().clone();
 	}
 }

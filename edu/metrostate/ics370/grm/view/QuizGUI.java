@@ -27,6 +27,7 @@ public class QuizGUI extends JPanel {
 	private JLabel promptLabel;
 	private JLabel backgroundLabel;
 	private JButton[] wishlistButtons;
+	private JButton[] wishlistRemoveButtons;
 	private JButton[] removeGameButtons;
 	private JButton[] answerButtons;
 	private JButton[] topGameButtons;
@@ -55,6 +56,8 @@ public class QuizGUI extends JPanel {
 	 */
 	public void initialize() {
 		quizPanel = new JPanel();
+		
+		setupWishlist();
 		//**Menu Button - Questions**//
 		btnQuestions = new JButton("Questions"); 		//creating instance of JButton
 		btnQuestions.setBounds(1400, 50, 150, 70); 		//x axis, y axis, width, height
@@ -352,55 +355,41 @@ public class QuizGUI extends JPanel {
 //		
 //   }
    
-   
-//   public void setupGuiWishlist()
-//   {
-//	   Font fontGames = new Font("serif", Font.BOLD, 20);
-//	   
-//	   for (int i = 0; i < dbBtnGamesWishlist.length; i++)
-//	   {
-//		   int ti = i;
-//		   //**List Of Games In Wishlist & Hatelist**//
-//		   dbBtnGamesWishlist[ti] = new JButton(""); //creating instance of JButton
-//		   int height = 100 + (ti * 50);
-//		   dbBtnGamesWishlist[ti].setBounds(700, height, 400, 50);
-//		   dbBtnGamesWishlist[ti].setFont(fontGames);
-//		   dbBtnGamesWishlist[ti].setBackground(Color.black);
-//		   dbBtnGamesWishlist[ti].setForeground(Color.white);
-//		   dbBtnGamesWishlist[ti].setOpaque(true);
-//		   dbBtnGamesWishlist[ti].setVisible(false);
-//		   dbBtnGamesWishlist[ti].addActionListener(new ActionListener()
-//		   {
-//			   @Override
-//			   public void actionPerformed(ActionEvent e)
-//			   {
-//				   btnWishlistGame(ti); //This needs to be be assigned to the button somehow//
-//			   }
-//		   });
-//		   frame.add(dbBtnGamesWishlist[ti]); //adding button in JFrame
-//
-//		   
-//		   dbBtnGamesWishlistRemove[ti] = new JButton("-"); //creating instance of JButton
-//		   //height = 100 + (ti * 50);
-//		   dbBtnGamesWishlistRemove[ti].setBounds(650, height, 50, 50);
-//		   dbBtnGamesWishlistRemove[ti].setFont(fontGames);
-//		   dbBtnGamesWishlistRemove[ti].setBackground(Color.red);
-//		   dbBtnGamesWishlistRemove[ti].setForeground(Color.white);
-//		   dbBtnGamesWishlistRemove[ti].setOpaque(true);
-//		   dbBtnGamesWishlistRemove[ti].setVisible(false);
-//		   dbBtnGamesWishlistRemove[ti].addActionListener(new ActionListener()
-//		   {
-//			   @Override
-//			   public void actionPerformed(ActionEvent e)
-//			   {
-//				   btnWishlistGameRemove(ti); //This needs to be be assigned to the button somehow//
-//			   }
-//		   });
-//		   frame.add(dbBtnGamesWishlistRemove[ti]); //adding button in JFrame
-//	   
-//	   }
-//   }
-   
+
+	private void setupWishlist() {
+		for (int i=0; i<17; i++) {
+			wishlistButtons[i] = new JButton("");
+			int height = 100 + (i * 50);
+			wishlistButtons[i].setBounds(700, height, 400, 50);
+			wishlistButtons[i].setFont(fontGames);
+			wishlistButtons[i].setBackground(Color.black);
+			wishlistButtons[i].setForeground(Color.white);
+			wishlistButtons[i].setOpaque(true);
+			wishlistButtons[i].setVisible(false);
+			wishlistButtons[i].addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO add wishlist button action
+				}
+			});
+			quizPanel.add(wishlistButtons[i]);
+			
+			wishlistRemoveButtons[i] = new JButton("-");
+			wishlistRemoveButtons[i].setBounds(650, height, 50, 50);
+			wishlistRemoveButtons[i].setFont(fontGames);
+			wishlistRemoveButtons[i].setBackground(Color.red);
+			wishlistRemoveButtons[i].setForeground(Color.white);
+			wishlistRemoveButtons[i].setOpaque(true);
+			wishlistRemoveButtons[i].setVisible(false);
+			wishlistRemoveButtons[i].addActionListener(new ActionListener() {
+			   @Override
+			   public void actionPerformed(ActionEvent e) {
+				   // TODO add wishlist remove button action
+			   }
+		   });
+		   quizPanel.add(wishlistRemoveButtons[i]);
+		   }
+	}
    
 //   public void btnWishlistScreen()
 //   {
