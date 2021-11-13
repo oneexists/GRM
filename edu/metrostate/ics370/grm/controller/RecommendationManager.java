@@ -54,9 +54,6 @@ public class RecommendationManager {
             		}
             	}
             	
-                //if (!dbPotentialGames.Contains(gl.dbGames[y]) && !user.dbGamesWishlist.Contains(gl.dbGames[y]) && !user.dbGamesRemoved.Contains(gl.dbGames[y]))
-            	//List<Game> dbCheck = new ArrayList<>(Arrays.asList(dbPotentialGames));
-            	//if (!dbCheck.contains(gl.dbGames[y]) && !dbCheckWishlist.contains(gl.dbGames[y]) && !dbCheckRemoved.contains(gl.dbGames[y]))
             	if (!contains)
                 {
                     //If game is not in either wishlist or trash//
@@ -90,11 +87,6 @@ public class RecommendationManager {
                 }
             }
         }
-
-
-        //tohs.db_morphs = tohs.db_morphs.OrderBy(w => (w.delay + w.dur)).ToList();
-        //dbPotentialGames = dbPotentialGames.OrderBy(w => w.rating).ToList();
-        //Arrays.sort(dbPotentialGames);
         
         //Inefficient temporary sorting code, can make nicer later//
         Game dbTopGames[] = new Game[5];
@@ -111,23 +103,13 @@ public class RecommendationManager {
             		besti = i;
             	}
             }
-            //System.out.println("x: " + x); //+ " dbTop " + dbTopGames[x].getName());
             dbTopGames[x] = getGames()[besti];
             getGames()[besti].setRating(0); //So we don't use this same one again//
         }
         
 
-        //int num = dbPotentialGames.length;
-        //num = Math.Clamp(num, 0, 5);
-        //System.out.println(dbTopGames.length);
         for (int x = 0; x < dbTopGames.length; x++)
         {
-            //var tgo = (GameObject) Instantiate(prefab_gui_result, prefab_gui_result.transform.position, prefab_gui_result.transform.rotation, prefab_gui_result.transform.parent);
-        	//var gres = tgo.GetComponent<gui_result>();
-        	//gres.txt_nam.text = dbPotentialGames[x].nam;
-        	//gres.game_s = dbPotentialGames[x];
-        	//db_gui_results.Add(gres);
-        	//tgo.SetActive(true);
         	gm.getDbBtnGames()[x].setText(dbTopGames[x].getName());
         	gm.getDbGuiResults()[x] = dbTopGames[x];
         }
