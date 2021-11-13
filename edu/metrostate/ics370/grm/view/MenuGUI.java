@@ -16,7 +16,6 @@ import edu.metrostate.ics370.grm.controller.Login;
 
 /**
  * @author skylar
- *
  */
 public class MenuGUI extends JPanel {
 

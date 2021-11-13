@@ -14,6 +14,10 @@ import edu.metrostate.ics370.grm.controller.RecommendationManaager;
 import edu.metrostate.ics370.grm.model.Game;
 
 
+/**
+ * @author skylar
+ * @author christian
+ */
 public class QuizGUI extends JFrame {
 	/**
 	 * Version of the Quiz Panel

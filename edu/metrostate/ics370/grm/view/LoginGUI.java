@@ -17,7 +17,6 @@ import edu.metrostate.ics370.grm.controller.Login;
 
 /**
  * @author skylar
- *
  */
 public class LoginGUI implements ActionListener {
 	// login messages

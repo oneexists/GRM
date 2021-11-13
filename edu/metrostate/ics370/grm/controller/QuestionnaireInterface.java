@@ -19,6 +19,7 @@ import edu.metrostate.ics370.grm.model.QuestionChoice;
 /**
  * @author skylar
  * @author nick
+ * @author christian
  */
 public abstract class QuestionnaireInterface {
 	public static Question[] questions;
