@@ -67,19 +67,20 @@ public class MenuGUI extends JPanel {
 		takeQuiz = new JButton("Take Quiz");
 		takeQuiz.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e)
-			{
+			public void actionPerformed(ActionEvent e) {
 				// TODO implement take quiz frame
-				RecommendationManager rms;
-				try
-				{
-					rms = new RecommendationManager();
-				}
-				catch (Exception e1)
-				{
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				QuizGUI quiz = new QuizGUI();
+				quiz.initialize();
+//				RecommendationManager rms;
+//				try
+//				{
+//					rms = new RecommendationManager();
+//				}
+//				catch (Exception e1)
+//				{
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
 			}
 		});
 		menuPanel.add(takeQuiz);
