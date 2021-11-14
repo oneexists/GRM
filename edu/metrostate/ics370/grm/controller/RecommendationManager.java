@@ -8,20 +8,13 @@ import edu.metrostate.ics370.grm.model.Question;
  * @author skylar
  * @author christian
  */
-public abstract class RecommendationManaager {
+public abstract class RecommendationManager {
 	private static int qNum = 0;
-	private static Question question;
 	
 	/**
 	 * No-arg constructor
 	 */
-	public RecommendationManaager() {
-		// get questions from database
-		QuestionnaireInterface.getQuestions();
-		// load games from file
-		QuestionnaireInterface.getGames();
-		// set first question
-		question = getQuestions()[qNum];
+	public RecommendationManager() {
 	}
 	
 	public static void getResults() {
@@ -30,7 +23,7 @@ public abstract class RecommendationManaager {
 
 	public static void selectChoice(int i) {
 		// save tags
-		for (GameTag tag : question.getChoices()[i].getTags()) {
+		for (GameTag tag : getQuestions()[qNum].getChoices()[i].getTags()) {
 			QuestionnaireInterface.addPersonalTag(tag);
 		}
 		getResults();
@@ -38,9 +31,12 @@ public abstract class RecommendationManaager {
 		// TODO refresh gui
 	}
 	
+	public static Question getQuestion() {
+		return getQuestions()[qNum];
+	}
 	private static void nextQuestion() {
 		if (qNum < getGames().length) {
-			question = getQuestions()[qNum];
+			getQuestions()[qNum] = getQuestions()[qNum];
 			qNum++;
 		} else {
 			// TODO end questionnaire: out of questions
@@ -48,7 +44,7 @@ public abstract class RecommendationManaager {
 	}
 	
 	private static Question[] getQuestions() {
-		return QuestionnaireInterface.questions.clone();
+		return QuestionnaireInterface.getQuestions().clone();
 	}
 	private static Game[] getGames() {
 		return QuestionnaireInterface.games.clone();
