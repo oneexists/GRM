@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import edu.metrostate.ics370.grm.controller.QuestionnaireInterface;
 import edu.metrostate.ics370.grm.controller.RecommendationManager;
@@ -25,7 +24,6 @@ public class QuizGUI extends JFrame {
 	private static final long serialVersionUID = 202111002L;
 	
 	private JFrame frame;
-	private JPanel quizPanel;
 	private JButton btnQuestions;
 	private JButton btnWishlist;
 	private JButton btnHatelist;
@@ -50,24 +48,22 @@ public class QuizGUI extends JFrame {
 	 * No-arg constructor
 	 */
 	public QuizGUI() {
-		   //**Initialize frame**//
-		   frame = new JFrame("Questionnaire");
-		   frame.setSize(1920,1080);					//400 width and 500 height
-		   frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		   // set background
-		   backgroundLabel = new JLabel();
-		   backgroundLabel.setOpaque(true);
-		   backgroundLabel.setBackground(teal);
-		   frame.add(backgroundLabel);
-		   frame.setVisible(true);						//making frame visible
+		//**Initialize frame**//
+		frame = new JFrame("Questionnaire");
+		frame.setSize(1920,1080);					//400 width and 500 height
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		// set background
+		backgroundLabel = new JLabel();
+		backgroundLabel.setOpaque(true);
+		backgroundLabel.setBackground(teal);
+		frame.add(backgroundLabel);
 	}
 	
 	/**
 	 * Initialize Quiz
 	 */
 	public void initialize() {
-		quizPanel = new JPanel();
-		
 		setupWishlist();
 		setupMenu();
 		setupQuestions();
@@ -75,7 +71,8 @@ public class QuizGUI extends JFrame {
 		setupTopWishlist();
 		setupTopGamesRemove();
 
-		frame.add(quizPanel);						//add panel to frame
+		frame.setLayout(null);
+		frame.setVisible(true);
 	}
 
 	private void setupTopGamesRemove() {
@@ -90,7 +87,7 @@ public class QuizGUI extends JFrame {
 		        QuestionnaireInterface.addHatelist(gameResults[0]);
 		    }
 		});
-		quizPanel.add(removeGameButtons[0]);
+		frame.add(removeGameButtons[0]);
 		
 		removeGameButtons[1] = new JButton("-");
 		removeGameButtons[1].setBounds(950, 350, 50, 50);
@@ -102,7 +99,7 @@ public class QuizGUI extends JFrame {
 		        QuestionnaireInterface.addHatelist(gameResults[1]);
 		    }
 		});
-		quizPanel.add(removeGameButtons[1]);
+		frame.add(removeGameButtons[1]);
 		
 		removeGameButtons[2] = new JButton("-");
 		removeGameButtons[2].setBounds(950, 400, 50, 50);
@@ -114,7 +111,7 @@ public class QuizGUI extends JFrame {
 		        QuestionnaireInterface.addHatelist(gameResults[0]);
 		    }
 		});
-		quizPanel.add(removeGameButtons[2]);
+		frame.add(removeGameButtons[2]);
 		
 		removeGameButtons[3] = new JButton("-");
 		removeGameButtons[3].setBounds(950, 450, 50, 50);
@@ -126,7 +123,7 @@ public class QuizGUI extends JFrame {
 		        QuestionnaireInterface.addHatelist(gameResults[3]);
 		    }
 		});
-		quizPanel.add(removeGameButtons[3]);
+		frame.add(removeGameButtons[3]);
 		
 		removeGameButtons[4] = new JButton("-");
 		removeGameButtons[4].setBounds(950, 500, 50, 50);
@@ -138,7 +135,7 @@ public class QuizGUI extends JFrame {
 		        QuestionnaireInterface.addHatelist(gameResults[4]);
 		    }
 		});
-		quizPanel.add(removeGameButtons[4]);
+		frame.add(removeGameButtons[4]);
 	}
 
 	private void setupTopWishlist() {
@@ -153,7 +150,7 @@ public class QuizGUI extends JFrame {
 		    	QuestionnaireInterface.addWishlist(gameResults[0]);
 		    }
 		});
-		quizPanel.add(wishlistButtons[0]);
+		frame.add(wishlistButtons[0]);
 		
 		wishlistButtons[1] = new JButton("+");
 		wishlistButtons[1].setBounds(900, 350, 50, 50);
@@ -165,7 +162,7 @@ public class QuizGUI extends JFrame {
 		    	QuestionnaireInterface.addWishlist(gameResults[1]);
 		    }
 		});
-		quizPanel.add(wishlistButtons[1]);
+		frame.add(wishlistButtons[1]);
 		
 		wishlistButtons[2] = new JButton("+");
 		wishlistButtons[2].setBounds(900, 400, 50, 50);
@@ -177,7 +174,7 @@ public class QuizGUI extends JFrame {
 		    	QuestionnaireInterface.addWishlist(gameResults[2]);
 		    }
 		});
-		quizPanel.add(wishlistButtons[2]);
+		frame.add(wishlistButtons[2]);
 		
 		wishlistButtons[3] = new JButton("+");
 		wishlistButtons[3].setBounds(900, 450, 50, 50);
@@ -189,7 +186,7 @@ public class QuizGUI extends JFrame {
 		    	QuestionnaireInterface.addWishlist(gameResults[3]);
 		    }
 		});
-		quizPanel.add(wishlistButtons[3]);
+		frame.add(wishlistButtons[3]);
 		
 		wishlistButtons[4] = new JButton("+");
 		wishlistButtons[4].setBounds(900, 500, 50, 50);
@@ -201,7 +198,7 @@ public class QuizGUI extends JFrame {
 		    	QuestionnaireInterface.addWishlist(gameResults[4]);
 		    }
 		});
-		quizPanel.add(wishlistButtons[4]);
+		frame.add(wishlistButtons[4]);
 	}
 
 	private void setupTopGames() {
@@ -211,92 +208,92 @@ public class QuizGUI extends JFrame {
 		topGameButtons[0].setFont(fontGames);
 		topGameButtons[0].setBackground(Color.black);
 		topGameButtons[0].setForeground(Color.white);
-		quizPanel.add(topGameButtons[0]);
+		frame.add(topGameButtons[0]);
 		
 		topGameButtons[1] = new JButton("");
 		topGameButtons[1].setBounds(1000, 350, 400, 50);
 		topGameButtons[1].setFont(fontGames);
 		topGameButtons[1].setBackground(Color.black);
 		topGameButtons[1].setForeground(Color.white);
-		quizPanel.add(topGameButtons[1]);
+		frame.add(topGameButtons[1]);
 		
 		topGameButtons[2] = new JButton("");
 		topGameButtons[2].setBounds(1000, 400, 400, 50);
 		topGameButtons[2].setFont(fontGames);
 		topGameButtons[2].setBackground(Color.black);
 		topGameButtons[2].setForeground(Color.white);
-		quizPanel.add(topGameButtons[2]);
+		frame.add(topGameButtons[2]);
 		
 		topGameButtons[3] = new JButton("");
 		topGameButtons[3].setBounds(1000, 450, 400, 50);
 		topGameButtons[3].setFont(fontGames);
 		topGameButtons[3].setBackground(Color.black);
 		topGameButtons[3].setForeground(Color.white);
-		quizPanel.add(topGameButtons[3]);
+		frame.add(topGameButtons[3]);
 		
 		topGameButtons[4] = new JButton("");
 		topGameButtons[4].setBounds(1000, 500, 400, 50);
 		topGameButtons[4].setFont(fontGames);
 		topGameButtons[4].setBackground(Color.black);
 		topGameButtons[4].setForeground(Color.white);
-		quizPanel.add(topGameButtons[4]);
+		frame.add(topGameButtons[4]);
 	}
 
 	private void setupQuestions() {
 		//**Question Text**//
 		promptLabel = new JLabel(RecommendationManager.getQuestion().getPrompt());
 		promptLabel.setBounds(200, 100, 400, 200);
-		// TODO txtQuestion.setText(getQuestion());
 		promptLabel.setHorizontalAlignment(JLabel.CENTER);
 		promptLabel.setBackground(Color.black);
 		promptLabel.setForeground(Color.white);
 		promptLabel.setOpaque(true);
 		promptLabel.setFont(fontQuestion);
-		//txtQuest = quest;
-		quizPanel.add(promptLabel);
+		promptLabel.setVisible(true);
+		frame.add(promptLabel);
 		
 		//**Answers**//
-		answerButtons[0] = new JButton("Answer 0");
+		answerButtons[0] = new JButton(RecommendationManager.getQuestion().getChoices()[0].getText());
 		answerButtons[0].setBounds(200, 320, 400, 120);
 		answerButtons[0].setFont(fontAnswers);
 		answerButtons[0].setBackground(Color.white);
+		answerButtons[0].setVisible(true);
 		answerButtons[0].addActionListener(new ActionListener() {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
 		    	RecommendationManager.selectChoice(0);
 		    }
 		});
-		quizPanel.add(answerButtons[0]);
+		frame.add(answerButtons[0]);
 		
-		answerButtons[1] = new JButton("Answer 1");
+		answerButtons[1] = new JButton(RecommendationManager.getQuestion().getChoices()[1].getText());
 		answerButtons[1].setBounds(200, 460, 400, 120);
 		answerButtons[1].setFont(fontAnswers);
 		answerButtons[1].setBackground(Color.white);
+		answerButtons[1].setVisible(true);
 		answerButtons[1].addActionListener(new ActionListener()
 		{
 		    @Override
 		    public void actionPerformed(ActionEvent e)
 		    {
-		    	// TODO select choice
-		    	//		replace rm.guiChoiceSelected(rm.getQuestionChoices()[num])
+		    	RecommendationManager.selectChoice(1);
 		    }
 		});
-		quizPanel.add(answerButtons[1]);
+		frame.add(answerButtons[1]);
 		
-		answerButtons[2] = new JButton("");
+		answerButtons[2] = new JButton(RecommendationManager.getQuestion().getChoices()[2].getText());
 		answerButtons[2].setBounds(200, 600, 400, 120);
 		answerButtons[2].setFont(fontAnswers);
 		answerButtons[2].setBackground(Color.white);
+		answerButtons[2].setVisible(true);
 		answerButtons[2].addActionListener(new ActionListener()
 		{
 		    @Override
 		    public void actionPerformed(ActionEvent e)
 		    {
-		    	// TODO select choice
-		    	//		replace rm.guiChoiceSelected(rm.getQuestionChoices()[num])
+		    	RecommendationManager.selectChoice(2);
 		    }
 		});
-		quizPanel.add(answerButtons[2]);
+		frame.add(answerButtons[2]);
 	}
 	    
 
@@ -315,7 +312,7 @@ public class QuizGUI extends JFrame {
 		    	//		replace btnQuestionsScreen()
 		    }
 		});
-		quizPanel.add(btnQuestions); 						//adding button in JFrame
+		frame.add(btnQuestions); 						//adding button in JFrame
 
 		//**Menu Button - Wishlist**//
 		btnWishlist = new JButton("Wishlist");
@@ -331,7 +328,7 @@ public class QuizGUI extends JFrame {
 		    	//		replace btnWishlistScreen()
 		    }
 		});
-		quizPanel.add(btnWishlist);
+		frame.add(btnWishlist);
 
 		//**Menu Button - Hatelist**//
 		btnHatelist = new JButton("Hatelist");
@@ -347,7 +344,7 @@ public class QuizGUI extends JFrame {
 	    		//		replace btnHatelistScreen()
 		    }
 		});
-		quizPanel.add(btnHatelist);		
+		frame.add(btnHatelist);		
 	}
 
 	private void setupWishlist() {
@@ -366,7 +363,7 @@ public class QuizGUI extends JFrame {
 					// TODO add wishlist button action
 				}
 			});
-			quizPanel.add(wishlistAddButtons[i]);
+			frame.add(wishlistAddButtons[i]);
 			
 			wishlistRemoveButtons[i] = new JButton("-");
 			wishlistRemoveButtons[i].setBounds(650, height, 50, 50);
@@ -381,7 +378,7 @@ public class QuizGUI extends JFrame {
 				   // TODO add wishlist remove button action
 			   }
 		   });
-		   quizPanel.add(wishlistRemoveButtons[i]);
+		   frame.add(wishlistRemoveButtons[i]);
 		   }
 	}	
 }
