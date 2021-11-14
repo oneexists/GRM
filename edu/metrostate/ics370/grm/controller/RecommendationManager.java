@@ -28,7 +28,6 @@ public abstract class RecommendationManager {
 		}
 		getResults();
 		nextQuestion();
-		// TODO refresh gui
 	}
 	
 	public static Question getQuestion() {
