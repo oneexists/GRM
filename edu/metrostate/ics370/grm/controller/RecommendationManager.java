@@ -46,6 +46,6 @@ public abstract class RecommendationManager {
 		return QuestionnaireInterface.getQuestions().clone();
 	}
 	private static Game[] getGames() {
-		return QuestionnaireInterface.games.clone();
+		return QuestionnaireInterface.getGames().clone();
 	}
 }
