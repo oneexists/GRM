@@ -81,7 +81,6 @@ public abstract class QuestionnaireInterface {
 		// TODO reads data from file to populate games
         StringBuffer sb = new StringBuffer();
         try {
-        	// TODO add library.txt to project folder
         	FileReader reader = new FileReader("/lib/library.txt");		// path within project for txt file
         	Scanner sc = new Scanner(reader);
         	while (sc.hasNext()) {
@@ -216,22 +215,35 @@ public abstract class QuestionnaireInterface {
 
 	public static void removeWishlist(Game game) {
 		Login.user.removeWishlist(game);
-		// TODO remove game from database wishlist
+		String pSql = "DELETE FROM Wishlist WHERE appId = ?";
+		try (	PreparedStatement pStmt = Connector.getInstance().getConnection().prepareStatement(pSql);
+				) {
+			pStmt.setInt(1, game.getId());
+			pStmt.execute();
+		} catch (SQLException e) {
+			Connector.processException(e);
+		}
 	}
 
 	public static void removeHatelist(Game game) {
 		Login.user.removeHatelist(game);
-		// TODO remove game from database hatelist
-		
+		String pSql = "DELETE FROM Hatelist WHERE appId = ?";
+		try (	PreparedStatement pStmt = Connector.getInstance().getConnection().prepareStatement(pSql);
+				) {
+			pStmt.setInt(1, game.getId());
+			pStmt.execute();
+		} catch (SQLException e) {
+			Connector.processException(e);
+		}
 	}
 
 	public static void addPersonalTag(GameTag gameTag) {
 		List<GameTag> tags = Arrays.asList(Login.user.getPersonalTags());
 		if (!(tags.contains(gameTag))) {
 			Login.user.addPersonalTags(gameTag);
-			// TODO save add personal tag to database
 			// TODO update load_database to include new tables
-			String pSql = "INSERT INTO UserTags(username, tag_id)";		// TODO finish pSql stmt
+			String pSql = "INSERT INTO UserTags(username, tag_name)"
+					+ "VALUES(?, ?)";		// TODO finish pSql stmt
 			try (	PreparedStatement pStmt = Connector.getInstance().getConnection().prepareStatement(pSql);
 					) {
 				pStmt.setString(1, Login.user.getUsername());
