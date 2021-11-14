@@ -49,8 +49,12 @@ public class Question {
 	public QuestionChoice[] getChoices() {
 		return choices;
 	}
+	/**
+	 * Adds new choice to the question
+	 * 
+	 * @param newChoice choice to add
+	 */
 	public void addChoice(QuestionChoice newChoice) {
-		// TODO Auto-generated method stub
 		ArrayList<QuestionChoice> newChoices = new ArrayList<QuestionChoice>();
 		if (choices != null) {
 			for (QuestionChoice choice : choices) {
