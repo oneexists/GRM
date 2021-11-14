@@ -22,7 +22,6 @@ import edu.metrostate.ics370.grm.model.QuestionChoice;
  * @author christian
  */
 public abstract class QuestionnaireInterface {
-	public static Question[] questions;
 	public static Game[] games;
 
 	/**
@@ -152,66 +151,77 @@ public abstract class QuestionnaireInterface {
 	 * 
 	 * @return questionArray with all of the questions
 	 */
-	public static void getQuestions() {
-		Question[] questionArray = null;
-		String sql = "SELECT question_prompt, choice_text, tag_name "
-				+ "FROM Question, SelectChoices, Choice, ChoiceTags, GameTag "
+	public static Question[] getQuestions() {
+		ArrayList<Question> questions = new ArrayList<Question>();
+		String sql = "SELECT question_prompt, choice_text "
+				+ "FROM Question, SelectChoices, Choice "
 				+ "WHERE Question.question_id = SelectChoices.question_id "
 				+ "AND SelectChoices.choice_id = Choice.choice_id "
-				+ "AND Choice.choice_id = ChoiceTags.choice_id "
-				+ "AND ChoiceTags.tag_id = GameTag.tag_id";
+				+ "ORDER BY question_prompt";
 		try (	Statement stmt = Connector.getInstance().getConnection().createStatement();
 				ResultSet rs = stmt.executeQuery(sql);
 				) {
-			ArrayList<Question> questions = new ArrayList<Question>();
+			Question question = new Question();
 			while (rs.next()) {
-				String prompt = rs.getString("question_prompt");
-				ArrayList<QuestionChoice> choices = new ArrayList<QuestionChoice>();
-				while (prompt == rs.getString("question_prompt")) {
-					String choice = rs.getString("choice_text");
-					ArrayList<GameTag> tags = new ArrayList<GameTag>();
-					while (choice == rs.getString("choice_text")) {
-						String tag = rs.getString("tag_name");						
-						tags.add(new GameTag(tag));
-					}
-					GameTag[] tagArray = tags.toArray(new GameTag[tags.size()]);
-					choices.add(new QuestionChoice(choice, tagArray));
+				if (!(rs.getString("question_prompt").equalsIgnoreCase(question.getPrompt()))) {
+					questions.add(question);
+					question.setPrompt(rs.getString("question_prompt"));
 				}
-				QuestionChoice[] choiceArray = choices.toArray(new QuestionChoice[choices.size()]);
-				questions.add(new Question(prompt, choiceArray));
+				String choiceText = rs.getString("choice_text");
+				question.addChoice(new QuestionChoice(choiceText, getChoiceTags(choiceText)));
 			}
-			questionArray = questions.toArray(new Question[questions.size()]);
 		} catch (SQLException e) {
 			Connector.processException(e);
+			return null;
 		}
-		Question[] questionSet =  prepareQuestions(questionArray);
-		questions = questionSet;
+		return prepareQuestions(questions.toArray(new Question[questions.size()]));
 	}
 	
+	private static GameTag[] getChoiceTags(String choiceText) {
+		ArrayList<GameTag> tags = new ArrayList<GameTag>();
+		String pSql = "SELECT tag_name "
+				+ "FROM Choice, GameTag "
+				+ "WHERE Choice.choice_text = ?";
+		try (	PreparedStatement pStmt = Connector.getInstance().getConnection().prepareStatement(pSql);
+				) {
+			pStmt.setString(1, choiceText);
+			ResultSet rs = pStmt.executeQuery();
+			while (rs.next()) {
+				tags.add(new GameTag(rs.getString("tag_name")));
+			}
+		} catch (SQLException e) {
+			Connector.processException(e);
+			return null;
+		}
+		return tags.toArray(new GameTag[tags.size()]);
+	}
+
 	/**
 	 * @param questionArray array of the questions with all choices
 	 * @return qSet array of questions with three choices each
 	 */
 	private static Question[] prepareQuestions(Question[] questionArray) {
 		ArrayList<Question> qSet = new ArrayList<Question>();
+		QuestionChoice[] choices = new QuestionChoice[3];
 		for (Question q : questionArray) {
-			for (int i=0; i<q.getChoices().length-2; i=i+3) {
-				QuestionChoice[] choices = { q.getChoices()[i/3], q.getChoices()[(i+1)/3], q.getChoices()[(i+2)/3] };
-				Question newQuestion = new Question(q.getPrompt(), choices);
-				qSet.add(newQuestion);
-				
+			for (int i=0; i<12; i+=3) {
+				choices[0] = q.getChoices()[i];
+				choices[1] = q.getChoices()[i+1];
+				choices[2] = q.getChoices()[i+2];
+				qSet.add(new Question(q.getPrompt(), choices));				
 			}
 		}
 		return qSet.toArray(new Question[qSet.size()]);
 	}
 
 	public static void removeWishlist(Game game) {
-		// TODO remove game from wishlist
-		
+		Login.user.removeWishlist(game);
+		// TODO remove game from database wishlist
 	}
 
 	public static void removeHatelist(Game game) {
-		// TODO remove game from hatelist
+		Login.user.removeHatelist(game);
+		// TODO remove game from database hatelist
 		
 	}
 
