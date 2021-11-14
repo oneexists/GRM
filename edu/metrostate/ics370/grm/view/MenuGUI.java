@@ -66,7 +66,6 @@ public class MenuGUI extends JPanel {
 		takeQuiz.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO implement take quiz frame
 				QuizGUI quiz = new QuizGUI();
 				quiz.initialize();
 			}
