@@ -77,11 +77,12 @@ public abstract class QuestionnaireInterface {
 	/**
 	 * Gets games from library and populates them into array
 	 */
-	public static void getGames() {
+	public static Game[] getGames() {
 		// TODO reads data from file to populate games
+		ArrayList<Game> newGames = new ArrayList<Game>();
         StringBuffer sb = new StringBuffer();
         try {
-        	FileReader reader = new FileReader("/lib/library.txt");		// path within project for txt file
+        	FileReader reader = new FileReader("lib/library.txt");		// path within project for txt file
         	Scanner sc = new Scanner(reader);
         	while (sc.hasNext()) {
         		sb.append(sc.next());
@@ -118,9 +119,11 @@ public abstract class QuestionnaireInterface {
         		tags[tags.length] = new GameTag(words[i+1]);
         	}
         	if (appId != -1 && name != null) {
-        		games[games.length] = new Game(appId, name, rating, tags);        		
+        		newGames.add(new Game(appId, name, rating, tags));        		
         	}
         }
+        games = newGames.toArray(new Game[newGames.size()]);
+        return games;
 	}
 	
 	/**
