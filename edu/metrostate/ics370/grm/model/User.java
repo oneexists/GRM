@@ -93,7 +93,12 @@ public class User implements Serializable, Comparable<User> {
 	/**
 	 * @return the hatelist of the user
 	 */
-	public Game[] getHatelist() { return hatelist.toArray(new Game[hatelist.size()]); }
+	public Game[] getHatelist() { 
+		if (hatelist != null) {
+			return hatelist.toArray(new Game[hatelist.size()]); 			
+		}
+		return null;
+	}
 
 	/**
 	 * @return the last name of the user
@@ -113,7 +118,12 @@ public class User implements Serializable, Comparable<User> {
 	/**
 	 * @return the wishlist of the user
 	 */
-	public Game[] getWishlist() { return wishlist.toArray(new Game[wishlist.size()]); }
+	public Game[] getWishlist() { 
+		if (wishlist != null) {
+			return wishlist.toArray(new Game[wishlist.size()]); 			
+		}
+		return null;
+	}
 	
 	/**
 	 * @param game to remove from the user's hatelist
