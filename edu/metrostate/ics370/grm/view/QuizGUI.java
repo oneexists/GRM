@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import edu.metrostate.ics370.grm.controller.QuestionnaireInterface;
-import edu.metrostate.ics370.grm.controller.RecommendationManaager;
+import edu.metrostate.ics370.grm.controller.RecommendationManager;
 import edu.metrostate.ics370.grm.model.Game;
 
 
@@ -244,7 +244,7 @@ public class QuizGUI extends JFrame {
 
 	private void setupQuestions() {
 		//**Question Text**//
-		promptLabel = new JLabel();
+		promptLabel = new JLabel(RecommendationManager.getQuestion().getPrompt());
 		promptLabel.setBounds(200, 100, 400, 200);
 		// TODO txtQuestion.setText(getQuestion());
 		promptLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -263,7 +263,7 @@ public class QuizGUI extends JFrame {
 		answerButtons[0].addActionListener(new ActionListener() {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
-		    	RecommendationManaager.selectChoice(0);
+		    	RecommendationManager.selectChoice(0);
 		    }
 		});
 		quizPanel.add(answerButtons[0]);
