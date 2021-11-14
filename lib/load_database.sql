@@ -53,6 +53,12 @@ CREATE TABLE Hatelist (
   FOREIGN KEY(username) REFERENCES User(username)
 );
 
+CREATE TABLE UserTags (
+  username varchar(25) NOT NULL,
+  tag_name varchar(255),
+  FOREIGN KEY(username) REFERENCES User(username)
+);
+
 /* add tags */
 INSERT INTO GameTag(tag_name) VALUES
 ("survival"), 

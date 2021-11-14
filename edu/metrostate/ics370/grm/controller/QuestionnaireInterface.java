@@ -241,9 +241,8 @@ public abstract class QuestionnaireInterface {
 		List<GameTag> tags = Arrays.asList(Login.user.getPersonalTags());
 		if (!(tags.contains(gameTag))) {
 			Login.user.addPersonalTags(gameTag);
-			// TODO update load_database to include new tables
 			String pSql = "INSERT INTO UserTags(username, tag_name)"
-					+ "VALUES(?, ?)";		// TODO finish pSql stmt
+					+ "VALUES(?, ?)";
 			try (	PreparedStatement pStmt = Connector.getInstance().getConnection().prepareStatement(pSql);
 					) {
 				pStmt.setString(1, Login.user.getUsername());

@@ -295,7 +295,6 @@ public class QuizGUI extends JFrame {
 		frame.add(answerButtons[2]);
 	}
 	    
-
 	private void setupMenu() {
 		//**Menu Button - Questions**//
 		btnQuestions = new JButton("Questions"); 		//creating instance of JButton
