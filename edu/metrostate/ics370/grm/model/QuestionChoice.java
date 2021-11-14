@@ -12,7 +12,12 @@ public class QuestionChoice {
 
 	private String text;
 	private GameTag[] tags;
-
+	
+	/**
+	 * No-arg constructor
+	 */
+	public QuestionChoice() {
+	}
 	/**
 	 * Initializes the QuestionChoice
 	 * 
@@ -21,6 +26,20 @@ public class QuestionChoice {
 	 */
 	public QuestionChoice(String text, GameTag[] tags) {
 		this.text = text;
+		this.tags = tags;
+	}
+	
+	/**
+	 * @param text the text to set
+	 */
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	/**
+	 * @param tags the tags to set
+	 */
+	public void setTags(GameTag[] tags) {
 		this.tags = tags;
 	}
 	
