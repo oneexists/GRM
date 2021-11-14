@@ -238,7 +238,12 @@ public abstract class QuestionnaireInterface {
 	}
 
 	public static void addPersonalTag(GameTag gameTag) {
-		List<GameTag> tags = Arrays.asList(Login.user.getPersonalTags());
+		List<GameTag> tags;
+		if (Login.user.getPersonalTags() == null) {
+			tags = new ArrayList<>();
+		} else {
+			tags = Arrays.asList(Login.user.getPersonalTags());			
+		}
 		if (!(tags.contains(gameTag))) {
 			Login.user.addPersonalTags(gameTag);
 			String pSql = "INSERT INTO UserTags(username, tag_name)"
