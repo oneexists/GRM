@@ -101,7 +101,7 @@ public abstract class QuestionnaireInterface {
         int appId = -1;
         String name = null;
         float rating = -1;
-        GameTag[] tags = new GameTag[10];
+        ArrayList<GameTag> tags = new ArrayList<GameTag>();
         
         // TODO verify games populate correctly
         // populate games
@@ -116,10 +116,10 @@ public abstract class QuestionnaireInterface {
         		rating = Float.parseFloat(words[i+1]);
         	}
         	if (words[i].equals("tags")) {
-        		tags[tags.length] = new GameTag(words[i+1]);
+        		tags.add(new GameTag(words[i+1]));
         	}
         	if (appId != -1 && name != null) {
-        		newGames.add(new Game(appId, name, rating, tags));        		
+        		newGames.add(new Game(appId, name, rating, tags.toArray(new GameTag[tags.size()])));        		
         	}
         }
         games = newGames.toArray(new Game[newGames.size()]);
