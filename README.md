@@ -1,32 +1,28 @@
-FIRST DRAFT - I'll Will be Editing this a lot - Feel Free to add to it or change it! \
-https://www.makeareadme.com/ - Useful tool I found if you don't want to use Atom.
+# Game Recomendation Manager ![Alt text](https://img.shields.io/badge/GRM-Game%20Recommendation%20Manager-green?style=for-the-badge&logo=appveyor) 
 
+GRM is a barebones project to better understand different design patterns and how to use GitHub as a team.\
 
-# (GRM) Game Recommendation Manager
-
-GRM is a ground breaking Game Recommendation System.
+Made for ICS 370 at Metropolitan State University. 
 
 ![Alt text](/lib/images/GRM_Quiz.png?raw=true "GRM Quiz")
 
-## Built With
-- Java
-- MySQL
-
 ## Installation
-
+Developed for Windows and Linux and used only in local environments. A standalone jar was never made so you will have to run from your preferred IDE.
 ### Windows
-We used [MySQL Workbench](https://www.mysql.com/products/workbench/) to install and configure the database.
+ #### Software needed
+  * [MySQL Workbench](https://www.mysql.com/products/workbench/) to install and configure the database.
+  * [Xampp](https://www.apachefriends.org/index.html) to run the local server (Many other options).
+#### Steps
+1. Add libraries to IDE from the lib folder.
+2. Add load_database.sql to MySQL workbench from the lib folder to install database.
+3. Launch Xampp and run the local MySQL server.
+4. Run program from your IDE and test with the user info ( user | p@ssword ) or create your own user. 
+  
 
 ### Linux
 ```bash
 sudo apt-get install mysql-server
 ```
 
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
-
 ## License
-? Might not want this \
 [MIT](https://choosealicense.com/licenses/mit/)
