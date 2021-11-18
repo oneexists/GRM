@@ -1,7 +1,5 @@
 package edu.metrostate.ics370.grm.controller;
 
-import java.io.FileReader;
-import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,7 +7,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 import edu.metrostate.ics370.grm.model.Game;
 import edu.metrostate.ics370.grm.model.GameTag;
@@ -23,7 +20,19 @@ import edu.metrostate.ics370.grm.model.QuestionChoice;
  */
 public abstract class QuestionnaireInterface {
 	public static Game[] games;
+	private static int qNum = 0;
+	
+	public static Question getQuestion() {
+		return getQuestions()[qNum];
+	}
+	
 
+	public static void selectChoice(int i) {
+		// save tags
+		for (GameTag tag : getQuestion().getChoices()[i].getTags()) {
+			addPersonalTag(tag);
+		}
+	}
 	/**
 	 * Adds game to hatelist of user and saves in database
 	 * 
@@ -74,86 +83,8 @@ public abstract class QuestionnaireInterface {
 		}
 	}
 	
-	/**
-	 * Gets games from library and populates them into array
-	 */
-	public static Game[] getGames() {
-		// TODO reads data from file to populate games
-		ArrayList<Game> newGames = new ArrayList<Game>();
-        StringBuffer sb = new StringBuffer();
-        try {
-        	FileReader reader = new FileReader("lib/library.txt");		// path within project for txt file
-        	Scanner sc = new Scanner(reader);
-        	while (sc.hasNext()) {
-        		sb.append(sc.next());
-        	}
-        	reader.close();
-        	sc.close();
-        } catch (IOException e) {
-        	// TODO process file IO exception
-        	e.printStackTrace();
-        }
-        
-        String result = sb.toString();
-        result = result.replace(",", " ");
-        String[] words = result.split(" ");
-        
-        int appId = -1;
-        String name = null;
-        float rating = -1;
-        ArrayList<GameTag> tags = new ArrayList<GameTag>();
-        
-        // TODO verify games populate correctly
-        // populate games
-        for (int i=0; i<words.length; i++) {
-        	if (words[i].equals("appid")) {
-        		appId = Integer.parseInt(words[i+1]);
-        	}
-        	if (words[i].equals("name")) {
-        		name = words[i+1];
-        	}
-        	if (words[i].equals("rating")) {
-        		rating = Float.parseFloat(words[i+1]);
-        	}
-        	if (words[i].equals("tags")) {
-        		tags.add(new GameTag(words[i+1]));
-        	}
-        	if (appId != -1 && name != null) {
-        		newGames.add(new Game(appId, name, rating, tags.toArray(new GameTag[tags.size()])));        		
-        	}
-        }
-        games = newGames.toArray(new Game[newGames.size()]);
-        return games;
-	}
-	
-	/**
-	 * Returns all tags used in questionnaire
-	 * 
-	 * @return GameTag array
-	 */
-	public static GameTag[] getTags() {
-		String sql = "SELECT tag_id, tag_name FROM GameTag";
-		try (	Statement stmt = Connector.getInstance().getConnection().createStatement();
-				ResultSet rs = stmt.executeQuery(sql);
-				) {
-			List<GameTag> tags = new ArrayList<>();
-			while (rs.next()) {
-				GameTag tag = new GameTag(rs.getString("tag_name"));
-				tags.add(tag);
-			}
-			return tags.toArray(new GameTag[tags.size()]);
-		} catch (SQLException e) {
-			Connector.processException(e);
-			return null;
-		}
-	}
-	
-	/**
-	 * Returns an array of the questions 
-	 * 
-	 * @return questionArray with all of the questions
-	 */
-	public static Question[] getQuestions() {
+	// Returns an array of the questions 
+	private static Question[] getQuestions() {
 		ArrayList<Question> questions = new ArrayList<Question>();
 		String sql = "SELECT question_prompt, choice_text "
 				+ "FROM Question, SelectChoices, Choice "
@@ -179,6 +110,10 @@ public abstract class QuestionnaireInterface {
 		return prepareQuestions(questions.toArray(new Question[questions.size()]));
 	}
 	
+	/**
+	 * @param choiceText choice of the question
+	 * @return tags the array of GameTags associated with the choice
+	 */
 	private static GameTag[] getChoiceTags(String choiceText) {
 		ArrayList<GameTag> tags = new ArrayList<GameTag>();
 		String pSql = "SELECT tag_name "
@@ -216,31 +151,8 @@ public abstract class QuestionnaireInterface {
 		return qSet.toArray(new Question[qSet.size()]);
 	}
 
-	public static void removeWishlist(Game game) {
-		Login.user.removeWishlist(game);
-		String pSql = "DELETE FROM Wishlist WHERE appId = ?";
-		try (	PreparedStatement pStmt = Connector.getInstance().getConnection().prepareStatement(pSql);
-				) {
-			pStmt.setInt(1, game.getId());
-			pStmt.execute();
-		} catch (SQLException e) {
-			Connector.processException(e);
-		}
-	}
 
-	public static void removeHatelist(Game game) {
-		Login.user.removeHatelist(game);
-		String pSql = "DELETE FROM Hatelist WHERE appId = ?";
-		try (	PreparedStatement pStmt = Connector.getInstance().getConnection().prepareStatement(pSql);
-				) {
-			pStmt.setInt(1, game.getId());
-			pStmt.execute();
-		} catch (SQLException e) {
-			Connector.processException(e);
-		}
-	}
-
-	public static void addPersonalTag(GameTag gameTag) {
+	private static void addPersonalTag(GameTag gameTag) {
 		List<GameTag> tags;
 		if (Login.user.getPersonalTags() == null) {
 			tags = new ArrayList<>();
@@ -262,3 +174,108 @@ public abstract class QuestionnaireInterface {
 		}
 	}
 }
+//	public static void nextQuestion() {
+//		if (qNum < getGames().length) {
+//			qNum++;
+//		} else {
+//			// TODO end of questionnaire: out of questions
+//		}
+//	}
+//	/**
+
+//	 * Gets games from library and populates them into array
+//	 */
+//	public static Game[] getGames() {
+//		// TODO reads data from file to populate games
+//		ArrayList<Game> newGames = new ArrayList<Game>();
+//        StringBuffer sb = new StringBuffer();
+//        try {
+//        	FileReader reader = new FileReader("lib/library.txt");		// path within project for txt file
+//        	Scanner sc = new Scanner(reader);
+//        	while (sc.hasNext()) {
+//        		sb.append(sc.next());
+//        	}
+//        	reader.close();
+//        	sc.close();
+//        } catch (IOException e) {
+//        	// TODO process file IO exception
+//        	e.printStackTrace();
+//        }
+//        
+//        String result = sb.toString();
+//        result = result.replace(",", " ");
+//        String[] words = result.split(" ");
+//        
+//        int appId = -1;
+//        String name = null;
+//        float rating = -1;
+//        ArrayList<GameTag> tags = new ArrayList<GameTag>();
+//        
+//        // TODO verify games populate correctly
+//        // populate games
+//        for (int i=0; i<words.length; i++) {
+//        	if (words[i].equals("appid")) {
+//        		appId = Integer.parseInt(words[i+1]);
+//        	}
+//        	if (words[i].equals("name")) {
+//        		name = words[i+1];
+//        	}
+//        	if (words[i].equals("rating")) {
+//        		rating = Float.parseFloat(words[i+1]);
+//        	}
+//        	if (words[i].equals("tags")) {
+//        		tags.add(new GameTag(words[i+1]));
+//        	}
+//        	if (appId != -1 && name != null) {
+//        		newGames.add(new Game(appId, name, rating, tags.toArray(new GameTag[tags.size()])));        		
+//        	}
+//        }
+//        games = newGames.toArray(new Game[newGames.size()]);
+//        return games;
+//	}
+
+//	/**
+//	 * Returns all tags used in questionnaire
+//	 * 
+//	 * @return GameTag array
+//	 */
+//	public static GameTag[] getTags() {
+//		String sql = "SELECT tag_id, tag_name FROM GameTag";
+//		try (	Statement stmt = Connector.getInstance().getConnection().createStatement();
+//				ResultSet rs = stmt.executeQuery(sql);
+//				) {
+//			List<GameTag> tags = new ArrayList<>();
+//			while (rs.next()) {
+//				GameTag tag = new GameTag(rs.getString("tag_name"));
+//				tags.add(tag);
+//			}
+//			return tags.toArray(new GameTag[tags.size()]);
+//		} catch (SQLException e) {
+//			Connector.processException(e);
+//			return null;
+//		}
+//	}
+
+//	public static void removeWishlist(Game game) {
+//		Login.user.removeWishlist(game);
+//		String pSql = "DELETE FROM Wishlist WHERE appId = ?";
+//		try (	PreparedStatement pStmt = Connector.getInstance().getConnection().prepareStatement(pSql);
+//				) {
+//			pStmt.setInt(1, game.getId());
+//			pStmt.execute();
+//		} catch (SQLException e) {
+//			Connector.processException(e);
+//		}
+//	}
+
+//	public static void removeHatelist(Game game) {
+//		Login.user.removeHatelist(game);
+//		String pSql = "DELETE FROM Hatelist WHERE appId = ?";
+//		try (	PreparedStatement pStmt = Connector.getInstance().getConnection().prepareStatement(pSql);
+//				) {
+//			pStmt.setInt(1, game.getId());
+//			pStmt.execute();
+//		} catch (SQLException e) {
+//			Connector.processException(e);
+//		}
+//	}
