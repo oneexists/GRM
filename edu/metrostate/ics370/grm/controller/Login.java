@@ -1,9 +1,11 @@
 package edu.metrostate.ics370.grm.controller;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import edu.metrostate.ics370.grm.model.User;
 
@@ -29,15 +31,16 @@ public abstract class Login {
 	 * @param username username of the new user
 	 * @return {@code true} if the user was added to the database
 	 */
-	public static boolean newUser(String username, String password) {
-		boolean validCredentials = validateUser(username, password);
+	public static boolean newUser(String username, String password, String dob) {
+		boolean validCredentials = validateUser(username, password, dob);
 		
 		if (validCredentials == true) {
-			String pSql = "INSERT INTO User(username, user_password) VALUES (?, ?)";
+			String pSql = "INSERT INTO User(username, user_password, user_date_of_birth) VALUES (?, ?, ?)";
 			try (	PreparedStatement pStmt = Connector.getInstance().getConnection().prepareStatement(pSql);
 					) {
 				pStmt.setString(1, username);
 				pStmt.setString(2, password);
+				pStmt.setDate(3, Date.valueOf(LocalDate.parse(dob, DateTimeFormatter.ofPattern("MM/dd/uuuu"))));
 				int added = pStmt.executeUpdate();
 				// verify user is added
 				if (added == 1) {
@@ -57,8 +60,9 @@ public abstract class Login {
 	}
 	
 	// validates newUser credentials
-	private static boolean validateUser(String username, String password) {
+	private static boolean validateUser(String username, String password, String dob) {
 		// TODO validate username and password
+		// TODO validate dob
 		return true;
 	}
 

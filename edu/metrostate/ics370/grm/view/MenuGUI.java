@@ -9,34 +9,61 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import edu.metrostate.ics370.grm.controller.Login;
+import edu.metrostate.ics370.grm.model.User;
 
 /**
+ * Menu panel: edit profile, take quiz, logout
+ * Profile panel: username, firstName, dateOfBirth, gender
+ * 
  * @author skylar
  *
  */
-public class MenuGUI extends JPanel {
+public class MenuGUI extends JFrame {
 
 	/**
 	 * Version of the Menu Panel
 	 */
 	private static final long serialVersionUID = 202111002L;
 
-	private JPanel menuPanel;
 	private JFrame menuFrame;
+	private JPanel menuPanel;
 	private JButton editProfile;
 	private JButton takeQuiz;
 	private JButton logout;
+
+	private JPanel profilePanel;
+	private JLabel username;
+	private JLabel firstName;
+	private JLabel dateOfBirth;
+	private JLabel gender;
+	
+	private JPanel editPanel;
+	private JLabel userLabel;
+	private JLabel firstNameLabel;
+	private JLabel lastNameLabel;
+	private JLabel dateOfBirthLabel;
+	private JLabel genderLabel;
+	private JTextField userText;
+	private JTextField firstNameText;
+	private JTextField lastNameText;
+	private JTextField dateOfBirthText;
+	private JComboBox<User.Gender> genderComboBox;
+	private JButton saveButton;
+	private JButton cancelButton;
 	
 	/**
 	 * No-arg constructor
 	 */
 	public MenuGUI() {
 		menuFrame = new JFrame("Game Recommendation Manager Menu");
-		menuFrame.setSize(350, 350);
+		menuFrame.setSize(500, 500);
 		menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
@@ -45,6 +72,7 @@ public class MenuGUI extends JPanel {
 	 */
 	public void initialize() {
 		buildMenuPanel();
+		buildProfilePanel();
 		menuFrame.setVisible(true);
 	}
 	
@@ -59,6 +87,8 @@ public class MenuGUI extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO implement edit profile frame
+				profilePanel.setVisible(false);
+				buildEditUserPanel();
 			}
 		});
 		menuPanel.add(editProfile);
@@ -85,5 +115,67 @@ public class MenuGUI extends JPanel {
 		
 		// add to frame
 		menuFrame.add(menuPanel, BorderLayout.WEST);
+	}
+	
+	private void buildEditUserPanel() {
+		editPanel = new JPanel();
+		GridLayout editUserLayout = new GridLayout(0, 2);
+		editPanel.setLayout(editUserLayout);	
+		// labels
+		userLabel = new JLabel("Username:");
+		firstNameLabel = new JLabel("First name:");
+		lastNameLabel = new JLabel("Last name:");
+		dateOfBirthLabel = new JLabel("Date of birth:");
+		genderLabel = new JLabel("Gender:");
+		// text fields
+		userText = new JTextField(Login.user.getUsername());
+		firstNameText = new JTextField(Login.user.getFirstName());
+		lastNameText = new JTextField(Login.user.getLastName());
+		dateOfBirthText = new JTextField(Login.user.getDateOfBirth().toString());
+		// combo box
+		genderComboBox = new JComboBox<User.Gender>(User.Gender.values());
+		// buttons
+		saveButton = new JButton("Save");
+		cancelButton = new JButton("Cancel");
+		// add to panel
+		editPanel.add(userLabel);
+		editPanel.add(userText);
+		editPanel.add(firstNameLabel);
+		editPanel.add(firstNameText);
+		editPanel.add(lastNameLabel);
+		editPanel.add(lastNameText);
+		editPanel.add(dateOfBirthLabel);
+		editPanel.add(dateOfBirthText);
+		editPanel.add(genderLabel);
+		editPanel.add(genderComboBox);
+		editPanel.add(saveButton);
+		editPanel.add(cancelButton);
+		
+		profilePanel.setVisible(false);
+		editPanel.setVisible(true);
+		menuFrame.add(editPanel);
+	}
+	
+	private void buildProfilePanel() {
+		profilePanel = new JPanel();
+		GridLayout profileLayout = new GridLayout(0,1);
+		profilePanel.setLayout(profileLayout);
+		// username
+		username = new JLabel(Login.user.getUsername());
+		profilePanel.add(username);
+		// first name
+		firstName = new JLabel(Login.user.getFirstName());
+		profilePanel.add(firstName);
+		// date of birth
+		dateOfBirth = new JLabel(Login.user.getDateOfBirth().toString());
+		profilePanel.add(dateOfBirth);
+		// gender
+		if (Login.user.getGender() != null) {
+			gender = new JLabel(Login.user.getGender().toString());			
+			profilePanel.add(gender);
+		}
+		
+		// add to frame
+		menuFrame.add(profilePanel);
 	}
 }
