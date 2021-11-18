@@ -13,7 +13,12 @@ import javax.swing.JTextField;
 import edu.metrostate.ics370.grm.controller.Login;
 import edu.metrostate.ics370.grm.model.User;
 
-public class EditUserGUI implements ActionListener {
+public class EditUserGUI extends JPanel implements ActionListener {
+
+	/**
+	 * Version of the Edit User Panel
+	 */
+	private static final long serialVersionUID = 202111001L;
 
 	private JPanel editPanel;
 	private JLabel userLabel;

@@ -69,6 +69,10 @@ public class MenuGUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO implement edit profile frame
+				EditUserGUI editUserPanel = new EditUserGUI();
+				editUserPanel.initialize();
+				menuPanel.setVisible(false);
+				menuFrame.add(editUserPanel);
 			}
 		});
 		menuPanel.add(editProfile);
