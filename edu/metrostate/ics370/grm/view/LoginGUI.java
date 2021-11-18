@@ -30,13 +30,13 @@ public class LoginGUI implements ActionListener {
 
 	private static JFrame frame;
 	private JPanel loginPanel;
-	private JPanel newUserPanel;
 	private JButton loginButton;
 	private JButton newUserButton;
 	private JButton createUserButton;
 	private JButton cancelButton;
 	private JLabel success;
 	
+	private JPanel newUserPanel;
 	private JLabel userLabel;
 	private JTextField userText;
 	private JLabel passwordLabel;
