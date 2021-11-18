@@ -38,20 +38,20 @@ public abstract class QuestionnaireInterface {
 	 * 
 	 * @param game the game to add to the hatelist
 	 */
-	public static void addHatelist(Game game) {
+	public static void addHatelist(int gameIndex) {
 	   // create list of games from user's hatelist
 	   List<Game> hatelist = Arrays.asList(Login.user.getHatelist());
 	   // if game is not on list...
-	   if (!(hatelist.contains(game))) {
+	   if (!(hatelist.contains(games[gameIndex]))) {
 		   // add to user hatelist
-		   Login.user.addHatelist(game);
+		   Login.user.addHatelist(games[gameIndex]);
 	   
 		   // save to database
 		   String pSql = "INSERT INTO Hatelist(username, appId) VALUES(?, ?)";
 		   try (	PreparedStatement pStmt = Connector.getInstance().getConnection().prepareStatement(pSql);
 				   ) {
 			   pStmt.setString(1, Login.user.getUsername());
-			   pStmt.setInt(2, game.getId());
+			   pStmt.setInt(2, games[gameIndex].getId());
 			   pStmt.executeUpdate();
 		   } catch (SQLException e) {
 			   Connector.processException(e);
@@ -64,18 +64,18 @@ public abstract class QuestionnaireInterface {
 	 * 
 	 * @param game the game to add to the wishlist
 	 */
-	public static void addWishlist(Game game) {
+	public static void addWishlist(int gameIndex) {
 		// add to wishlist
 		List<Game> wishlist = Arrays.asList(Login.user.getWishlist());
-		if (!(wishlist.contains(game))) {
-			Login.user.addWishlist(game);
+		if (!(wishlist.contains(games[gameIndex]))) {
+			Login.user.addWishlist(games[gameIndex]);
 
 			// save to database
 			String pSql = "INSERT INTO Wishlist(username, appId) VALUES(?, ?)";
 			try (	PreparedStatement pStmt = Connector.getInstance().getConnection().prepareStatement(pSql);
 					) {
 				pStmt.setString(1, Login.user.getUsername());
-				pStmt.setInt(2, game.getId());
+				pStmt.setInt(2, games[gameIndex].getId());
 				pStmt.executeUpdate();
 			} catch (SQLException e) {
 				Connector.processException(e);
