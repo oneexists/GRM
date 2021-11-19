@@ -247,7 +247,7 @@ public abstract class QuestionnaireInterface {
 	 * 
 	 * @return games the array of games from the library
 	 */
-	public static Game[] getGames() {
+	private static Game[] getGames() {
 		// TODO reads data from file to populate games
 		ArrayList<Game> newGames = new ArrayList<Game>();
 		StringBuffer sb = new StringBuffer();
@@ -300,7 +300,7 @@ public abstract class QuestionnaireInterface {
 	 * 
 	 * @return GameTag array
 	 */
-	public static GameTag[] getTags() {
+	private static GameTag[] getTags() {
 		String sql = "SELECT tag_id, tag_name FROM GameTag";
 		try (	Statement stmt = Connector.getInstance().getConnection().createStatement();
 				ResultSet rs = stmt.executeQuery(sql);
