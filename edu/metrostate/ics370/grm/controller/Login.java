@@ -16,8 +16,8 @@ import edu.metrostate.ics370.grm.model.User;
  * @author skylar
  */
 public abstract class Login {
-
 	public static User user;
+	
 	/**
 	 * No-arg constructor
 	 */
@@ -60,10 +60,20 @@ public abstract class Login {
 	}
 	
 	// validates newUser credentials
+	// {@code true} iff: 
+	// 		username has at least 3 characters,
+	//		password has at least 5 characters, 
+	//		age is between 12 and 115 years
 	private static boolean validateUser(String username, String password, String dob) {
-		// TODO validate username and password
-		// TODO validate dob
-		return true;
+		LocalDate parsedDob = LocalDate.parse(dob, DateTimeFormatter.ofPattern("MM/dd/uuuu"));
+		// validate username and password
+		if (username.length() > 2 && password.length() > 4) {
+			// validate dob
+			if (parsedDob.isBefore(LocalDate.now().minusYears(12)) && parsedDob.isAfter(LocalDate.now().minusYears(115))) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
