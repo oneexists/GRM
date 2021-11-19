@@ -32,7 +32,17 @@ public abstract class QuestionnaireInterface {
 		for (GameTag tag : getQuestion().getChoices()[i].getTags()) {
 			addPersonalTag(tag);
 		}
+		updateResults();
+		nextQuestion();
 	}
+	private static void updateResults() {
+		// TODO CF: use games array to store game recommendations
+		//			wishlist -> Login.user.getWishlist()
+		//			hatelist -> Login.user.getHatelist()
+		
+	}
+
+
 	/**
 	 * Adds game to hatelist of user and saves in database
 	 * 
@@ -59,6 +69,26 @@ public abstract class QuestionnaireInterface {
 	   }
 	}
 	
+	public static void addHatelist(Game game) {
+		   // create list of games from user's hatelist
+		   List<Game> hatelist = Arrays.asList(Login.user.getHatelist());
+		   // if game is not on list...
+		   if (!(hatelist.contains(game))) {
+			   // add to user hatelist
+			   Login.user.addHatelist(game);
+		   
+			   // save to database
+			   String pSql = "INSERT INTO Hatelist(username, appId) VALUES(?, ?)";
+			   try (	PreparedStatement pStmt = Connector.getInstance().getConnection().prepareStatement(pSql);
+					   ) {
+				   pStmt.setString(1, Login.user.getUsername());
+				   pStmt.setInt(2, game.getId());
+				   pStmt.executeUpdate();
+			   } catch (SQLException e) {
+				   Connector.processException(e);
+			   }
+		   }
+	}
 	/**
 	 * Adds game to the wishlist and saves in the database
 	 * 
@@ -80,6 +110,18 @@ public abstract class QuestionnaireInterface {
 			} catch (SQLException e) {
 				Connector.processException(e);
 			}
+		}
+	}
+
+	public static void removeWishlist(Game game) {
+		Login.user.removeWishlist(game);
+		String pSql = "DELETE FROM Wishlist WHERE appId = ?";
+		try (	PreparedStatement pStmt = Connector.getInstance().getConnection().prepareStatement(pSql);
+				) {
+			pStmt.setInt(1, game.getId());
+			pStmt.execute();
+		} catch (SQLException e) {
+			Connector.processException(e);
 		}
 	}
 	
@@ -133,6 +175,14 @@ public abstract class QuestionnaireInterface {
 		return tags.toArray(new GameTag[tags.size()]);
 	}
 
+	private static void nextQuestion() {
+		if (qNum < getQuestions().length) {
+			qNum++;
+		} else {
+			// TODO end of questionnaire: out of questions
+		}
+	}
+
 	/**
 	 * @param questionArray array of the questions with all choices
 	 * @return qSet array of questions with three choices each
@@ -174,15 +224,8 @@ public abstract class QuestionnaireInterface {
 		}
 	}
 }
-//	public static void nextQuestion() {
-//		if (qNum < getGames().length) {
-//			qNum++;
-//		} else {
-//			// TODO end of questionnaire: out of questions
-//		}
-//	}
-//	/**
 
+///**
 //	 * Gets games from library and populates them into array
 //	 */
 //	public static Game[] getGames() {
@@ -256,17 +299,6 @@ public abstract class QuestionnaireInterface {
 //		}
 //	}
 
-//	public static void removeWishlist(Game game) {
-//		Login.user.removeWishlist(game);
-//		String pSql = "DELETE FROM Wishlist WHERE appId = ?";
-//		try (	PreparedStatement pStmt = Connector.getInstance().getConnection().prepareStatement(pSql);
-//				) {
-//			pStmt.setInt(1, game.getId());
-//			pStmt.execute();
-//		} catch (SQLException e) {
-//			Connector.processException(e);
-//		}
-//	}
 
 //	public static void removeHatelist(Game game) {
 //		Login.user.removeHatelist(game);

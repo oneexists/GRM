@@ -64,7 +64,7 @@ public class QuizGUI extends JFrame {
 		setupTopGames();
 		setupTopWishlist();
 		setupTopGamesRemove();
-		// set background
+		// TODO CF: set background (currently not visible)
 		backgroundLabel = new JLabel();
 		backgroundLabel.setOpaque(true);
 		backgroundLabel.setBackground(teal);
@@ -107,7 +107,7 @@ public class QuizGUI extends JFrame {
 		removeGameButtons[2].addActionListener(new ActionListener() {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
-		        QuestionnaireInterface.addHatelist(0);
+		        QuestionnaireInterface.addHatelist(2);
 		    }
 		});
 		frame.add(removeGameButtons[2]);
@@ -257,7 +257,9 @@ public class QuizGUI extends JFrame {
 		answerButtons[0].addActionListener(new ActionListener() {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
+		    	// add tags to user
 		    	QuestionnaireInterface.selectChoice(0);
+		    	// refresh gui
 		    }
 		});
 		frame.add(answerButtons[0]);
@@ -358,7 +360,7 @@ public class QuizGUI extends JFrame {
 				wishlistAddButtons[i].addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						Login.user.removeWishlist(game);
+						QuestionnaireInterface.removeWishlist(game);
 					}
 				});
 				frame.add(wishlistAddButtons[i]);
@@ -377,7 +379,7 @@ public class QuizGUI extends JFrame {
 				wishlistRemoveButtons[i].addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						Login.user.addHatelist(game);
+						QuestionnaireInterface.addHatelist(game);
 					}
 				});
 				frame.add(wishlistRemoveButtons[i]);
