@@ -259,7 +259,7 @@ public class QuizGUI extends JFrame {
 		    public void actionPerformed(ActionEvent e) {
 		    	// add tags to user
 		    	QuestionnaireInterface.selectChoice(0);
-		    	// refresh gui
+		    	// TODO create refresh gui method
 		    }
 		});
 		frame.add(answerButtons[0]);

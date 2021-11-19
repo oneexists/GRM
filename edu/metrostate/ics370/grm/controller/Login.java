@@ -29,6 +29,7 @@ public abstract class Login {
 	 * 
 	 * @param password password of the new user
 	 * @param username username of the new user
+	 * @param dob date of birth of the new user
 	 * @return {@code true} if the user was added to the database
 	 */
 	public static boolean newUser(String username, String password, String dob) {

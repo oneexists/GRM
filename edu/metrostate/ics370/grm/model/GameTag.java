@@ -26,7 +26,6 @@ public class GameTag implements Serializable
 	/**
 	 * Initializes the GameTag
 	 * 
-	 * @param id id of the GameTag
 	 * @param name name of the GameTag
 	 */
 	public GameTag(String name) {

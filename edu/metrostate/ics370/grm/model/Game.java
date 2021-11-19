@@ -15,11 +15,13 @@ public class Game {
 	 * No-arg constructor
 	 */
 	public Game() {}
+	
 	/**
 	 * Initializes the Game
 	 * 
 	 * @param appId id of the game
 	 * @param name name of the game
+	 * @param rating rating of the game
 	 * @param tags tags of the game
 	 */
 	public Game(int appId, String name, float rating, GameTag[] tags) {
