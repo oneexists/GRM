@@ -29,7 +29,7 @@ public class SettingsGUI{
 
         // ComboBox for Theme Choices
         String[] themes = {"Dark", "Light", "Darcula", "IntelliJ", "Arc Orange", "Arc Dark", "Carbon", "Cyan Light", "Nord"};
-        JComboBox cb = new JComboBox(themes);
+        JComboBox<String> cb = new JComboBox<String>(themes);
         settingsPanel.add(cb);
 
         // Apply Button for theme
@@ -54,15 +54,15 @@ public class SettingsGUI{
                 String userTheme = (String) cb.getItemAt(cb.getSelectedIndex());
                 try {
                     switch (userTheme) {
-                        case "Dark" -> UIManager.setLookAndFeel(new FlatDarkLaf());
-                        case "Light" -> UIManager.setLookAndFeel(new FlatLightLaf());
-                        case "Darcula" -> UIManager.setLookAndFeel(new FlatDarculaLaf());
-                        case "IntelliJ" -> UIManager.setLookAndFeel(new FlatIntelliJLaf());
-                        case "Arc Orange" -> UIManager.setLookAndFeel(new FlatArcOrangeIJTheme());
-                        case "Arc Dark" -> UIManager.setLookAndFeel(new FlatArcDarkIJTheme());
-                        case "Carbon" -> UIManager.setLookAndFeel(new FlatCarbonIJTheme());
-                        case "Cyan Light" -> UIManager.setLookAndFeel(new FlatCyanLightIJTheme());
-                        case "Nord" -> UIManager.setLookAndFeel(new FlatNordIJTheme());
+                        case "Dark": UIManager.setLookAndFeel(new FlatDarkLaf());
+                        case "Light": UIManager.setLookAndFeel(new FlatLightLaf());
+                        case "Darcula": UIManager.setLookAndFeel(new FlatDarculaLaf());
+                        case "IntelliJ": UIManager.setLookAndFeel(new FlatIntelliJLaf());
+                        case "Arc Orange": UIManager.setLookAndFeel(new FlatArcOrangeIJTheme());
+                        case "Arc Dark": UIManager.setLookAndFeel(new FlatArcDarkIJTheme());
+                        case "Carbon": UIManager.setLookAndFeel(new FlatCarbonIJTheme());
+                        case "Cyan Light": UIManager.setLookAndFeel(new FlatCyanLightIJTheme());
+                        case "Nord": UIManager.setLookAndFeel(new FlatNordIJTheme());
                     }
                     FlatLaf.updateUI();
                 } catch (UnsupportedLookAndFeelException ex) {
