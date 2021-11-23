@@ -1,19 +1,14 @@
 package edu.metrostate.ics370.grm.view;
 
-import java.awt.EventQueue;
+import com.formdev.flatlaf.FlatDarkLaf;
+import edu.metrostate.ics370.grm.controller.Connector;
+import edu.metrostate.ics370.grm.controller.Login;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-
-import edu.metrostate.ics370.grm.controller.Connector;
-import edu.metrostate.ics370.grm.controller.Login;
 
 /**
  * Login panel: userLabel, userText, passwordLabel, passwordText, loginButton, newUserButton, cancelButton, success
@@ -51,7 +46,13 @@ public class LoginGUI implements ActionListener {
 	 * 
 	 * Initializes Login Menu
 	 */
-	public LoginGUI() {
+	public LoginGUI() throws UnsupportedLookAndFeelException {
+		// Set Frames to Default Dark Theme + Other Modifications
+		UIManager.setLookAndFeel(new FlatDarkLaf());
+		UIManager.put( "Button.arc", 999 );
+		UIManager.getLookAndFeelDefaults()
+				.put("defaultFont", new Font("TimesRoman", Font.BOLD, 14));
+
 		frame = new JFrame("Login");
 		frame.setSize(500, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -64,9 +65,11 @@ public class LoginGUI implements ActionListener {
 	public static void openLogin() {
 		frame.setVisible(true);
 	}
+
 	
 	private void buildLoginPanel() {
 		loginPanel = new JPanel();
+		loginPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		// user labels and text
 		userLabel = new JLabel("User");
@@ -91,7 +94,7 @@ public class LoginGUI implements ActionListener {
 		loginButton.addActionListener(this);
 		// new user button
 		newUserButton = new JButton("Create New User");
-		newUserButton.setBounds(100, 80, 175, 25);
+		newUserButton.setBounds(100, 80, 165, 25);
 		newUserButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

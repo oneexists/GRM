@@ -1,20 +1,15 @@
+/**
+ * 
+ */
 package edu.metrostate.ics370.grm.view;
-
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import edu.metrostate.ics370.grm.controller.Login;
 import edu.metrostate.ics370.grm.model.User;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Menu panel: edit profile, take quiz, logout
@@ -76,7 +71,7 @@ public class MenuGUI extends JFrame {
 	
 	private void buildMenuPanel() {
 		menuPanel = new JPanel();
-		FlowLayout menuLayout = new FlowLayout();
+		GridLayout menuLayout = new GridLayout(0,1);
 		menuPanel.setLayout(menuLayout);
 		
 		// edit profile button
@@ -112,7 +107,7 @@ public class MenuGUI extends JFrame {
 		menuPanel.add(logout);
 		
 		// add to frame
-		menuFrame.add(menuPanel, BorderLayout.NORTH);
+		menuFrame.add(menuPanel, BorderLayout.WEST);
 	}
 	
 	private void buildEditUserPanel() {
