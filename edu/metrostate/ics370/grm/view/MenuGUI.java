@@ -118,7 +118,14 @@ public class MenuGUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Login.signOut();
-				LoginGUI.openLogin();
+				LoginGUI window;
+				try {
+					window = new SignInGUI();
+					window.buildPanel();
+				} catch (UnsupportedLookAndFeelException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				menuFrame.dispose();
 			}
 		});
