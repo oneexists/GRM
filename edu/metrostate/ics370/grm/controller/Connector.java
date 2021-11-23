@@ -58,7 +58,7 @@ public class Connector {
   			// Properties object
   			Properties dbProps = new Properties();
   			// Path object
-  			String propPath = ".settings/Settings.properties";
+  			String propPath = "lib/Settings.properties";
   			// File reader
   			FileReader fReader = new FileReader(propPath);
   			// Load properties from file
