@@ -24,7 +24,6 @@ import edu.metrostate.ics370.grm.model.QuestionChoice;
 public abstract class QuestionnaireInterface {
 	private static Game[] allGames;
 	public static Game[] games;
-	private static int gNum;
 	private static int qNum = 0;
 	
 	/**
@@ -244,7 +243,7 @@ public abstract class QuestionnaireInterface {
 		// TODO CF: find game recommendations and save them to games array
 		//			wishlist -> Login.user.getWishlist()
 		//			hatelist -> Login.user.getHatelist()
-		if (allGames == null) { allGames = getGames(); }
+		if (allGames == null) { getGames(); }
 
         Game dbPotentialGames[] = new Game[2000];
         for (int i = 0; i < dbPotentialGames.length; i++)
@@ -346,80 +345,61 @@ public abstract class QuestionnaireInterface {
 	 * 
 	 * @return games the array of games from the library
 	 */
-	private static Game[] getGames() {
+	private static void getGames() {
 		ArrayList<Game> newGames = new ArrayList<Game>();
 		StringBuffer sb = new StringBuffer();
 		try {
-			FileReader reader = new FileReader("lib/library.txt");		// path within project for txt file
-			Scanner sc = new Scanner(reader);
-			while (sc.hasNext()) {
-				sb.append(sc.next());
-			}
-			reader.close();
-			sc.close();
-		} catch (IOException e) {
-			// TODO process file IO exception
-			e.printStackTrace();
-		}
-		
-        gNum = 0;
-        Game[] dbGames = new Game[2000];
-        for (int i = 0; i < dbGames.length; i++)
-        	dbGames[i] = new Game();
-        
-        String result = sb.toString();
-		  result = result.replace(",", " ");
-		  String[] words = result.split(" ");
-		  
-		  boolean inTags = false;
-		  boolean inName = false;
-		  String nam = "";
-		
-		  for (int x = 0; x < words.length; x++)
-		  {
-			  //System.out.println("Words: " + words[x]);
-			  if (words[x].equals("appid"))
-			  {
-				  dbGames[gNum].setId(words[x + 1]);
-			  }
-			  if (words[x].equals("name"))
-			  {
-				  inName = true;
-				  nam = "";
-			  }
-			  else
-			  if (words[x].equals("rating"))
-			  {
-				  inName = false;
-				  float pos = Float.parseFloat(words[x + 1]);
-				  dbGames[gNum].setRating(pos);
-			  }
-			  else
-			  if (words[x].equals("tags"))
-			  {
-				  inTags = true;
-			  }
-			  else
-			  if (words[x].equals("END"))
-			  {
-				  gNum++;
-				  inTags = false;
-			  }
-			  else
-			  if (inTags)
-			  {
-				  dbGames[gNum].addTag(words[x]);
-			  }
-			  else
-			  if (inName)
-			  {
-				  if (nam != "")
-					  nam += " ";
-				  nam += words[x];
-				  dbGames[gNum].setName(nam);
-			  }
+		  FileReader reader = new FileReader("lib/library.txt");		// path within project for txt file
+		  Scanner sc = new Scanner(reader);
+		  while (sc.hasNext()) {
+		    sb.append(sc.next());
 		  }
-		  games = dbGames;
+		  reader.close();
+		  sc.close();
+		} catch (IOException e) {
+		  // TODO process file IO exception
+		  e.printStackTrace();
+		}
+
+		String result = sb.toString();
+		result = result.replace(",", " ");
+		String[] words = result.split(" ");
+
+		boolean inName = false;
+		boolean inTags = false;
+		int appId = -1;
+		String name = null;
+		float rating = -1;
+		ArrayList<GameTag> tags = new ArrayList<GameTag>();
+
+		// TODO verify games populate correctly
+		// populate games
+		for (int i=0; i<words.length; i++) {
+		  if (words[i].equals("appid")) {
+		    appId = Integer.parseInt(words[i+1]);
+		  }
+		  if (words[i].equals("name")) {
+		    inName = true;
+		  }
+		  if (words[i].equals("rating")) {
+		    inName = false;
+		    rating = Float.parseFloat(words[i+1]);
+		  }
+		  if (words[i].equals("tags")) {
+		    inTags = true;
+		  }
+		  if (words[i].equals("END")) {
+		    inTags = false;
+		    newGames.add(new Game(appId, name, rating, tags.toArray(new GameTag[tags.size()])));        		
+		  }
+		  if (inName == true) {
+		    name += words[i];
+		  }
+		  if (inTags == true) {
+		    tags.add(new GameTag(words[i]));
+		  }
+		}
+		allGames = newGames.toArray(new Game[newGames.size()]);
 		  
 		  //This shows what's in the games[]
 		  /*
@@ -431,8 +411,6 @@ public abstract class QuestionnaireInterface {
 			  System.out.println(tstr);
 		  }
 		  */
-		  
-		  return games;
 	}
 
 	/**
