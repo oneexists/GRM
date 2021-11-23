@@ -64,8 +64,9 @@ public class QuizGUI extends JFrame {
 		setupTopGames();
 		setupTopWishlist();
 		setupTopGamesRemove();
-		// TODO CF: set background (currently not visible)
+
 		backgroundLabel = new JLabel();
+		backgroundLabel.setBounds(0, 0, 1920, 1080);
 		backgroundLabel.setOpaque(true);
 		backgroundLabel.setBackground(teal);
 		frame.add(backgroundLabel);

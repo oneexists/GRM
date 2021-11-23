@@ -47,4 +47,8 @@ public class GameTag implements Serializable
 	public void upVal() {
 		this.val++;
 	}
+
+	public GameTag getTag() {
+		return this;
+	}
 }

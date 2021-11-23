@@ -8,13 +8,17 @@ public class Game {
 	private int appId;
 	private String name;
 	private float rating;
-
+	private int nTags;
 	private GameTag[] tags;
 	
 	/**
 	 * No-arg constructor
 	 */
-	public Game() {}
+	public Game() {
+		tags = new GameTag[200];
+		for (int x = 0; x < tags.length; x++)
+			tags[x] = new GameTag();
+	}
 	
 	/**
 	 * Initializes the Game
@@ -66,5 +70,19 @@ public class Game {
 	 */
 	public void setRating(float rating) {
 		this.rating = rating;
+	}
+
+	public void setName(String nam) {
+		this.name = nam;
+	}
+
+	public void addTag(String string) {
+		var ttag = new GameTag(string);
+		this.tags[nTags] = ttag;
+		this.nTags++;
+	}
+
+	public void setId(String string) {
+		this.appId = Integer.parseInt(string);
 	}
 }

@@ -22,7 +22,9 @@ import edu.metrostate.ics370.grm.model.QuestionChoice;
  * @author christian
  */
 public abstract class QuestionnaireInterface {
+	private static Game[] allGames;
 	public static Game[] games;
+	private static int gNum;
 	private static int qNum = 0;
 	
 	/**
@@ -179,6 +181,7 @@ public abstract class QuestionnaireInterface {
 	private static void nextQuestion() {
 		if (qNum < getQuestions().length) {
 			qNum++;
+			//TODO it should be setting a question here//
 		} else {
 			// TODO end of questionnaire: out of questions
 		}
@@ -230,7 +233,9 @@ public abstract class QuestionnaireInterface {
 		// save tags
 		for (GameTag tag : getQuestion().getChoices()[i].getTags()) {
 			addPersonalTag(tag);
+			//System.out.println("tag: " + tag.getName());
 		}
+		//System.out.println("i: " + i);
 		updateResults();
 		nextQuestion();
 	}
@@ -239,7 +244,101 @@ public abstract class QuestionnaireInterface {
 		// TODO CF: find game recommendations and save them to games array
 		//			wishlist -> Login.user.getWishlist()
 		//			hatelist -> Login.user.getHatelist()
-		
+		if (allGames == null) { allGames = getGames(); }
+
+        Game dbPotentialGames[] = new Game[2000];
+        for (int i = 0; i < dbPotentialGames.length; i++)
+        	dbPotentialGames[i] = new Game();
+        int numPotentials = 0;
+
+        for (int x = 0; x < Login.user.getPersonalTags().length; x++)
+        {
+            for (int y = 0; y < allGames.length; y++)
+            {
+            	boolean contains = false;
+            	for (int i = 0; i < dbPotentialGames.length; i++)
+            	{
+            		if (dbPotentialGames[i] == allGames[y])
+            		{
+            			contains = true;
+            			break;
+            		}
+            	}
+            	for (int i = 0; i < Login.user.getWishlist().length; i++)
+            	{
+            		if (Login.user.getWishlist()[i] == allGames[y])
+            		{
+            			contains = true;
+            			break;
+            		}
+            	}
+            	for (int i = 0; i < Login.user.getHatelist().length; i++)
+            	{
+            		if (Login.user.getHatelist()[i] == allGames[y])
+            		{
+            			contains = true;
+            			break;
+            		}
+            	}
+            	
+            	if (!contains)
+                {
+                    //If game is not in either wishlist or trash//
+                    for (int z = 0; z < allGames[y].getTags().length; z++)
+                    {
+                        if (Login.user.getPersonalTags()[x].getTag() == allGames[y].getTags()[z].getTag())
+                        {
+                        	//dbPotentialGames.Add(allGames[y]);
+                        	dbPotentialGames[numPotentials] = allGames[y];
+                        	numPotentials++;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        //Modify rating by tags//
+        for (int x = 0; x < numPotentials; x++)
+        {
+            for (int y = 0; y < dbPotentialGames[x].getTags().length; y++)
+            {
+                for (int z = 0; z < Login.user.getPersonalTags().length; z++)
+                {
+                    var mod = 1;
+                    if (dbPotentialGames[x].getTags()[y].getTag() == Login.user.getPersonalTags()[z].getTag())
+                    {
+                        mod = Math.round(Login.user.getPersonalTags()[z].getVal() * 0.5f);
+                        dbPotentialGames[x].setRating(dbPotentialGames[x].getRating() + mod);
+                    }
+                }
+            }
+        }
+
+        //Gets the top 5//
+        Game dbTopGames[] = new Game[5];
+        
+        for (int x = 0; x < 5; x++)
+        {
+        	float bestRating = 0f;
+        	int besti = 0;
+            for (int i = 0; i < numPotentials; i++)
+            {
+            	if (dbPotentialGames[i].getRating() > bestRating)
+            	{
+            		bestRating = dbPotentialGames[i].getRating();
+            		besti = i;
+            	}
+            }
+            dbTopGames[x] = dbPotentialGames[besti];
+            dbPotentialGames[besti].setRating(0); //So we don't use this same one again//
+        }
+        
+        //Sets the games[] as the top 5//
+        for (int x = 0; x < dbTopGames.length; x++)
+        {
+        	games[x] = dbTopGames[x];
+        }
 	}
 
 	/**
@@ -248,7 +347,6 @@ public abstract class QuestionnaireInterface {
 	 * @return games the array of games from the library
 	 */
 	private static Game[] getGames() {
-		// TODO reads data from file to populate games
 		ArrayList<Game> newGames = new ArrayList<Game>();
 		StringBuffer sb = new StringBuffer();
 		try {
@@ -264,35 +362,77 @@ public abstract class QuestionnaireInterface {
 			e.printStackTrace();
 		}
 		
-		String result = sb.toString();
-		result = result.replace(",", " ");
-		String[] words = result.split(" ");
+        gNum = 0;
+        Game[] dbGames = new Game[2000];
+        for (int i = 0; i < dbGames.length; i++)
+        	dbGames[i] = new Game();
+        
+        String result = sb.toString();
+		  result = result.replace(",", " ");
+		  String[] words = result.split(" ");
+		  
+		  boolean inTags = false;
+		  boolean inName = false;
+		  String nam = "";
 		
-		int appId = -1;
-		String name = null;
-		float rating = -1;
-		ArrayList<GameTag> tags = new ArrayList<GameTag>();
-		
-		// TODO verify games populate correctly
-		// populate games
-		for (int i=0; i<words.length; i++) {
-			if (words[i].equals("appid")) {
-				appId = Integer.parseInt(words[i+1]);
-			}
-			if (words[i].equals("name")) {
-				name = words[i+1];
-			}
-			if (words[i].equals("rating")) {
-				rating = Float.parseFloat(words[i+1]);
-			}
-			if (words[i].equals("tags")) {
-				tags.add(new GameTag(words[i+1]));
-			}
-			if (appId != -1 && name != null) {
-				newGames.add(new Game(appId, name, rating, tags.toArray(new GameTag[tags.size()])));        		
-			}
-		}
-		return games;
+		  for (int x = 0; x < words.length; x++)
+		  {
+			  //System.out.println("Words: " + words[x]);
+			  if (words[x].equals("appid"))
+			  {
+				  dbGames[gNum].setId(words[x + 1]);
+			  }
+			  if (words[x].equals("name"))
+			  {
+				  inName = true;
+				  nam = "";
+			  }
+			  else
+			  if (words[x].equals("rating"))
+			  {
+				  inName = false;
+				  float pos = Float.parseFloat(words[x + 1]);
+				  dbGames[gNum].setRating(pos);
+			  }
+			  else
+			  if (words[x].equals("tags"))
+			  {
+				  inTags = true;
+			  }
+			  else
+			  if (words[x].equals("END"))
+			  {
+				  gNum++;
+				  inTags = false;
+			  }
+			  else
+			  if (inTags)
+			  {
+				  dbGames[gNum].addTag(words[x]);
+			  }
+			  else
+			  if (inName)
+			  {
+				  if (nam != "")
+					  nam += " ";
+				  nam += words[x];
+				  dbGames[gNum].setName(nam);
+			  }
+		  }
+		  games = dbGames;
+		  
+		  //This shows what's in the games[]
+		  /*
+		  for (int x = 0; x < 100; x++)
+		  {
+			  String tstr = games[x].getName() + " " + games[x].getId() + " " + games[x].getRating() + " tags: ";
+			  for (int y = 0; y < games[x].getTags().length; y++)
+				  tstr += games[x].getTags()[y].getName() + " ";
+			  System.out.println(tstr);
+		  }
+		  */
+		  
+		  return games;
 	}
 
 	/**
