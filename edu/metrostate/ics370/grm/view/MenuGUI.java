@@ -74,6 +74,7 @@ public class MenuGUI extends JFrame {
 		menuPanel = new JPanel();
 		GridLayout menuLayout = new GridLayout(0,1);
 		menuPanel.setLayout(menuLayout);
+		menuLayout.setVgap(30);
 
 		// Add logo
 		menuPanel.add(new JLabel(new ImageIcon("lib/images/Logo_small.png")));
@@ -89,7 +90,6 @@ public class MenuGUI extends JFrame {
 			}
 		});
 		menuPanel.add(editProfile);
-		menuPanel.add(Box.createHorizontalStrut(10));
 
 		// take quiz button
 		takeQuiz = new JButton("Take Quiz");
@@ -101,7 +101,6 @@ public class MenuGUI extends JFrame {
 		});
 		menuPanel.add(takeQuiz);
 
-		menuPanel.add(Box.createHorizontalStrut(10));
 		// settings button
 		settings = new JButton("Settings");
 		settings.addActionListener(new ActionListener() {
@@ -112,7 +111,6 @@ public class MenuGUI extends JFrame {
 			}
 		});
 		menuPanel.add(settings);
-		menuPanel.add(Box.createHorizontalStrut(10));
 
 		// logout button
 		logout = new JButton("Logout");
@@ -125,7 +123,6 @@ public class MenuGUI extends JFrame {
 			}
 		});
 		menuPanel.add(logout);
-		menuPanel.add(Box.createHorizontalStrut(10));
 		
 		// add to frame
 		menuFrame.add(menuPanel, BorderLayout.WEST);
