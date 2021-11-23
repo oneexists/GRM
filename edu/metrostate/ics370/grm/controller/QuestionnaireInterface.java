@@ -22,7 +22,6 @@ import edu.metrostate.ics370.grm.model.QuestionChoice;
  * @author christian
  */
 public abstract class QuestionnaireInterface {
-	private static Game[] allGames;
 	public static Game[] games;
 	private static int qNum = 0;
 	
@@ -232,111 +231,63 @@ public abstract class QuestionnaireInterface {
 		// save tags
 		for (GameTag tag : getQuestion().getChoices()[i].getTags()) {
 			addPersonalTag(tag);
-			//System.out.println("tag: " + tag.getName());
 		}
-		//System.out.println("i: " + i);
 		updateResults();
 		nextQuestion();
 	}
 
 	private static void updateResults() {
-		// TODO CF: find game recommendations and save them to games array
-		//			wishlist -> Login.user.getWishlist()
-		//			hatelist -> Login.user.getHatelist()
-		if (allGames == null) { getGames(); }
-
-        Game dbPotentialGames[] = new Game[2000];
-        for (int i = 0; i < dbPotentialGames.length; i++)
-        	dbPotentialGames[i] = new Game();
-        int numPotentials = 0;
-
-        for (int x = 0; x < Login.user.getPersonalTags().length; x++)
-        {
-            for (int y = 0; y < allGames.length; y++)
-            {
-            	boolean contains = false;
-            	for (int i = 0; i < dbPotentialGames.length; i++)
-            	{
-            		if (dbPotentialGames[i] == allGames[y])
-            		{
-            			contains = true;
-            			break;
-            		}
-            	}
-            	for (int i = 0; i < Login.user.getWishlist().length; i++)
-            	{
-            		if (Login.user.getWishlist()[i] == allGames[y])
-            		{
-            			contains = true;
-            			break;
-            		}
-            	}
-            	for (int i = 0; i < Login.user.getHatelist().length; i++)
-            	{
-            		if (Login.user.getHatelist()[i] == allGames[y])
-            		{
-            			contains = true;
-            			break;
-            		}
-            	}
-            	
-            	if (!contains)
-                {
-                    //If game is not in either wishlist or trash//
-                    for (int z = 0; z < allGames[y].getTags().length; z++)
-                    {
-                        if (Login.user.getPersonalTags()[x].getTag() == allGames[y].getTags()[z].getTag())
-                        {
-                        	//dbPotentialGames.Add(allGames[y]);
-                        	dbPotentialGames[numPotentials] = allGames[y];
-                        	numPotentials++;
-                            break;
-                        }
-                    }
-                }
-            }
+		ArrayList<Game> potentialGames = new ArrayList<Game>(Arrays.asList(getGames()));
+        
+        // remove games already on wishilst or hatelist
+        for (Game game : potentialGames) {
+        	for (Game wishlistGame : Login.user.getWishlist()) {
+        		if (game.getName().equals(wishlistGame.getName())) {
+        			potentialGames.remove(game);
+        		}
+        	}
+        	for (Game hatelistGame : Login.user.getHatelist()) {
+        		if (game.getName().equals(hatelistGame.getName())) {
+        			potentialGames.remove(game);
+        		}
+        	}
         }
-
+        
         //Modify rating by tags//
-        for (int x = 0; x < numPotentials; x++)
-        {
-            for (int y = 0; y < dbPotentialGames[x].getTags().length; y++)
-            {
-                for (int z = 0; z < Login.user.getPersonalTags().length; z++)
-                {
-                    var mod = 1;
-                    if (dbPotentialGames[x].getTags()[y].getTag() == Login.user.getPersonalTags()[z].getTag())
-                    {
-                        mod = Math.round(Login.user.getPersonalTags()[z].getVal() * 0.5f);
-                        dbPotentialGames[x].setRating(dbPotentialGames[x].getRating() + mod);
-                    }
-                }
-            }
+        for (Game potentialGame : potentialGames) {
+        	for (GameTag potentialTag : potentialGame.getTags()) {
+        		for (GameTag personalTag : Login.user.getPersonalTags()) {
+        			potentialGame.setRating(Math.round(personalTag.getVal() * 0.5f) + 1);
+        		}
+        	}
         }
 
-        //Gets the top 5//
-        Game dbTopGames[] = new Game[5];
+
+        //Gets the top 5//        
+        games = new Game[5];
+        float bestRating = 0;
+        Game bestGame = new Game();
         
-        for (int x = 0; x < 5; x++)
-        {
-        	float bestRating = 0f;
-        	int besti = 0;
-            for (int i = 0; i < numPotentials; i++)
-            {
-            	if (dbPotentialGames[i].getRating() > bestRating)
-            	{
-            		bestRating = dbPotentialGames[i].getRating();
-            		besti = i;
-            	}
-            }
-            dbTopGames[x] = dbPotentialGames[besti];
-            dbPotentialGames[besti].setRating(0); //So we don't use this same one again//
+        for (Game game : games) {
+        	for (Game potentialGame : potentialGames) {
+        		if (potentialGame.getRating() > bestRating) {
+        			bestRating = potentialGame.getRating();
+        			bestGame = potentialGame;
+        		}
+        	}
+        	game = bestGame;
+        	for (Game potentialGame : potentialGames) {
+        		if (potentialGame.getName().equals(bestGame.getName())) { potentialGame.setRating(0); }
+        	}
         }
         
-        //Sets the games[] as the top 5//
-        for (int x = 0; x < dbTopGames.length; x++)
-        {
-        	games[x] = dbTopGames[x];
+        
+        // Test: potentialGames and top 5 games
+        for (Game potentialGame : potentialGames) {
+        	System.out.println(potentialGame.getName());
+        }
+        for (Game game : games) {
+        	System.out.println(game);        	
         }
 	}
 
@@ -345,7 +296,7 @@ public abstract class QuestionnaireInterface {
 	 * 
 	 * @return games the array of games from the library
 	 */
-	private static void getGames() {
+	private static Game[] getGames() {
 		ArrayList<Game> newGames = new ArrayList<Game>();
 		StringBuffer sb = new StringBuffer();
 		try {
@@ -399,7 +350,7 @@ public abstract class QuestionnaireInterface {
 		    tags.add(new GameTag(words[i]));
 		  }
 		}
-		allGames = newGames.toArray(new Game[newGames.size()]);
+		return newGames.toArray(new Game[newGames.size()]);
 		  
 		  //This shows what's in the games[]
 		  /*
