@@ -30,6 +30,7 @@ public class MenuGUI extends JFrame {
 	private JButton editProfile;
 	private JButton takeQuiz;
 	private JButton logout;
+	private JButton settings;
 
 	private JPanel profilePanel;
 	private JLabel username;
@@ -56,7 +57,7 @@ public class MenuGUI extends JFrame {
 	 */
 	public MenuGUI() {
 		menuFrame = new JFrame("Game Recommendation Manager Menu");
-		menuFrame.setSize(500, 500);
+		menuFrame.setSize(700, 600);
 		menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
@@ -68,12 +69,15 @@ public class MenuGUI extends JFrame {
 		buildProfilePanel();
 		menuFrame.setVisible(true);
 	}
-	
+
 	private void buildMenuPanel() {
 		menuPanel = new JPanel();
 		GridLayout menuLayout = new GridLayout(0,1);
 		menuPanel.setLayout(menuLayout);
-		
+
+		// Add logo
+		menuPanel.add(new JLabel(new ImageIcon("lib/images/Logo_small.png")));
+
 		// edit profile button
 		editProfile = new JButton("Edit Profile");
 		editProfile.addActionListener(new ActionListener() {
@@ -85,6 +89,8 @@ public class MenuGUI extends JFrame {
 			}
 		});
 		menuPanel.add(editProfile);
+		menuPanel.add(Box.createHorizontalStrut(10));
+
 		// take quiz button
 		takeQuiz = new JButton("Take Quiz");
 		takeQuiz.addActionListener(new ActionListener() {
@@ -94,6 +100,20 @@ public class MenuGUI extends JFrame {
 			}
 		});
 		menuPanel.add(takeQuiz);
+
+		menuPanel.add(Box.createHorizontalStrut(10));
+		// settings button
+		settings = new JButton("Settings");
+		settings.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new SettingsGUI();
+				menuFrame.dispose();
+			}
+		});
+		menuPanel.add(settings);
+		menuPanel.add(Box.createHorizontalStrut(10));
+
 		// logout button
 		logout = new JButton("Logout");
 		logout.addActionListener(new ActionListener() {
@@ -105,6 +125,7 @@ public class MenuGUI extends JFrame {
 			}
 		});
 		menuPanel.add(logout);
+		menuPanel.add(Box.createHorizontalStrut(10));
 		
 		// add to frame
 		menuFrame.add(menuPanel, BorderLayout.WEST);
