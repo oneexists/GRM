@@ -7,6 +7,8 @@ import edu.metrostate.ics370.grm.controller.Login;
 import edu.metrostate.ics370.grm.model.User;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -72,6 +74,9 @@ public class MenuGUI extends JFrame {
 
 	private void buildMenuPanel() {
 		menuPanel = new JPanel();
+		Border padding = BorderFactory.createEmptyBorder(20, 20, 20, 20);
+		menuPanel.setBorder(padding);
+
 		GridLayout menuLayout = new GridLayout(0,1);
 		menuPanel.setLayout(menuLayout);
 		menuLayout.setVgap(30);
@@ -179,17 +184,17 @@ public class MenuGUI extends JFrame {
 		GridLayout profileLayout = new GridLayout(0,1);
 		profilePanel.setLayout(profileLayout);
 		// username
-		username = new JLabel(Login.user.getUsername());
+		username = new JLabel(Login.user.getUsername() + " is logged in.");
 		profilePanel.add(username);
 		// first name
-		firstName = new JLabel(Login.user.getFirstName());
+		firstName = new JLabel("Hello " + Login.user.getFirstName() + "!");
 		profilePanel.add(firstName);
 		// date of birth
-		dateOfBirth = new JLabel(Login.user.getDateOfBirth().toString());
+		dateOfBirth = new JLabel("DOB: " + Login.user.getDateOfBirth().toString());
 		profilePanel.add(dateOfBirth);
 		// gender
 		if (Login.user.getGender() != null) {
-			gender = new JLabel(Login.user.getGender().toString());			
+			gender = new JLabel("Gender: " + Login.user.getGender().toString());			
 			profilePanel.add(gender);
 		}
 		
