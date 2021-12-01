@@ -1,16 +1,19 @@
 package edu.metrostate.ics370.grm.view;
 
 import java.awt.Component;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.Border;
 
 import edu.metrostate.ics370.grm.controller.Connector;
 import edu.metrostate.ics370.grm.controller.Login;
@@ -40,7 +43,10 @@ public class SignInGUI extends LoginGUI implements ActionListener {
 	public void buildPanel() {
 		userPanel = new JPanel();
 		userPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
+		userPanel.setLayout(new GridLayout(0,2));
+		Border padding = BorderFactory.createEmptyBorder(50, 50, 50, 50);
+		userPanel.setBorder(padding);
+		
 		// user labels and text
 		userLabel = new JLabel("User");
 		userLabel.setBounds(10, 20, 80, 25);
@@ -82,9 +88,6 @@ public class SignInGUI extends LoginGUI implements ActionListener {
 
 		// add to frame
 		frame.add(userPanel);
-
-		// set layout, visibility
-		userPanel.setLayout(null);
 		frame.setVisible(true);
 	}
 	
