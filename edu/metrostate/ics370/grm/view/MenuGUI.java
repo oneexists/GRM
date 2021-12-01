@@ -25,6 +25,7 @@ public class MenuGUI extends JFrame {
 	private static final long serialVersionUID = 202111002L;
 
 	private JFrame menuFrame;
+	private JPanel menuPanelContainer;
 	private JPanel menuPanel;
 	private JButton editProfile;
 	private JButton takeQuiz;
@@ -70,16 +71,19 @@ public class MenuGUI extends JFrame {
 	}
 
 	private void buildMenuPanel() {
+		menuPanelContainer = new JPanel();
+		GridLayout menuLayout = new GridLayout(0,1);
+		menuPanelContainer.setLayout(menuLayout);
+		// Add logo
+		menuPanelContainer.add(new JLabel(new ImageIcon("lib/images/Logo_small.png")));
+
 		menuPanel = new JPanel();
 		Border padding = BorderFactory.createEmptyBorder(20, 20, 20, 20);
 		menuPanel.setBorder(padding);
 
-		GridLayout menuLayout = new GridLayout(0,1);
 		menuPanel.setLayout(menuLayout);
 		menuLayout.setVgap(30);
 
-		// Add logo
-		menuPanel.add(new JLabel(new ImageIcon("lib/images/Logo_small.png")));
 
 		// edit profile button
 		editProfile = new JButton("Edit Profile");
@@ -133,8 +137,9 @@ public class MenuGUI extends JFrame {
 		});
 		menuPanel.add(logout);
 		
+		menuPanelContainer.add(menuPanel);
 		// add to frame
-		menuFrame.add(menuPanel, BorderLayout.WEST);
+		menuFrame.add(menuPanelContainer, BorderLayout.WEST);
 	}
 	
 	private void buildEditUserPanel() {
