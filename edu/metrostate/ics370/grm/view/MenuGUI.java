@@ -1,6 +1,3 @@
-/**
- * 
- */
 package edu.metrostate.ics370.grm.view;
 
 import edu.metrostate.ics370.grm.controller.Login;
@@ -14,7 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Menu panel: edit profile, take quiz, logout
+ * Menu panel: edit profile, take quiz, settings, logout
  * Profile panel: username, firstName, dateOfBirth, gender
  * 
  * @author skylar
@@ -160,6 +157,16 @@ public class MenuGUI extends JFrame {
 		// buttons
 		saveButton = new JButton("Save");
 		cancelButton = new JButton("Cancel");
+		cancelButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				editPanel.setVisible(false);
+				profilePanel.setVisible(true);
+			}
+			
+		});
 		// add to panel
 		editPanel.add(userLabel);
 		editPanel.add(userText);
