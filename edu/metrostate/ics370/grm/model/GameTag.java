@@ -15,14 +15,8 @@ public class GameTag implements Serializable {
 	 */
 	private static final long serialVersionUID = 202110001L;
 	
-	private int id;
+	private int val;
 	private String name;
-
-	/**
-	 * No-arg constructor
-	 */
-	public GameTag() {
-	}
 	
 	/**
 	 * Initializes the GameTag
@@ -30,16 +24,9 @@ public class GameTag implements Serializable {
 	 * @param id id of the GameTag
 	 * @param name name of the GameTag
 	 */
-	public GameTag(int id, String name) {
-		this.id = id;
+	public GameTag(String name) {
 		this.name = name;
-	}
-
-	/**
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
+		this.val = 1;
 	}
 	
 	/**
@@ -47,5 +34,13 @@ public class GameTag implements Serializable {
 	 */
 	public String getName() {
 		return name;
+	}
+	
+	public int getVal() {
+		return val;
+	}
+
+	public void upVal() {
+		this.val++;
 	}
 }

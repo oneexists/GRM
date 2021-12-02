@@ -6,7 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+import edu.metrostate.ics370.grm.model.GameTag;
 import edu.metrostate.ics370.grm.model.User;
 
 /**
@@ -139,5 +143,27 @@ public abstract class Login {
 			}
 		}
 		user = new User(username, firstName, lastName, dateOfBirth, gender);
+	}
+
+	public static void addPersonalTag(GameTag choiceTag) {
+		List<GameTag> tags;
+		if (user.getPersonalTags() == null) {
+			tags = new ArrayList<GameTag>();
+		} else {
+			tags = Arrays.asList(user.getPersonalTags());
+		}
+		if (!(tags.contains(choiceTag))) {
+			user.addPersonalTags(choiceTag);
+			String pSql = "INSERT INTO UserTags(username, tag_name)"
+					+ "VALUES(?, ?)";
+			try (	PreparedStatement pStmt = Connector.getInstance().getConnection().prepareStatement(pSql);
+					) {
+				pStmt.setString(1, user.getUsername());
+				pStmt.setString(2, choiceTag.getName());
+				pStmt.execute();
+			} catch (SQLException e) {
+				Connector.processException(e);
+			}
+		}
 	}
 }

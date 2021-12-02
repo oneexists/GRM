@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import edu.metrostate.ics370.grm.controller.Login;
+import edu.metrostate.ics370.grm.controller.QuestionnaireInterface;
 import edu.metrostate.ics370.grm.model.Game;
 
 
@@ -237,8 +238,8 @@ public class QuizGUI extends JFrame {
 	}
 
 	private void setupQuestions() {
-		//**Question Text**//
-		promptLabel = new JLabel("First Prompt");		//	QuestionnaireInterface.getQuestion().getPrompt()
+		//**	Question Prompt		**//
+		promptLabel = new JLabel(QuestionnaireInterface.getQuestion().getPrompt());
 		promptLabel.setBounds(200, 100, 400, 200);
 		promptLabel.setHorizontalAlignment(JLabel.CENTER);
 		promptLabel.setBackground(Color.black);
@@ -248,8 +249,8 @@ public class QuizGUI extends JFrame {
 		promptLabel.setVisible(true);
 		frame.add(promptLabel);
 		
-		//**Answers**//
-		answerButtons[0] = new JButton("First Choice");		//	QuestionnaireInterface.getQuestion().getChoices()[0].getText()
+		//**	First Choice		**//
+		answerButtons[0] = new JButton(QuestionnaireInterface.getQuestion().getChoices()[0].getText());
 		answerButtons[0].setBounds(200, 320, 400, 120);
 		answerButtons[0].setFont(fontAnswers);
 		answerButtons[0].setBackground(Color.white);
@@ -258,13 +259,14 @@ public class QuizGUI extends JFrame {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
 		    	// add tags to user
-//		    	QuestionnaireInterface.selectChoice(0);
+		    	QuestionnaireInterface.selectChoice(0);
 		    	// TODO create refresh gui method
 		    }
 		});
 		frame.add(answerButtons[0]);
 		
-		answerButtons[1] = new JButton("Second Choice");		//	QuestionnaireInterface.getQuestion().getChoices()[1].getText()
+		//**	Second Choice		**//
+		answerButtons[1] = new JButton(QuestionnaireInterface.getQuestion().getChoices()[1].getText());	
 		answerButtons[1].setBounds(200, 460, 400, 120);
 		answerButtons[1].setFont(fontAnswers);
 		answerButtons[1].setBackground(Color.white);
@@ -274,12 +276,13 @@ public class QuizGUI extends JFrame {
 		    @Override
 		    public void actionPerformed(ActionEvent e)
 		    {
-//		    	QuestionnaireInterface.selectChoice(1);
+		    	QuestionnaireInterface.selectChoice(1);
 		    }
 		});
 		frame.add(answerButtons[1]);
 		
-		answerButtons[2] = new JButton("Third Choice");		//	QuestionnaireInterface.getQuestion().getChoices()[2].getText()
+		//**	Third Choice		**//
+		answerButtons[2] = new JButton(QuestionnaireInterface.getQuestion().getChoices()[2].getText());
 		answerButtons[2].setBounds(200, 600, 400, 120);
 		answerButtons[2].setFont(fontAnswers);
 		answerButtons[2].setBackground(Color.white);
@@ -289,7 +292,7 @@ public class QuizGUI extends JFrame {
 		    @Override
 		    public void actionPerformed(ActionEvent e)
 		    {
-//		    	QuestionnaireInterface.selectChoice(2);
+		    	QuestionnaireInterface.selectChoice(2);
 		    }
 		});
 		frame.add(answerButtons[2]);
