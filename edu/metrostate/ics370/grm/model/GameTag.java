@@ -16,6 +16,7 @@ public class GameTag implements Serializable {
 	private static final long serialVersionUID = 202110001L;
 	
 	private int val;
+
 	private String name;
 	
 	/**
@@ -43,6 +44,13 @@ public class GameTag implements Serializable {
 	
 	public int getVal() {
 		return val;
+	}
+
+	/**
+	 * @param val the val to set
+	 */
+	public void setVal(int val) {
+		this.val = val;
 	}
 
 	public void upVal() {

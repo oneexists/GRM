@@ -68,24 +68,43 @@ public abstract class QuestionnaireInterface {
         		}
         	}
         	// add games to recommended games
-        	for (GameTag gameTag : game.getTags()) {
-        		for (GameTag choiceTag : choiceTags) {
-        			if (gameTag.getName().equals(choiceTag.getName()) && !(recommendedGames.contains(game))) {
-        				recommendedGames.add(game);
+        	for (Game potentialGame : potentialGames) {
+        		if (potentialGame.getRating() > 0.8 && ! (recommendedGames.contains(potentialGame))) {
+        			if (getScore(potentialGame) > 4 && ! (recommendedGames.contains(potentialGame))) {
+        				recommendedGames.add(potentialGame);        				
         			}
         		}
         	}
+//        	for (Game potentialGame : potentialGames) {
+//        		for (GameTag potentialTag : potentialGame.getTags()) {
+//        			for (GameTag userTag : Login.user.getPersonalTags()) {
+//        				if (userTag.getName().equals(potentialTag.getName())) {
+//        					potentialTag.setVal(userTag.getVal());
+//        				}
+//        			}
+//        		}
+//        	}
+        	
         }
         
         // TEST: print recommended game titles
-//        for (Game game : potentialGames) {
-//        	System.out.println(game.getName());
-//        }
         for (GameTag tag : Login.user.getPersonalTags()) {
         	System.out.println(tag.getName() + " " + tag.getVal());
         }
         System.out.println("Potential games: " + potentialGames.size());
         System.out.println("Recommended games: " + recommendedGames.size());
+	}
+
+	private static int getScore(Game potentialGame) {
+		int score = 0;
+		for (GameTag tag : Login.user.getPersonalTags()) {
+			for (GameTag gameTag : potentialGame.getTags()) {
+				if (tag.getName().equals(gameTag.getName())) {
+					score++;
+				}
+			}
+		}
+		return score;
 	}
 
 	/**

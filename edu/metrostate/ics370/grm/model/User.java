@@ -66,7 +66,11 @@ public class User implements Serializable, Comparable<User> {
 		ArrayList<GameTag> tags = new ArrayList<GameTag>();
 		if (personalTags != null) {
 			for (GameTag personalTag : personalTags) {
-				tags.add(personalTag);
+				if (personalTag.getName().equals(tag.getName())) {
+					personalTag.upVal();
+				} else {
+					tags.add(personalTag);					
+				}
 			}
 		}
 		tags.add(tag);
