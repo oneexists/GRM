@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 import edu.metrostate.ics370.grm.model.Game;
@@ -36,12 +37,55 @@ public abstract class QuestionnaireInterface {
 		for (GameTag choiceTag : choiceTags) {
 			Login.addPersonalTag(choiceTag);
 		}
+		addRecommendations(choiceTags);
 		nextQuestion();
+		// TEST: next question's choices
+		System.out.println("Next question choices: ");
 		System.out.println(getQuestion().getChoices()[0].getText());
 		System.out.println(getQuestion().getChoices()[1].getText());
 		System.out.println(getQuestion().getChoices()[2].getText());
 	}
 	
+	private static void addRecommendations(GameTag[] choiceTags) {
+		ArrayList<Game> potentialGames = new ArrayList<Game>(Arrays.asList(getGames()));
+		ArrayList<Game> recommendedGames = new ArrayList<Game>();
+				
+        for (Game game : potentialGames) {
+        	// remove wishlist
+        	if (Login.user.getWishlist() != null) {
+	        	for (Game wishlistGame : Login.user.getWishlist()) {
+	        		if (game.getName().equals(wishlistGame.getName())) {
+	        			potentialGames.remove(game);
+	        		}
+	        	}
+        	}
+        	// remove hatelist
+        	if (Login.user.getHatelist() != null) {
+        		for (Game hatelistGame : Login.user.getHatelist()) {
+        			if (game.getName().equals(hatelistGame.getName())) {
+        				potentialGames.remove(game);
+        			}
+        		}
+        	}
+        	// add games to recommended games
+        	for (GameTag gameTag : game.getTags()) {
+        		for (GameTag choiceTag : choiceTags) {
+        			if (gameTag.getName().equals(choiceTag.getName()) && !(recommendedGames.contains(game))) {
+        				recommendedGames.add(game);
+        			}
+        		}
+        	}
+        }
+        
+        // TEST: print recommended game titles
+//        for (Game game : potentialGames) {
+//        	System.out.println(game.getName());
+//        }
+        System.out.println(potentialGames.get(3));
+        System.out.println("Potential games: " + potentialGames.size());
+        System.out.println("Recommended games: " + recommendedGames.size());
+	}
+
 	/**
 	 * @param choiceText choice of the question
 	 * @return tags the array of GameTags associated with the choice
@@ -116,9 +160,10 @@ public abstract class QuestionnaireInterface {
 			qSet.add(thirdQuestion);
 			qSet.add(fourthQuestion);
 		}
-		for (Question question : qSet) {
-			System.out.println(question.getPrompt());
-		}
+		// TEST: prepared questions
+//		for (Question question : qSet) {
+//			System.out.println(question.getPrompt());
+//		}
 		return qSet.toArray(new Question[qSet.size()]);
 	}
 	
@@ -126,7 +171,7 @@ public abstract class QuestionnaireInterface {
 		ArrayList<Game> allGames = new ArrayList<Game>();
 		StringBuffer gameBuffer = new StringBuffer();
 		int appId = -1;
-		String name = null;
+		String name = "";
 		float rating = -1;
 		boolean inName = false;
 		boolean inTags = false;
@@ -146,16 +191,12 @@ public abstract class QuestionnaireInterface {
 		
 		String gameString = gameBuffer.toString();
 		String[] splitGame = gameString.split("END");
-		System.out.println(splitGame);
 		for (String gameSplit : splitGame) {
 			String[] lineSplits = gameSplit.split(",");
 			for (int i=0; i<lineSplits.length; i++) {
 				// parse name
-				if (inName) {
+				if (inName && !(lineSplits[i].equals("rating"))) {
 					name += " " + lineSplits[i];
-					if (lineSplits[i + 1] == "rating") {
-						inName = false;
-					}
 				}
 				// parse tags
 				if (inTags) {
@@ -171,6 +212,7 @@ public abstract class QuestionnaireInterface {
 				}
 				// parse rating
 				if (lineSplits[i].equals("rating")) {
+					inName = false;
 					i++;
 					rating = Float.parseFloat(lineSplits[i]);
 				}
@@ -178,10 +220,15 @@ public abstract class QuestionnaireInterface {
 					inTags = true;
 				}
 				if (lineSplits[i].equals("END")) {
+					inTags = false;
 					// end of line
 				}
 			}
+			name = name.trim();
 			allGames.add(new Game(appId, name, rating, tags.toArray(new GameTag[tags.size()])));
+			appId = -1;
+			name = "";
+			rating = -1;
 		}
 		return allGames.toArray(new Game[allGames.size()]);
 		

@@ -51,7 +51,13 @@ public class QuizGUI extends JFrame {
 		frame = new JFrame("Questionnaire");
 		frame.setSize(1920,1080);					//400 width and 500 height
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+	}
+	
+	private void refreshQuestion() {
+		promptLabel.setText(QuestionnaireInterface.getQuestion().getPrompt());
+		answerButtons[0].setText(QuestionnaireInterface.getQuestion().getChoices()[0].getText());
+		answerButtons[1].setText(QuestionnaireInterface.getQuestion().getChoices()[1].getText());
+		answerButtons[2].setText(QuestionnaireInterface.getQuestion().getChoices()[2].getText());
 	}
 	
 	/**
@@ -260,7 +266,7 @@ public class QuizGUI extends JFrame {
 		    public void actionPerformed(ActionEvent e) {
 		    	// add tags to user
 		    	QuestionnaireInterface.selectChoice(0);
-		    	// TODO create refresh gui method
+		    	refreshQuestion();
 		    }
 		});
 		frame.add(answerButtons[0]);
@@ -277,6 +283,7 @@ public class QuizGUI extends JFrame {
 		    public void actionPerformed(ActionEvent e)
 		    {
 		    	QuestionnaireInterface.selectChoice(1);
+		    	refreshQuestion();
 		    }
 		});
 		frame.add(answerButtons[1]);
@@ -293,6 +300,7 @@ public class QuizGUI extends JFrame {
 		    public void actionPerformed(ActionEvent e)
 		    {
 		    	QuestionnaireInterface.selectChoice(2);
+		    	refreshQuestion();
 		    }
 		});
 		frame.add(answerButtons[2]);

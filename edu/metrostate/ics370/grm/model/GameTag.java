@@ -29,6 +29,11 @@ public class GameTag implements Serializable {
 		this.val = 1;
 	}
 	
+	@Override
+	public String toString() {
+		return "GameTag [val=" + val + ", name=" + name + "]";
+	}
+
 	/**
 	 * @return the name
 	 */

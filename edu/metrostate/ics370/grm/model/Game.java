@@ -1,5 +1,7 @@
 package edu.metrostate.ics370.grm.model;
 
+import java.util.Arrays;
+
 /**
  * @author skylar
  */
@@ -60,5 +62,11 @@ public class Game {
 	 */
 	public void setRating(float rating) {
 		this.rating = rating;
+	}
+
+	@Override
+	public String toString() {
+		return "Game [appId=" + appId + ", name=" + name + ", rating=" + rating + ", tags=" + Arrays.toString(tags)
+				+ "]";
 	}
 }
