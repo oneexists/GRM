@@ -90,7 +90,6 @@ public class MenuGUI extends JFrame {
 		editProfile.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO implement edit profile frame
 				profilePanel.setVisible(false);
 				buildEditUserPanel();
 			}
@@ -103,6 +102,8 @@ public class MenuGUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO implement take quiz frame
+				QuizGUI quiz = new QuizGUI();
+				quiz.initialize();
 			}
 		});
 		menuPanel.add(takeQuiz);
