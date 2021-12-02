@@ -81,7 +81,9 @@ public abstract class QuestionnaireInterface {
 //        for (Game game : potentialGames) {
 //        	System.out.println(game.getName());
 //        }
-        System.out.println(potentialGames.get(3));
+        for (GameTag tag : Login.user.getPersonalTags()) {
+        	System.out.println(tag.getName() + " " + tag.getVal());
+        }
         System.out.println("Potential games: " + potentialGames.size());
         System.out.println("Recommended games: " + recommendedGames.size());
 	}
@@ -92,16 +94,34 @@ public abstract class QuestionnaireInterface {
 	 */
 	private static GameTag[] getChoiceTags(String choiceText) {
 		ArrayList<GameTag> tags = new ArrayList<GameTag>();
-		String pSql = "SELECT tag_name "
-				+ "FROM Choice, GameTag "
-				+ "WHERE Choice.choice_text = ?";
+		ArrayList<Integer> tag_ids = new ArrayList<Integer>();
+		String pSql = "SELECT tag_id "
+				+ "FROM ChoiceTags, Choice "
+				+ "WHERE Choice.choice_id = ChoiceTags.choice_id "
+				+ "AND choice_text = ?";
+		
 		try (	PreparedStatement pStmt = Connector.getInstance().getConnection().prepareStatement(pSql);
 				) {
 			pStmt.setString(1, choiceText);
 			ResultSet rs = pStmt.executeQuery();
 			while (rs.next()) {
-				tags.add(new GameTag(rs.getString("tag_name")));
+				tag_ids.add(rs.getInt("tag_id"));
 			}
+						
+			String prepSql = "SELECT tag_name "
+					+ "FROM GameTag "
+					+ "WHERE tag_id = ?";
+			try (	PreparedStatement prepStmt = Connector.getInstance().getConnection().prepareStatement(prepSql);
+					) {
+				for (Integer id : tag_ids) {
+					prepStmt.setInt(1, id);
+					ResultSet res = prepStmt.executeQuery();
+					while (res.next()) {
+						tags.add(new GameTag(res.getString("tag_name")));						
+					}
+				}
+			}
+			
 		} catch (SQLException e) {
 			Connector.processException(e);
 			return null;
