@@ -126,8 +126,8 @@ public class MenuGUI extends JFrame {
 				Login.signOut();
 				LoginGUI window;
 				try {
-					window = new SignInGUI();
-					window.buildPanel();
+					window = new LoginGUI();
+					window.initialize();
 				} catch (UnsupportedLookAndFeelException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
