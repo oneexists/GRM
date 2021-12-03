@@ -21,6 +21,7 @@ public class User implements Serializable, Comparable<User> {
 	private static final Comparator<User> USER_COMPARATOR = Comparator.comparing(User::getUsername);
 	
 	private String firstName;
+
 	private String lastName;
 	private String username;
 	private LocalDate dateOfBirth;
@@ -36,6 +37,34 @@ public class User implements Serializable, Comparable<User> {
 		personalTags = new TreeSet<GameTag>();
 		wishlist = new TreeSet<Game>();
 		hatelist = new TreeSet<Game>();
+	}
+
+	/**
+	 * @param firstName the firstName to set
+	 */
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	
+	/**
+	 * @param lastName the lastName to set
+	 */
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	
+	/**
+	 * @param dateOfBirth the dateOfBirth to set
+	 */
+	public void setDateOfBirth(LocalDate dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+	
+	/**
+	 * @param gender the gender to set
+	 */
+	public void setGender(Gender gender) {
+		this.gender = gender;
 	}
 
 	/**

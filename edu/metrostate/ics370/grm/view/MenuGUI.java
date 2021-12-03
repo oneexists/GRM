@@ -2,6 +2,7 @@ package edu.metrostate.ics370.grm.view;
 
 import edu.metrostate.ics370.grm.controller.Login;
 import edu.metrostate.ics370.grm.model.User;
+import edu.metrostate.ics370.grm.model.User.Gender;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -39,12 +40,10 @@ public class MenuGUI extends JFrame {
 	private JLabel gender;
 	
 	private JPanel editPanel;
-	private JLabel userLabel;
 	private JLabel firstNameLabel;
 	private JLabel lastNameLabel;
 	private JLabel dateOfBirthLabel;
 	private JLabel genderLabel;
-	private JTextField userText;
 	private JTextField firstNameText;
 	private JTextField lastNameText;
 	private JTextField dateOfBirthText;
@@ -147,13 +146,11 @@ public class MenuGUI extends JFrame {
 		GridLayout editUserLayout = new GridLayout(0, 2);
 		editPanel.setLayout(editUserLayout);	
 		// labels
-		userLabel = new JLabel("Username:");
 		firstNameLabel = new JLabel("First name:");
 		lastNameLabel = new JLabel("Last name:");
 		dateOfBirthLabel = new JLabel("Date of birth:");
 		genderLabel = new JLabel("Gender:");
 		// text fields
-		userText = new JTextField(Login.user.getUsername());
 		firstNameText = new JTextField(Login.user.getFirstName());
 		lastNameText = new JTextField(Login.user.getLastName());
 		dateOfBirthText = new JTextField(Login.user.getDateOfBirth().toString());
@@ -161,6 +158,23 @@ public class MenuGUI extends JFrame {
 		genderComboBox = new JComboBox<User.Gender>(User.Gender.values());
 		// buttons
 		saveButton = new JButton("Save");
+		saveButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				String newFirst = firstNameText.getText();
+				String newLast = lastNameText.getText();
+				String newDob = dateOfBirthText.getText();
+				Gender newGender = (Gender) genderComboBox.getSelectedItem();
+				
+				Login.updateUser(newFirst, newLast, newDob, newGender);
+				refreshProfilePanel();
+				editPanel.setVisible(false);
+				profilePanel.setVisible(true);
+			}
+			
+		});
 		cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener(new ActionListener() {
 
@@ -173,8 +187,6 @@ public class MenuGUI extends JFrame {
 			
 		});
 		// add to panel
-		editPanel.add(userLabel);
-		editPanel.add(userText);
 		editPanel.add(firstNameLabel);
 		editPanel.add(firstNameText);
 		editPanel.add(lastNameLabel);
@@ -191,6 +203,13 @@ public class MenuGUI extends JFrame {
 		menuFrame.add(editPanel);
 	}
 	
+	private void refreshProfilePanel() {
+		firstName.setText("Hello " + Login.user.getFirstName() + "!");
+		dateOfBirth.setText("DOB: " + Login.user.getDateOfBirth().toString());
+		if (Login.user.getGender() != null) {
+			gender.setText("Gender: " + Login.user.getGender().toString());
+		}
+	}
 	private void buildProfilePanel() {
 		profilePanel = new JPanel();
 		GridLayout profileLayout = new GridLayout(0,1);
