@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import edu.metrostate.ics370.grm.model.User;
+import edu.metrostate.ics370.grm.model.User.Gender;
 
 /**
  * Controller class provides new user functionality, signs into and out of the database.
@@ -139,5 +140,56 @@ public abstract class Login {
 			}
 		}
 		user = new User(username, firstName, lastName, dateOfBirth, gender);
+	}
+
+	public static void updateUser(String newFirst, String newLast, String newDob, Gender newGender) {
+		if (!(user.getFirstName().equals(newFirst))) {
+			user.setFirstName(newFirst);
+			String pSql = "UPDATE User SET user_first_name = ? WHERE username = ?";
+			try (	PreparedStatement pStmt = Connector.getInstance().getConnection().prepareStatement(pSql);
+					) {
+				pStmt.setString(1, newFirst);
+				pStmt.setString(2, user.getUsername());
+				pStmt.execute();
+			} catch (SQLException e) {
+				Connector.processException(e);
+			}
+		}
+		if (!(user.getLastName().equals(newLast))) {
+			user.setLastName(newLast);					
+			String pSql = "UPDATE User SET user_last_name = ? WHERE username = ?";
+			try (	PreparedStatement pStmt = Connector.getInstance().getConnection().prepareStatement(pSql);
+					) {
+				pStmt.setString(1, newLast);
+				pStmt.setString(2, user.getUsername());
+				pStmt.execute();
+			} catch (SQLException e) {
+				Connector.processException(e);
+			}	
+		}
+		if (!(user.getDateOfBirth().equals(LocalDate.parse(newDob)))) {
+			user.setDateOfBirth(LocalDate.parse(newDob));
+			String pSql = "UPDATE User SET user_date_of_birth = ? WHERE username = ?";
+			try (	PreparedStatement pStmt = Connector.getInstance().getConnection().prepareStatement(pSql);
+					) {
+				pStmt.setString(1, newDob);
+				pStmt.setString(2, user.getUsername());
+				pStmt.execute();
+			} catch (SQLException e) {
+				Connector.processException(e);
+			}
+		}
+		if (!(user.getGender().equals(newGender))) {
+			user.setGender(newGender);
+			String pSql = "UPDATE User SET gender = ? WHERE username = ?";
+			try (	PreparedStatement pStmt = Connector.getInstance().getConnection().prepareStatement(pSql);
+					) {
+				pStmt.setString(1, newGender.toString());
+				pStmt.setString(2, user.getUsername());
+				pStmt.execute();
+			} catch (SQLException e) {
+				Connector.processException(e);
+			}
+		}
 	}
 }
