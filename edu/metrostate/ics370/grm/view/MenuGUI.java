@@ -1,25 +1,17 @@
-/**
- * 
- */
 package edu.metrostate.ics370.grm.view;
-
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import edu.metrostate.ics370.grm.controller.Login;
 import edu.metrostate.ics370.grm.model.User;
 
+import javax.swing.*;
+import javax.swing.border.Border;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 /**
- * Menu panel: edit profile, take quiz, logout
+ * Menu panel: edit profile, take quiz, settings, logout
  * Profile panel: username, firstName, dateOfBirth, gender
  * 
  * @author skylar
@@ -33,10 +25,12 @@ public class MenuGUI extends JFrame {
 	private static final long serialVersionUID = 202111002L;
 
 	private JFrame menuFrame;
+	private JPanel menuPanelContainer;
 	private JPanel menuPanel;
 	private JButton editProfile;
 	private JButton takeQuiz;
 	private JButton logout;
+	private JButton settings;
 
 	private JPanel profilePanel;
 	private JLabel username;
@@ -63,7 +57,7 @@ public class MenuGUI extends JFrame {
 	 */
 	public MenuGUI() {
 		menuFrame = new JFrame("Game Recommendation Manager Menu");
-		menuFrame.setSize(500, 500);
+		menuFrame.setSize(700, 600);
 		menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
@@ -75,12 +69,22 @@ public class MenuGUI extends JFrame {
 		buildProfilePanel();
 		menuFrame.setVisible(true);
 	}
-	
+
 	private void buildMenuPanel() {
-		menuPanel = new JPanel();
+		menuPanelContainer = new JPanel();
 		GridLayout menuLayout = new GridLayout(0,1);
+		menuPanelContainer.setLayout(menuLayout);
+		// Add logo
+		menuPanelContainer.add(new JLabel(new ImageIcon("lib/images/Logo_small.png")));
+
+		menuPanel = new JPanel();
+		Border padding = BorderFactory.createEmptyBorder(20, 20, 20, 20);
+		menuPanel.setBorder(padding);
+
 		menuPanel.setLayout(menuLayout);
-		
+		menuLayout.setVgap(30);
+
+
 		// edit profile button
 		editProfile = new JButton("Edit Profile");
 		editProfile.addActionListener(new ActionListener() {
@@ -92,6 +96,7 @@ public class MenuGUI extends JFrame {
 			}
 		});
 		menuPanel.add(editProfile);
+
 		// take quiz button
 		takeQuiz = new JButton("Take Quiz");
 		takeQuiz.addActionListener(new ActionListener() {
@@ -101,20 +106,40 @@ public class MenuGUI extends JFrame {
 			}
 		});
 		menuPanel.add(takeQuiz);
+
+		// settings button
+		settings = new JButton("Settings");
+		settings.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new SettingsGUI();
+				menuFrame.dispose();
+			}
+		});
+		menuPanel.add(settings);
+
 		// logout button
 		logout = new JButton("Logout");
 		logout.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Login.signOut();
-				LoginGUI.openLogin();
+				LoginGUI window;
+				try {
+					window = new LoginGUI();
+					window.initialize();
+				} catch (UnsupportedLookAndFeelException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				menuFrame.dispose();
 			}
 		});
 		menuPanel.add(logout);
 		
+		menuPanelContainer.add(menuPanel);
 		// add to frame
-		menuFrame.add(menuPanel, BorderLayout.WEST);
+		menuFrame.add(menuPanelContainer, BorderLayout.WEST);
 	}
 	
 	private void buildEditUserPanel() {
@@ -137,6 +162,16 @@ public class MenuGUI extends JFrame {
 		// buttons
 		saveButton = new JButton("Save");
 		cancelButton = new JButton("Cancel");
+		cancelButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				editPanel.setVisible(false);
+				profilePanel.setVisible(true);
+			}
+			
+		});
 		// add to panel
 		editPanel.add(userLabel);
 		editPanel.add(userText);
@@ -161,17 +196,17 @@ public class MenuGUI extends JFrame {
 		GridLayout profileLayout = new GridLayout(0,1);
 		profilePanel.setLayout(profileLayout);
 		// username
-		username = new JLabel(Login.user.getUsername());
+		username = new JLabel(Login.user.getUsername() + " is logged in.");
 		profilePanel.add(username);
 		// first name
-		firstName = new JLabel(Login.user.getFirstName());
+		firstName = new JLabel("Hello " + Login.user.getFirstName() + "!");
 		profilePanel.add(firstName);
 		// date of birth
-		dateOfBirth = new JLabel(Login.user.getDateOfBirth().toString());
+		dateOfBirth = new JLabel("DOB: " + Login.user.getDateOfBirth().toString());
 		profilePanel.add(dateOfBirth);
 		// gender
 		if (Login.user.getGender() != null) {
-			gender = new JLabel(Login.user.getGender().toString());			
+			gender = new JLabel("Gender: " + Login.user.getGender().toString());			
 			profilePanel.add(gender);
 		}
 		
