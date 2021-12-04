@@ -32,6 +32,17 @@ public abstract class QuestionnaireInterface {
 		qNum += 1;
 	}
 	
+//	public static Game[] getTopGames() {
+//		return Arrays.copyOfRange(sortGames(getGames()), 0, 4);
+//	}
+//	private static Game[] sortGames(Game[] games) {
+//		Arrays.sort(games);
+//		return games;
+//	}
+	
+	public static Game[] getTopGames() {
+		return Arrays.copyOfRange(getGames(), 0, 4);
+	}
 	public static void selectChoice(int choice) {
 		GameTag[] choiceTags = getQuestion().getChoices()[choice].getTags();
 		for (GameTag choiceTag : choiceTags) {
@@ -243,6 +254,7 @@ public abstract class QuestionnaireInterface {
 				}
 				// parse appId
 				if (lineSplits[i].equals("appid")) {
+					inTags = false;
 					i++;
 					appId = Integer.parseInt(lineSplits[i]);
 				}
@@ -257,10 +269,6 @@ public abstract class QuestionnaireInterface {
 				}
 				if (lineSplits[i].equals("tags")) {
 					inTags = true;
-				}
-				if (lineSplits[i].equals("END")) {
-					inTags = false;
-					// end of line
 				}
 			}
 			name = name.trim();

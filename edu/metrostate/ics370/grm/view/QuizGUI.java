@@ -208,39 +208,37 @@ public class QuizGUI extends JFrame {
 	}
 
 	private void setupTopGames() {
-		if (true) {		//	QuestionnaireInterface.games != null
-			//**Top 5 Game Recommendations**//
-			topGameButtons[0] = new JButton("First Game");		//	QuestionnaireInterface.games[0].getName()
-			topGameButtons[0].setBounds(1000, 300, 400, 50);
-			topGameButtons[0].setFont(fontGames);
-			topGameButtons[0].setBackground(Color.black);
-			topGameButtons[0].setForeground(Color.white);
-			frame.add(topGameButtons[0]);
-			topGameButtons[1] = new JButton("Second Game");		//	QuestionnaireInterface.games[1].getName()
-			topGameButtons[1].setBounds(1000, 350, 400, 50);
-			topGameButtons[1].setFont(fontGames);
-			topGameButtons[1].setBackground(Color.black);
-			topGameButtons[1].setForeground(Color.white);
-			frame.add(topGameButtons[1]);
-			topGameButtons[2] = new JButton("Third Game");		//	QuestionnaireInterface.games[2].getName()
-			topGameButtons[2].setBounds(1000, 400, 400, 50);
-			topGameButtons[2].setFont(fontGames);
-			topGameButtons[2].setBackground(Color.black);
-			topGameButtons[2].setForeground(Color.white);
-			frame.add(topGameButtons[2]);
-			topGameButtons[3] = new JButton("Fourth Game");		//	QuestionnaireInterface.games[3].getName()
-			topGameButtons[3].setBounds(1000, 450, 400, 50);
-			topGameButtons[3].setFont(fontGames);
-			topGameButtons[3].setBackground(Color.black);
-			topGameButtons[3].setForeground(Color.white);
-			frame.add(topGameButtons[3]);
-			topGameButtons[4] = new JButton("Fifth Game");		//	QuestionnaireInterface.games[4].getName()
-			topGameButtons[4].setBounds(1000, 500, 400, 50);
-			topGameButtons[4].setFont(fontGames);
-			topGameButtons[4].setBackground(Color.black);
-			topGameButtons[4].setForeground(Color.white);
-			frame.add(topGameButtons[4]);
-		}
+		//**Top 5 Game Recommendations**//
+		topGameButtons[0] = new JButton(QuestionnaireInterface.getTopGames()[0].getName());
+		topGameButtons[0].setBounds(1000, 300, 400, 50);
+		topGameButtons[0].setFont(fontGames);
+		topGameButtons[0].setBackground(Color.black);
+		topGameButtons[0].setForeground(Color.white);
+		frame.add(topGameButtons[0]);
+		topGameButtons[1] = new JButton(QuestionnaireInterface.getTopGames()[0].getName());
+		topGameButtons[1].setBounds(1000, 350, 400, 50);
+		topGameButtons[1].setFont(fontGames);
+		topGameButtons[1].setBackground(Color.black);
+		topGameButtons[1].setForeground(Color.white);
+		frame.add(topGameButtons[1]);
+		topGameButtons[2] = new JButton(QuestionnaireInterface.getTopGames()[0].getName());
+		topGameButtons[2].setBounds(1000, 400, 400, 50);
+		topGameButtons[2].setFont(fontGames);
+		topGameButtons[2].setBackground(Color.black);
+		topGameButtons[2].setForeground(Color.white);
+		frame.add(topGameButtons[2]);
+		topGameButtons[3] = new JButton(QuestionnaireInterface.getTopGames()[0].getName());
+		topGameButtons[3].setBounds(1000, 450, 400, 50);
+		topGameButtons[3].setFont(fontGames);
+		topGameButtons[3].setBackground(Color.black);
+		topGameButtons[3].setForeground(Color.white);
+		frame.add(topGameButtons[3]);
+		topGameButtons[4] = new JButton(QuestionnaireInterface.getTopGames()[0].getName());
+		topGameButtons[4].setBounds(1000, 500, 400, 50);
+		topGameButtons[4].setFont(fontGames);
+		topGameButtons[4].setBackground(Color.black);
+		topGameButtons[4].setForeground(Color.white);
+		frame.add(topGameButtons[4]);
 	}
 
 	private void setupQuestions() {

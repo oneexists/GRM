@@ -1,11 +1,13 @@
 package edu.metrostate.ics370.grm.model;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 /**
  * @author skylar
  */
-public class Game {
+public class Game implements Comparable<Game> {
+	private static final Comparator<Game> GAME_RATING_COMPARATOR = Comparator.comparing(Game::getRating);
 	
 	private int appId;
 	private String name;
@@ -64,6 +66,11 @@ public class Game {
 		this.rating = rating;
 	}
 
+	@Override
+	public int compareTo(Game game) {
+		return GAME_RATING_COMPARATOR.compare(this, game);
+	}
+	
 	@Override
 	public String toString() {
 		return "Game [appId=" + appId + ", name=" + name + ", rating=" + rating + ", tags=" + Arrays.toString(tags)
