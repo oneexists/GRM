@@ -155,7 +155,7 @@ public abstract class Login {
 				Connector.processException(e);
 			}
 		}
-		if (!(user.getLastName().equals(newLast))) {
+		if (!(user.getLastName().equals(newLast)) || user.getLastName() == null) {
 			user.setLastName(newLast);					
 			String pSql = "UPDATE User SET user_last_name = ? WHERE username = ?";
 			try (	PreparedStatement pStmt = Connector.getInstance().getConnection().prepareStatement(pSql);
@@ -179,7 +179,7 @@ public abstract class Login {
 				Connector.processException(e);
 			}
 		}
-		if (!(user.getGender().equals(newGender))) {
+		if (!(user.getGender().equals(newGender)) || user.getGender() == null) {
 			user.setGender(newGender);
 			String pSql = "UPDATE User SET gender = ? WHERE username = ?";
 			try (	PreparedStatement pStmt = Connector.getInstance().getConnection().prepareStatement(pSql);

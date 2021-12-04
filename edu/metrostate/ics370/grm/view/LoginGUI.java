@@ -18,7 +18,7 @@ import java.sql.SQLException;
  * @author nick
  */
 public class LoginGUI {
-	public static class NewUserPanel extends JPanel {
+	static class NewUserPanel extends JPanel {
 		/**
 		 * 
 		 */
@@ -42,7 +42,7 @@ public class LoginGUI {
 			// user labels and text
 			userLabel = new JLabel("User");
 			userLabel.setBounds(10, 20, 220, 25);
-			userPanel.add(userLabel);
+			newUserPanel.add(userLabel);
 			userText = new JTextField();
 			userText.setBounds(220, 20, 165, 25);
 			newUserPanel.add(userText);
@@ -52,33 +52,6 @@ public class LoginGUI {
 			newUserPanel.add(passwordLabel);
 			passwordText = new JPasswordField();
 			passwordText.setBounds(220, 50, 165, 25);
-			passwordText.addActionListener(new ActionListener() {
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					String user = userText.getText();
-					@SuppressWarnings("deprecation")
-					String password = passwordText.getText();
-					boolean login;
-					try {
-						// validate login
-						login = Login.signIn(user, password);
-						if (login == true) {
-							MenuGUI menu = new MenuGUI();
-							menu.initialize();
-							userText.setText("");
-							passwordText.setText("");
-							frame.setVisible(false);
-						} else {
-							// display login error
-							setSuccessMessage(INVALID_LOGIN);
-						}
-					} catch (SQLException err) {
-						Connector.processException(err);
-					}					
-				}
-				
-			});
 			newUserPanel.add(passwordText);
 			// confirm password label and text
 			confirmPasswordLabel = new JLabel("Confirm Password");
@@ -93,19 +66,14 @@ public class LoginGUI {
 			newUserPanel.add(dateOfBirthLabel);
 			dateOfBirthText = new JTextField();
 			dateOfBirthText.setBounds(220, 110, 165, 25);
-			newUserPanel.add(dateOfBirthText);
-			
-			// buttons
-			createUserButton = new JButton("Create User");
-			createUserButton.setBounds(10, 140, 130, 25);
-			createUserButton.addActionListener(new ActionListener() {
-				String user = userText.getText();
-				@SuppressWarnings("deprecation")
-				String password = passwordText.getText();
+			dateOfBirthText.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// create user
 					boolean newUser;
+					String user = userText.getText();
+					@SuppressWarnings("deprecation")
+					String password = passwordText.getText();
 					@SuppressWarnings("deprecation")
 					String confirmPassword = confirmPasswordText.getText();
 					String dob = dateOfBirthText.getText();
@@ -114,15 +82,45 @@ public class LoginGUI {
 						newUser = Login.newUser(user, password, dob);	
 						if (newUser != true) {
 							setSuccessMessage(INVALID_NEW_USER);
-							SignInPanel.buildPanel();
-							newUserPanel.setVisible(false);
-							userPanel.setVisible(true);
 						} else {
 							setSuccessMessage(VALID_NEW_USER);
-							SignInPanel.buildPanel();
-							newUserPanel.setVisible(false);
-							userPanel.setVisible(true);
 						}
+						SignInPanel.buildPanel();
+						newUserPanel.setVisible(false);
+						userPanel.setVisible(true);
+					} else {
+						// passwords do not match
+						setSuccessMessage(INVALID_NEW_PASSWORD);
+					}
+				}
+			});
+			newUserPanel.add(dateOfBirthText);
+			
+			// buttons
+			createUserButton = new JButton("Create User");
+			createUserButton.setBounds(10, 140, 130, 25);
+			createUserButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// create user
+					boolean newUser;
+					String user = userText.getText();
+					@SuppressWarnings("deprecation")
+					String password = passwordText.getText();
+					@SuppressWarnings("deprecation")
+					String confirmPassword = confirmPasswordText.getText();
+					String dob = dateOfBirthText.getText();
+					// matching password
+					if (password.equals(confirmPassword)) {
+						newUser = Login.newUser(user, password, dob);	
+						if (newUser != true) {
+							setSuccessMessage(INVALID_NEW_USER);
+						} else {
+							setSuccessMessage(VALID_NEW_USER);
+						}
+						SignInPanel.buildPanel();
+						newUserPanel.setVisible(false);
+						userPanel.setVisible(true);
 					} else {
 						// passwords do not match
 						setSuccessMessage(INVALID_NEW_PASSWORD);
@@ -137,6 +135,7 @@ public class LoginGUI {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					setSuccessMessage("");
 					SignInPanel.buildPanel();
 					newUserPanel.setVisible(false);
 					userPanel.setVisible(true);
@@ -150,11 +149,19 @@ public class LoginGUI {
 		}
 	}
 
-	public static class SignInPanel extends JFrame {
+	static class SignInPanel extends JFrame {
 		/**
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
+		
+		// elements
+		private static JLabel userLabel;
+		private static JTextField userText;
+		private static JLabel passwordLabel;
+		private static JPasswordField passwordText;
+		private static JButton loginButton;
+		private static JButton newUserButton;
 		
 		private static void buildPanel() {
 			userPanel = new JPanel();
@@ -264,15 +271,6 @@ public class LoginGUI {
 	private static JPanel userPanel;
 	private static JPanel newUserPanel;
 	private static JLabel success;
-	
-	
-	// elements
-	private static JLabel userLabel;
-	private static JTextField userText;
-	private static JLabel passwordLabel;
-	private static JPasswordField passwordText;
-	private static JButton loginButton;
-	private static JButton newUserButton;
 	
 	/**
 	 * No-arg constructor
