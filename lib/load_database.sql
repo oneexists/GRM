@@ -85,9 +85,9 @@ INSERT INTO Question(question_prompt) VALUES
 ("Which is the most important to you?"),
 ("I like pretending"),
 ("My favorite games usually have:"),
-("I\\'m look forward to a game that has:"),
+("I\'m look forward to a game that has:"),
 ("I often daydream about:"),
-("If you locked yourself in a room for a month you\\'d want to play: "),
+("If you locked yourself in a room for a month you\'d want to play: "),
 ("If you made a game, it would be closest to:");
 
 /* add question choices */
@@ -152,9 +152,9 @@ INSERT INTO ChoiceTags VALUES
 
 /* question 2 */
 INSERT INTO Choice(choice_text) VALUES 
-("I\\'m playing fighting games by myself"),
-("I\\'m doing Battle Royale shooters"),
-("I\\'m building & crafting with others"),
+("I\'m playing fighting games by myself"),
+("I\'m doing Battle Royale shooters"),
+("I\'m building & crafting with others"),
 ("I make a smart strategic move"),
 ("Solving a relaxing puzzle"),
 ("Adventuring an open world"),
@@ -329,16 +329,16 @@ INSERT INTO ChoiceTags VALUES
 
 /* question 5 */
 INSERT INTO Choice(choice_text) VALUES 
-("I\\'m on a journey to be the best at my sport"),
-("I\\'m a street racer with lots of friends"),
+("I\'m on a journey to be the best at my sport"),
+("I\'m a street racer with lots of friends"),
 ("Everyday scenarios are puzzles"),
 ("My everyday walks are in large worlds to explore"),
-("I\\m building things large and small"),
+("I\m building things large and small"),
 ("Every choice I make is strategic"),
-("I\\'m adventuring by myself in other countries"),
-("I\\'m in a zombie apocalypse"),
+("I\'m adventuring by myself in other countries"),
+("I\'m in a zombie apocalypse"),
 ("My co-workers are living in a cartoon with me"),
-("I\\'m training to fight in real battles"),
+("I\'m training to fight in real battles"),
 ("Card games mean more than they do in real life"),
 ("Real life");
 INSERT INTO SelectChoices VALUES
