@@ -39,33 +39,29 @@ public class LoginGUI {
 		
 		private static void buildPanel() {
 			newUserPanel = new JPanel();
+			newUserPanel.setLayout(new GridLayout(0,2));
+			Border padding = BorderFactory.createEmptyBorder(50, 50, 50, 50);
+			newUserPanel.setBorder(padding);
 			// user labels and text
 			userLabel = new JLabel("User");
-			userLabel.setBounds(10, 20, 220, 25);
 			newUserPanel.add(userLabel);
 			userText = new JTextField();
-			userText.setBounds(220, 20, 165, 25);
 			newUserPanel.add(userText);
 			// password label and text
 			passwordLabel = new JLabel("Password");
-			passwordLabel.setBounds(10, 50, 220, 25);
 			newUserPanel.add(passwordLabel);
 			passwordText = new JPasswordField();
-			passwordText.setBounds(220, 50, 165, 25);
 			newUserPanel.add(passwordText);
 			// confirm password label and text
 			confirmPasswordLabel = new JLabel("Confirm Password");
-			confirmPasswordLabel.setBounds(10, 80, 220, 25);
 			newUserPanel.add(confirmPasswordLabel);
 			confirmPasswordText = new JPasswordField();
-			confirmPasswordText.setBounds(220, 80, 165, 25);
 			newUserPanel.add(confirmPasswordText);
 			// date of birth
-			dateOfBirthLabel = new JLabel("Date of birth (mm/dd/yyyy):");
-			dateOfBirthLabel.setBounds(10, 110, 220, 25);
+			dateOfBirthLabel = new JLabel("Date of birth:");
 			newUserPanel.add(dateOfBirthLabel);
 			dateOfBirthText = new JTextField();
-			dateOfBirthText.setBounds(220, 110, 165, 25);
+			dateOfBirthText.setToolTipText("(mm/dd/yyyy)");
 			dateOfBirthText.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -98,7 +94,6 @@ public class LoginGUI {
 			
 			// buttons
 			createUserButton = new JButton("Create User");
-			createUserButton.setBounds(10, 140, 130, 25);
 			createUserButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -130,7 +125,6 @@ public class LoginGUI {
 			});
 			newUserPanel.add(createUserButton);
 			cancelButton = new JButton("Cancel");
-			cancelButton.setBounds(160, 140, 100, 25);
 			cancelButton.addActionListener(new ActionListener() {
 
 				@Override
@@ -144,7 +138,6 @@ public class LoginGUI {
 			});
 			newUserPanel.add(cancelButton);
 			
-			newUserPanel.setLayout(null);
 			frame.add(newUserPanel);
 		}
 	}
