@@ -143,7 +143,7 @@ public abstract class Login {
 	}
 
 	public static void updateUser(String newFirst, String newLast, String newDob, Gender newGender) {
-		if (!(user.getFirstName().equals(newFirst))) {
+		if (user.getFirstName() == null || !(user.getFirstName().equals(newFirst))) {
 			user.setFirstName(newFirst);
 			String pSql = "UPDATE User SET user_first_name = ? WHERE username = ?";
 			try (	PreparedStatement pStmt = Connector.getInstance().getConnection().prepareStatement(pSql);
@@ -155,7 +155,7 @@ public abstract class Login {
 				Connector.processException(e);
 			}
 		}
-		if (!(user.getLastName().equals(newLast)) || user.getLastName() == null) {
+		if (user.getLastName() == null || !(user.getLastName().equals(newLast))) {
 			user.setLastName(newLast);					
 			String pSql = "UPDATE User SET user_last_name = ? WHERE username = ?";
 			try (	PreparedStatement pStmt = Connector.getInstance().getConnection().prepareStatement(pSql);
@@ -167,7 +167,7 @@ public abstract class Login {
 				Connector.processException(e);
 			}	
 		}
-		if (!(user.getDateOfBirth().equals(LocalDate.parse(newDob)))) {
+		if (user.getDateOfBirth() == null || !(user.getDateOfBirth().equals(LocalDate.parse(newDob)))) {
 			user.setDateOfBirth(LocalDate.parse(newDob));
 			String pSql = "UPDATE User SET user_date_of_birth = ? WHERE username = ?";
 			try (	PreparedStatement pStmt = Connector.getInstance().getConnection().prepareStatement(pSql);
@@ -179,7 +179,7 @@ public abstract class Login {
 				Connector.processException(e);
 			}
 		}
-		if (!(user.getGender().equals(newGender)) || user.getGender() == null) {
+		if (user.getGender() == null || !(user.getGender().equals(newGender))) {
 			user.setGender(newGender);
 			String pSql = "UPDATE User SET gender = ? WHERE username = ?";
 			try (	PreparedStatement pStmt = Connector.getInstance().getConnection().prepareStatement(pSql);

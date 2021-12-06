@@ -154,6 +154,7 @@ public class MenuGUI extends JFrame {
 		dateOfBirthText = new JTextField(Login.user.getDateOfBirth().toString());
 		// combo box
 		genderComboBox = new JComboBox<User.Gender>(User.Gender.values());
+		genderComboBox.setSelectedItem(Login.user.getGender());
 		// buttons
 		saveButton = new JButton("Save");
 		saveButton.addActionListener(new ActionListener() {
@@ -163,8 +164,8 @@ public class MenuGUI extends JFrame {
 				String newFirst = firstNameText.getText();
 				String newLast = lastNameText.getText();
 				String newDob = dateOfBirthText.getText();
-				Gender newGender = (Gender) genderComboBox.getSelectedItem();
-				
+				Gender newGender = Gender.valueOf(genderComboBox.getSelectedItem().toString());
+
 				Login.updateUser(newFirst, newLast, newDob, newGender);
 				refreshProfilePanel();
 				editPanel.setVisible(false);
@@ -206,6 +207,7 @@ public class MenuGUI extends JFrame {
 			gender.setText("Gender: " + Login.user.getGender().toString());
 		}
 	}
+	
 	private void buildProfilePanel() {
 		profilePanel = new JPanel();
 		GridLayout profileLayout = new GridLayout(0,1);
@@ -214,7 +216,11 @@ public class MenuGUI extends JFrame {
 		username = new JLabel(Login.user.getUsername() + " is logged in.");
 		profilePanel.add(username);
 		// first name
-		firstName = new JLabel("Hello " + Login.user.getFirstName() + "!");
+		if (Login.user.getFirstName() != null) {
+			firstName = new JLabel("Hello " + Login.user.getFirstName() + "!");
+		} else {
+			firstName = new JLabel("Hello!");
+		}
 		profilePanel.add(firstName);
 		// date of birth
 		dateOfBirth = new JLabel("DOB: " + Login.user.getDateOfBirth().toString());
