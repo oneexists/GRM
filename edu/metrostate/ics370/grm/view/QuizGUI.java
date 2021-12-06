@@ -8,7 +8,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import edu.metrostate.ics370.grm.controller.Login;
 import edu.metrostate.ics370.grm.controller.QuestionnaireInterface;
 import edu.metrostate.ics370.grm.model.Game;
 
@@ -30,8 +29,6 @@ public class QuizGUI extends JFrame {
 	private JLabel promptLabel;
 	private JLabel backgroundLabel;
 	private JButton[] wishlistButtons = new JButton[5];
-	private JButton[] wishlistAddButtons = new JButton[17];
-	private JButton[] wishlistRemoveButtons = new JButton[17];
 	private JButton[] removeGameButtons = new JButton[5];
 	private JButton[] answerButtons = new JButton[3];
 	private JButton[] topGameButtons = new JButton[5];
@@ -368,45 +365,45 @@ public class QuizGUI extends JFrame {
 		frame.add(btnHatelist);		
 	}
 
-	private void setupWishlist() {
-		int i = 0;
-		int height = 100 + (i * 50);
-		if (Login.user.getWishlist() != null) {
-			for (Game game : Login.user.getWishlist()) {
-				wishlistAddButtons[i] = new JButton("+");
-				wishlistAddButtons[i].setBounds(700, height, 400, 50);
-				wishlistAddButtons[i].setBackground(Color.black);
-				wishlistAddButtons[i].setForeground(Color.white);
-				wishlistAddButtons[i].setFont(fontGames);
-				wishlistAddButtons[i].setOpaque(true);
-				wishlistAddButtons[i].setVisible(false);
-				wishlistAddButtons[i].addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-//						QuestionnaireInterface.removeWishlist(game);
-					}
-				});
-				frame.add(wishlistAddButtons[i]);
-			} 
-		}
-		i = 0;
-		if (Login.user.getHatelist() != null) {
-			for (Game game : Login.user.getHatelist()) {
-				wishlistRemoveButtons[i] = new JButton("-");
-				wishlistRemoveButtons[i].setBounds(650, height, 50, 50);
-				wishlistRemoveButtons[i].setFont(fontGames);
-				wishlistRemoveButtons[i].setBackground(Color.red);
-				wishlistRemoveButtons[i].setForeground(Color.white);
-				wishlistRemoveButtons[i].setOpaque(true);
-				wishlistRemoveButtons[i].setVisible(false);
-				wishlistRemoveButtons[i].addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-//						QuestionnaireInterface.addHatelist(game);
-					}
-				});
-				frame.add(wishlistRemoveButtons[i]);
-			} 
-		}
-	}	
+//	private void setupWishlist() {
+//		int i = 0;
+//		int height = 100 + (i * 50);
+//		if (Login.user.getWishlist() != null) {
+//			for (Game game : Login.user.getWishlist()) {
+//				wishlistAddButtons[i] = new JButton("+");
+//				wishlistAddButtons[i].setBounds(700, height, 400, 50);
+//				wishlistAddButtons[i].setBackground(Color.black);
+//				wishlistAddButtons[i].setForeground(Color.white);
+//				wishlistAddButtons[i].setFont(fontGames);
+//				wishlistAddButtons[i].setOpaque(true);
+//				wishlistAddButtons[i].setVisible(false);
+//				wishlistAddButtons[i].addActionListener(new ActionListener() {
+//					@Override
+//					public void actionPerformed(ActionEvent e) {
+////						QuestionnaireInterface.removeWishlist(game);
+//					}
+//				});
+//				frame.add(wishlistAddButtons[i]);
+//			} 
+//		}
+//		i = 0;
+//		if (Login.user.getHatelist() != null) {
+//			for (Game game : Login.user.getHatelist()) {
+//				wishlistRemoveButtons[i] = new JButton("-");
+//				wishlistRemoveButtons[i].setBounds(650, height, 50, 50);
+//				wishlistRemoveButtons[i].setFont(fontGames);
+//				wishlistRemoveButtons[i].setBackground(Color.red);
+//				wishlistRemoveButtons[i].setForeground(Color.white);
+//				wishlistRemoveButtons[i].setOpaque(true);
+//				wishlistRemoveButtons[i].setVisible(false);
+//				wishlistRemoveButtons[i].addActionListener(new ActionListener() {
+//					@Override
+//					public void actionPerformed(ActionEvent e) {
+////						QuestionnaireInterface.addHatelist(game);
+//					}
+//				});
+//				frame.add(wishlistRemoveButtons[i]);
+//			} 
+//		}
+//	}	
 }

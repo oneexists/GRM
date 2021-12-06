@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 import edu.metrostate.ics370.grm.model.Game;
@@ -16,7 +15,6 @@ import edu.metrostate.ics370.grm.model.Question;
 import edu.metrostate.ics370.grm.model.QuestionChoice;
 
 /**
- * @author skylar
  * @author nick
  * @author christian
  */
@@ -184,18 +182,6 @@ public abstract class QuestionnaireInterface {
         	//}
         //System.out.println("gNum: " + gNum);
         //System.out.println("Recommended games: " + recommendedGames.size());
-	}
-
-	private static int getScore(Game potentialGame) {
-		int score = 0;
-		for (GameTag tag : Login.user.getPersonalTags()) {
-			for (GameTag gameTag : potentialGame.getTags()) {
-				if (tag.getName().equals(gameTag.getName())) {
-					score++;
-				}
-			}
-		}
-		return score;
 	}
 
 	/**
@@ -386,8 +372,8 @@ public abstract class QuestionnaireInterface {
             	//System.out.println(sc.next());
             }
 
-            
             reader.close();	
+            sc.close();
     	}
     	catch (IOException e)
     	{
