@@ -172,17 +172,13 @@ public class LoginGUI {
 			
 			// user labels and text
 			userLabel = new JLabel("User");
-			userLabel.setBounds(10, 20, 80, 25);
 			userPanel.add(userLabel);
 			userText = new JTextField();
-			userText.setBounds(100, 20, 165, 25);
 			userPanel.add(userText);
 			// password label and text
 			passwordLabel = new JLabel("Password");
-			passwordLabel.setBounds(10, 50, 80, 25);
 			userPanel.add(passwordLabel);
 			passwordText = new JPasswordField();
-			passwordText.setBounds(100, 50, 165, 25);
 			passwordText.addActionListener(new ActionListener() {
 
 				@Override
@@ -214,7 +210,6 @@ public class LoginGUI {
 			
 			// login button
 			loginButton = new JButton("Login");
-			loginButton.setBounds(10, 80, 80, 25);
 			userPanel.add(loginButton);
 			loginButton.addActionListener(new ActionListener() {
 				@Override
@@ -243,7 +238,6 @@ public class LoginGUI {
 			});
 			// new user button
 			newUserButton = new JButton("Create New User");
-			newUserButton.setBounds(100, 80, 165, 25);
 			newUserButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
