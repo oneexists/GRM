@@ -89,7 +89,6 @@ public class MenuGUI extends JFrame {
 		editProfile.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO implement edit profile frame
 				profilePanel.setVisible(false);
 				buildEditUserPanel();
 			}
@@ -128,7 +127,6 @@ public class MenuGUI extends JFrame {
 					window = new LoginGUI();
 					window.initialize();
 				} catch (UnsupportedLookAndFeelException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				menuFrame.dispose();
@@ -162,7 +160,6 @@ public class MenuGUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				String newFirst = firstNameText.getText();
 				String newLast = lastNameText.getText();
 				String newDob = dateOfBirthText.getText();
@@ -180,7 +177,6 @@ public class MenuGUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				editPanel.setVisible(false);
 				profilePanel.setVisible(true);
 			}
