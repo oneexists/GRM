@@ -101,6 +101,13 @@ public class MenuGUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO implement take quiz frame
+				QuizGUI quiz = new QuizGUI();
+				try {
+					quiz.initialize();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		menuPanel.add(takeQuiz);
